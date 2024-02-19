@@ -9,7 +9,7 @@ docs: package-storybook
 package-kotlin: build-libs publish-libs
 
 build-libs:
-	./gradlew build
+	./gradlew build -x test
 
 test-libs:
 	./gradlew test
