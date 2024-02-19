@@ -18,6 +18,7 @@ object Versions {
 	const val slf4j = FixersVersions.Logging.slf4j
 	const val jacksonKotlin = FixersVersions.Json.jacksonKotlin
 	val f2 = PluginVersions.fixers
+	val springBoot = FixersVersions.Spring.boot
 	val ktor = FixersVersions.Kotlin.ktor
 
 	const val cloudant = "0.3.1"

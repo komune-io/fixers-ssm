@@ -50,10 +50,10 @@ include(
 	"ssm-spring:ssm-tx-spring-boot-starter:ssm-tx-session-start-spring-boot-starter"
 )
 
-include(
-	"sample:ssm-full",
-	"sample:ssm-full-ext",
-)
+//include(
+//	"sample:ssm-full",
+//	"sample:ssm-full-ext",
+//)
 
 include(
 	"ssm-tx:ssm-tx-bdd",
