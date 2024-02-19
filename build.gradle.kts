@@ -8,26 +8,20 @@ plugins {
 	id("dev.petuska.npm.publish") version PluginVersions.npmPublish apply false
 	id("com.moowork.node") version "1.2.0"
 
-	id("city.smartb.fixers.gradle.config") version PluginVersions.fixers
-	id("city.smartb.fixers.gradle.sonar") version PluginVersions.fixers
-	id("city.smartb.fixers.gradle.d2") version PluginVersions.d2
+	id("io.komune.fixers.gradle.config") version PluginVersions.fixers
+//	id("io.komune.fixers.gradle.check") version PluginVersions.fixers
+	id("io.komune.fixers.gradle.d2") version PluginVersions.d2
 }
 
 allprojects {
-	group = "city.smartb.ssm"
+	group = "io.komune.ssm"
 	version = System.getenv("VERSION") ?: "experimental-SNAPSHOT"
-	repositories {
-		mavenCentral()
-		maven { url = uri("https://oss.sonatype.org/service/local/repositories/releases/content") }
-		maven { url = uri("https://oss.sonatype.org/content/repositories/snapshots") }
-		mavenLocal()
-	}
 }
 
 subprojects {
 	plugins.withType(dev.petuska.npm.publish.NpmPublishPlugin::class.java).whenPluginAdded {
 		the<dev.petuska.npm.publish.extension.NpmPublishExtension>().apply {
-			organization.set("smartb")
+			organization.set("komune")
 			registries {
 				register("npmjs") {
 					uri.set(uri("https://registry.npmjs.org"))
@@ -56,9 +50,10 @@ fixers {
 		outputDirectory = file("storybook/stories/d2/")
 	}
 	bundle {
-		id = "ssm-data"
+		id = "ssm"
 		name = "Ssm Data"
 		description = "Aggregate all ssm data source to optimize request"
-		url = "https://gitlab.smartb.city/fixers/ssm"
+		url = "https://github.com/komune-io/fixers-ssm"
 	}
+
 }

@@ -28,9 +28,9 @@ ssm:
       name: ssm-agent
       key:  ${COMMUNE_SSM_AGENT}
   couchdb:
-    url: http://peer0.pr-commune.smartb.network:5984
+    url: http://peer0.pr-commune.Komune.io:5984
     username: ${COMMUNE_COUCHDB_USERNAME}
     password: ${COMMUNE_COUCHDB_PASSWORD}
     serviceName: ssm-couchdb-unit
   chaincode:
-    url: http://peer0.pr-commune.smartb.network
+    url: http://peer0.pr-commune.Komune.io

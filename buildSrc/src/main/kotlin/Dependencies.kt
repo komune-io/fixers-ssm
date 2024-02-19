@@ -1,8 +1,8 @@
-import city.smartb.gradle.dependencies.FixersPluginVersions
-import city.smartb.gradle.dependencies.FixersVersions
-import city.smartb.gradle.dependencies.FixersDependencies
-import city.smartb.gradle.dependencies.Scope
-import city.smartb.gradle.dependencies.add
+import io.komune.gradle.dependencies.FixersPluginVersions
+import io.komune.gradle.dependencies.FixersVersions
+import io.komune.gradle.dependencies.FixersDependencies
+import io.komune.gradle.dependencies.Scope
+import io.komune.gradle.dependencies.add
 
 object PluginVersions {
 	val fixers = FixersPluginVersions.fixers
@@ -18,6 +18,7 @@ object Versions {
 	const val slf4j = FixersVersions.Logging.slf4j
 	const val jacksonKotlin = FixersVersions.Json.jacksonKotlin
 	val f2 = PluginVersions.fixers
+	val springBoot = FixersVersions.Spring.boot
 	val ktor = FixersVersions.Kotlin.ktor
 
 	const val cloudant = "0.3.1"

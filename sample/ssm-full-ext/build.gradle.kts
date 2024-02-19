@@ -1,12 +1,11 @@
-
 plugins {
-	id("city.smartb.fixers.gradle.kotlin.jvm")
+	id("io.komune.fixers.gradle.kotlin.jvm")
 	kotlin("plugin.spring")
 }
 
 dependencies {
-	api("org.springframework.boot:spring-boot-starter-webflux:${city.smartb.gradle.dependencies.FixersVersions.Spring.boot}")
-	implementation("city.smartb.ssm:ssm-data-spring-boot-starter:0.2.1")
-	implementation("city.smartb.ssm:ssm-tx-spring-boot-starter:0.2.1")
+	api("org.springframework.boot:spring-boot-starter-webflux:${Versions.springBoot}")
+	implementation("io.komune.ssm:ssm-data-spring-boot-starter:0.17.0-SNAPSHOT")
+	implementation("io.komune.ssm:ssm-tx-spring-boot-starter:0.17.0-SNAPSHOT")
 
 }

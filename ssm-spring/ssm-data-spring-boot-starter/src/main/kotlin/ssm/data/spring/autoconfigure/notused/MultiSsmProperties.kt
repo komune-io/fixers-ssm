@@ -15,7 +15,7 @@ package ssm.data.spring.autoconfigure.notused
 // * 	ssm: {
 // *		couchdb: {
 // *			smartbase: {
-// *				url: "http://peer.sandbox.smartb.network:9000",
+// *				url: "http://peer.sandbox.Komune.io:9000",
 // *				username: "admin",
 // *				password: "admin",
 // *				serviceName: "ssm-couchdb"
@@ -23,16 +23,16 @@ package ssm.data.spring.autoconfigure.notused
 // *		},
 // *		chaincode: {
 // *			"smartcode-ssm": {
-// *				baseUrl: "http://peer.sandbox.smartb.network:9000",
-// *	 			channelId: "channel-smartb",
-// *	 			chaincodeId: "ssm-smartb"
+// *				baseUrl: "http://peer.sandbox.Komune.io:9000",
+// *	 			channelId: "channel-komune",
+// *	 			chaincodeId: "ssm-komune"
 // *	 		}
 // *		},
 // * 		list: {
 // *		 	ProductLogistic: {
 // *			 	"1.0": {
-// *				 	baseUrl: "http://peer.sandbox.smartb.network:9000",
-// *				 	channel: "channel-smartb",
+// *				 	baseUrl: "http://peer.sandbox.Komune.io:9000",
+// *				 	channel: "channel-komune",
 // *				 	chaincode: "smartcode-ssm"
 // *				}
 // *			}

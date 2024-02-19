@@ -42,7 +42,7 @@ interface CouchdbSsmGetQueryDTO : Query {
 
 	/**
 	 * The name of ssm
-	 * @example "ssmsmartb"
+	 * @example "ssmkomune"
 	 */
 	val ssmName: SsmName
 }

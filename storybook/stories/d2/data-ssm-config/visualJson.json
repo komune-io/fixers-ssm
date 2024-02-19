@@ -1,6 +1,6 @@
 {
   "couchdb" : {
-    "url" : "http://peer.sandbox.smartb.network:9000",
+    "url" : "http://peer.sandbox.Komune.io:9000",
     "username" : "admin",
     "password" : "admin",
     "serviceName" : "ssm-couchdb"

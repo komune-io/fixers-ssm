@@ -19,7 +19,7 @@ typealias DatabaseName = String
 interface DatabaseDTO {
 	/**
 	 * Name of the database
-	 * @example "smartbase_ssm"
+	 * @example "komunease_ssm"
 	 */
 	val name: DatabaseName
 }
