@@ -1,13 +1,5 @@
-pluginManagement {
-	repositories {
-		gradlePluginPortal()
-		maven { url = uri("https://oss.sonatype.org/service/local/repositories/releases/content") }
-		maven { url = uri("https://oss.sonatype.org/content/repositories/snapshots") }
-		mavenLocal()
-	}
-}
 
-rootProject.name = "ssm"
+rootProject.name = "fixers-ssm"
 
 include(
 	"ssm-bdd:ssm-bdd-config",
