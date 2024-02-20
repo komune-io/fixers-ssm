@@ -1,5 +1,5 @@
 STORYBOOK_DOCKERFILE	:= infra/docker/storybook/Dockerfile
-STORYBOOK_NAME	   	 	:= smartbcity/ssm-storybook
+STORYBOOK_NAME	   	 	:= komune/ssm-storybook
 STORYBOOK_IMG	    	:= ${STORYBOOK_NAME}:${VERSION}
 STORYBOOK_LATEST		:= ${STORYBOOK_NAME}:latest
 
