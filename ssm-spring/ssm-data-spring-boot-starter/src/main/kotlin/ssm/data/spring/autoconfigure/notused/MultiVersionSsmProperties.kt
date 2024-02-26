@@ -8,9 +8,9 @@ package ssm.data.spring.autoconfigure.notused
  * @example {
  *  "ProductLogistic": {
  *      "1.0": {
- *          "baseUrl": "http://peer.sandbox.smartb.network:9000",
- *          "channel": "channel-smartb",
- *          "chaincode": "ssm-smartb",
+ *          "baseUrl": "http://peer.sandbox.Komune.io:9000",
+ *          "channel": "channel-komune",
+ *          "chaincode": "ssm-komune",
  *          "couchdb": "smartbase",
  *          "dbName": "smartbase_ssm"
  *      }

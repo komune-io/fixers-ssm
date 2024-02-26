@@ -16,7 +16,7 @@ import kotlinx.serialization.Serializable
 interface SsmChaincodePropertiesDTO {
 	/**
 	 * URL of the peer hosting the chaincode
-	 * @example "http://peer.sandbox.smartb.network:9000"
+	 * @example "http://peer.sandbox.Komune.io:9000"
 	 */
 	val url: String
 }

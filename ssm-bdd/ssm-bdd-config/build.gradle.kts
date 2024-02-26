@@ -1,8 +1,8 @@
-import city.smartb.gradle.dependencies.FixersDependencies
-import city.smartb.gradle.dependencies.FixersVersions
+import io.komune.gradle.dependencies.FixersDependencies
+import io.komune.gradle.dependencies.FixersVersions
 
 plugins {
-	id("city.smartb.fixers.gradle.kotlin.jvm")
+	id("io.komune.fixers.gradle.kotlin.jvm")
 }
 
 dependencies {

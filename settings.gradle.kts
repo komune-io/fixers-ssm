@@ -1,13 +1,19 @@
-pluginManagement {
-	repositories {
-		gradlePluginPortal()
-		maven { url = uri("https://oss.sonatype.org/service/local/repositories/releases/content") }
-		maven { url = uri("https://oss.sonatype.org/content/repositories/snapshots") }
-		mavenLocal()
-	}
+
+rootProject.name = "fixers-ssm"
+
+plugins {
+	id("com.gradle.enterprise") version "3.16.2"
 }
 
-rootProject.name = "ssm"
+gradleEnterprise {
+	if (System.getenv("CI") != null) {
+		buildScan {
+			publishAlways()
+			termsOfServiceUrl = "https://gradle.com/terms-of-service"
+			termsOfServiceAgree = "yes"
+		}
+	}
+}
 
 include(
 	"ssm-bdd:ssm-bdd-config",
@@ -58,10 +64,10 @@ include(
 	"ssm-spring:ssm-tx-spring-boot-starter:ssm-tx-session-start-spring-boot-starter"
 )
 
-include(
-	"sample:ssm-full",
-	"sample:ssm-full-ext",
-)
+//include(
+//	"sample:ssm-full",
+//	"sample:ssm-full-ext",
+//)
 
 include(
 	"ssm-tx:ssm-tx-bdd",

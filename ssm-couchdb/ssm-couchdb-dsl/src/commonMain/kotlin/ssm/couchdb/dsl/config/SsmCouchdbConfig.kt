@@ -9,7 +9,7 @@ package ssm.couchdb.dsl.config
 data class SsmCouchdbConfig(
 	/**
 	 * URL of the machine hosting the database
-	 * @example "http://peer.sandbox.smartb.network:9000"
+	 * @example "http://peer.sandbox.Komune.io:9000"
 	 */
 	val url: String,
 

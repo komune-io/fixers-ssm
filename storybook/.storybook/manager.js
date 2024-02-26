@@ -6,7 +6,7 @@ addons.setConfig({
     theme:  create({
         base: "light",
         brandTitle: "SmartB SSM SDK",
-        brandUrl: "https://github.com/smartbcity/ssm",
+        brandUrl: "https://github.com/komune-io/ssm",
         brandImage: logo,
         brandTarget: "_self",
         appBg: "#FFFEFB",

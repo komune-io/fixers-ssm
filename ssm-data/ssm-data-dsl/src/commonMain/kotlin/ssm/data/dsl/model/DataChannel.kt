@@ -11,7 +11,7 @@ import ssm.chaincode.dsl.model.ChannelId
 interface DataChannelDTO {
 	/**
 	 * Identifier
-	 * @example "channel-smartb"
+	 * @example "channel-@komune-io"
 	 */
 	val id: ChannelId
 }
