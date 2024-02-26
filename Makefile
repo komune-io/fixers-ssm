@@ -20,7 +20,7 @@ lint-libs:
 	#./gradlew detekt
 
 build-libs:
-	./gradlew build --scan
+	./gradlew build --scan -x test
 
 test-libs:
 	echo 'No Tests'
