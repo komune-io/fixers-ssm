@@ -16,7 +16,7 @@ interface IdentitiesInfoDTO {
 
 	/**
 	 * TODO
-	 * @example "PeerSmartb2"
+	 * @example "PeerKomune2"
 	 */
 	val mspid: String
 }

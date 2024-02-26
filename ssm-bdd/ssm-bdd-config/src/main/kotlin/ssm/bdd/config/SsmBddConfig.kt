@@ -9,11 +9,11 @@ object SsmBddConfig {
 
 	object Commune {
 		object Chaincode {
-			const val url = "http://peer0.pr-commune.smartb.network"
+			const val url = "http://peer0.pr-commune.Komune.io"
 			const val chaincodeUri = "chaincode:sandbox:ssm"
 		}
 		object Couchdb {
-			const val url = "http://peer0.pr-commune.smartb.network:5984"
+			const val url = "http://peer0.pr-commune.Komune.io:5984"
 			const val username = "COMMUNE_COUCHDB_USERNAME"
 			const val password = "COMMUNE_COUCHDB_PASSWORD"
 		}

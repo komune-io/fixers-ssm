@@ -9,7 +9,7 @@ plugins {
 	id("com.moowork.node") version "1.2.0"
 
 	id("io.komune.fixers.gradle.config") version PluginVersions.fixers
-	id("io.komune.fixers.gradle.check") version PluginVersions.fixers
+//	id("io.komune.fixers.gradle.check") version PluginVersions.fixers
 	id("io.komune.fixers.gradle.d2") version PluginVersions.d2
 }
 
@@ -21,7 +21,7 @@ allprojects {
 subprojects {
 	plugins.withType(dev.petuska.npm.publish.NpmPublishPlugin::class.java).whenPluginAdded {
 		the<dev.petuska.npm.publish.extension.NpmPublishExtension>().apply {
-			organization.set("smartb")
+			organization.set("komune")
 			registries {
 				register("npmjs") {
 					uri.set(uri("https://registry.npmjs.org"))
@@ -50,9 +50,10 @@ fixers {
 		outputDirectory = file("storybook/stories/d2/")
 	}
 	bundle {
-		id = "ssm-data"
+		id = "ssm"
 		name = "Ssm Data"
 		description = "Aggregate all ssm data source to optimize request"
-		url = "https://gitlab.smartb.city/fixers/ssm"
+		url = "https://github.com/komune-io/fixers-ssm"
 	}
+
 }

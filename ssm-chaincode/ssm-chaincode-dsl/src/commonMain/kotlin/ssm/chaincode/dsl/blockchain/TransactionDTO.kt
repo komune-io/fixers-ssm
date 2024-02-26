@@ -34,7 +34,7 @@ interface TransactionDTO {
 
 	/**
 	 * Channel in which the transaction has been performed
-	 * @example "channel-smartb"
+	 * @example "channel-komune"
 	 */
 	val channelId: String
 
