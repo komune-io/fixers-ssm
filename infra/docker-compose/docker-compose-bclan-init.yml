@@ -3,7 +3,7 @@ version: '3.7'
 services:
   cli-init.bc-coop.bclan:
     container_name: cli-init-bclan-network-it
-    image: smartbcity/commune-sandbox-cli:2.3.3-0.8.2-2
+    image: ghcr.io/komune-io/ssm-sandbox-cli:latest
     command: /opt/commune-sandbox/util/init.sh
     networks:
       - net

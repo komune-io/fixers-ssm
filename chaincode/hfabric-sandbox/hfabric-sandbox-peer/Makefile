@@ -1,0 +1,34 @@
+include ../../.env_version
+include ../config/.env
+export
+
+FABRIC_PEER_NAME		:= ${DOCKER_REPOSITORY}komune-io/hfabric-sandbox-peer
+FABRIC_PEER_IMG			:= ${FABRIC_PEER_NAME}:${VERSION}
+FABRIC_PEER_LATEST 		:= ${FABRIC_PEER_NAME}:latest
+
+package: lint build test push
+
+lint:
+	docker run --rm -i hadolint/hadolint < Dockerfile
+
+test:
+	@echo No test to run
+
+build:
+	@docker build \
+		 --platform=linux/amd64 \
+		 --no-cache \
+		--build-arg VERSION_FABRIC=$$VERSION_FABRIC \
+		--build-arg DOCKER_REPOSITORY=$$DOCKER_REPOSITORY \
+		--build-arg COOP_PEER=peer0 \
+    	--build-arg COOP_PEER_MSP=$$peer_msp \
+    	--build-arg COOP_PEER_DOMAIN=$$cli_ORGA \
+    	-f Dockerfile \
+    	-t ${FABRIC_PEER_IMG} ..
+
+push:
+	@docker push ${FABRIC_PEER_IMG}
+
+push-latest:
+	@docker tag ${FABRIC_PEER_IMG} ${FABRIC_PEER_LATEST}
+	@docker push ${FABRIC_PEER_LATEST}

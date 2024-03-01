@@ -74,3 +74,9 @@ include(
 	"ssm-tx:ssm-tx-dsl",
 	"ssm-tx:ssm-tx-f2",
 )
+
+include(
+	"chaincode:chaincode-api:chaincode-api-fabric",
+	"chaincode:chaincode-api:chaincode-api-gateway",
+	"chaincode:chaincode-api:chaincode-api-rest-i2-keycloak"
+)

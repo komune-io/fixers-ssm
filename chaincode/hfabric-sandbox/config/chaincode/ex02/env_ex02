@@ -1,0 +1,4 @@
+CHAINCODE=ex02
+CHAINCODE_PAK=/opt/chaincode/ex02/ex02.pak
+CHAINCODE_INIT_ARG=init.arg
+CHAINCODE_TEST_ARG=test.arg

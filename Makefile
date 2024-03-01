@@ -1,7 +1,15 @@
+VERSION = $(shell cat version)
+DOCKER_REPOSITORY = ghcr.io/
+
 STORYBOOK_DOCKERFILE	:= infra/docker/storybook/Dockerfile
-STORYBOOK_NAME	   	 	:= komune/ssm-storybook
+STORYBOOK_NAME	   	 	:= ${DOCKER_REPOSITORY}komune/ssm-storybook
 STORYBOOK_IMG	    	:= ${STORYBOOK_NAME}:${VERSION}
 STORYBOOK_LATEST		:= ${STORYBOOK_NAME}:latest
+
+CHAINCODE_APP_NAME	   	 	:= ghcr.io/komune-io/chaincode-api-gateway
+CHAINCODE_APP_IMG	    	:= ${CHAINCODE_APP_NAME}:${VERSION}
+CHAINCODE_APP_PACKAGE	   	:= :chaincode:chaincode-api:chaincode-api-gateway:bootBuildImage
+
 
 .PHONY: version
 
@@ -38,6 +46,13 @@ push-storybook:
 version:
 	@VERSION=$$(cat VERSION); \
 	echo "$$VERSION"
+
+docker-chaincode-api-gateway-build:
+	VERSION=${VERSION} ./gradlew build ${CHAINCODE_APP_PACKAGE} -x test --stacktrace
+
+docker-chaincode-api-gateway-push:
+	@docker push ${CHAINCODE_APP_IMG}
+
 
 ## DEV ENVIRONMENT
 include infra/docker-compose/dev-compose.mk

@@ -1,0 +1,13 @@
+version: '3.7'
+
+services:
+  cli-init.bc-coop.bclan:
+    container_name: cli-init-bclan-network-it
+    image: ghcr.io/komune-io/hfabric-sandbox-cli:${VERSION}
+    command: /opt/commune-sandbox/chaincode/ssm/init.sh
+    networks:
+      - bclannet-it
+
+networks:
+  bclannet-it:
+    name: bclannet-it
