@@ -1,4 +1,4 @@
-DOCKER_COMPOSE_FILE = bclan bclan-init
+DOCKER_COMPOSE_FILE = c2-sandbox c2-sandbox-gateway
 
 DOCKER_COMPOSE_PATH = infra/docker-compose
 DOCKER_COMPOSE_ENV = $(DOCKER_COMPOSE_PATH)/.env_dev

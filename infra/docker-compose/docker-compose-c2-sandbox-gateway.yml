@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  coop-rest-java:
+    container_name: coop-rest-bclan-${DOCKER_NETWORK}
+    image: ghcr.io/komune-io/hfabric-sandbox-ssm-gateway:0.17.0-SNAPSHOT
+    environment:
+      - i2_jwt-issuer-uri=
+    ports:
+      - "9090:9090"
+    networks:
+      - net
+networks:
+  net:
+    name: ${DOCKER_NETWORK}
+    external: true
