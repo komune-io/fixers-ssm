@@ -1,5 +1,4 @@
-VERSION = $(shell cat ../../VERSION)
-include ../.env_version
+include ../../.env_version
 
 SSM_CHAINCODE_DOCKERFILE 	:= Dockerfile
 SSM_CHAINCODE_NAME 			:= ${DOCKER_REPOSITORY}komune-io/chaincode-ssm

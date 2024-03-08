@@ -2,11 +2,11 @@ include ../../.env_version
 include ../config/.env
 export
 
-FABRIC_CA_NAME			:= ${DOCKER_REPOSITORY}komune-io/hfabric-sandbox-ca
+FABRIC_CA_NAME			:= ${DOCKER_REPOSITORY}komune-io/c2-sandbox-ca
 FABRIC_CA_IMG			:= ${FABRIC_CA_NAME}:${VERSION}
 FABRIC_CA_LATEST 		:= ${FABRIC_CA_NAME}:latest
 
-package: lint build test push
+package: build test push
 
 clean:
 	@echo "No clean to run"

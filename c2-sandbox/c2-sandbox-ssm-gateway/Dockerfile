@@ -1,7 +1,7 @@
-ARG VERSION_CHAINCODE_API
+ARG VERSION
 ARG DOCKER_REPOSITORY
 
-FROM ${DOCKER_REPOSITORY}komune-io/chaincode-api-gateway:${VERSION_CHAINCODE_API}
+FROM ${DOCKER_REPOSITORY}komune-io/c2-chaincode-api-gateway:${VERSION}
 
 ARG coop_channel
 ARG coop_ccid
@@ -12,8 +12,9 @@ ARG ca__PASSWD
 ARG coop_config_file
 ARG coop_config_crypto
 
-ENV coop_channel ${coop_channel}
-ENV coop_ccid ${coop_ccid}
+ENV coop_defaultCcid ${coop_channel}/${coop_ccid}
+ENV coop_ccid ${coop_channel}/${coop_ccid}
+
 ENV coop_user_org ${coop_user_org}
 ENV coop_endorsers ${coop_endorsers}
 ENV coop_user_name ${ca__ADMIN}

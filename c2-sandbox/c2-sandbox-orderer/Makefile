@@ -2,7 +2,7 @@ include ../../.env_version
 include ../config/.env
 export
 
-FABRIC_ORDERER_NAME		:= ${DOCKER_REPOSITORY}komune-io/hfabric-sandbox-orderer
+FABRIC_ORDERER_NAME		:= ${DOCKER_REPOSITORY}komune-io/c2-sandbox-orderer
 FABRIC_ORDERER_IMG		:= ${FABRIC_ORDERER_NAME}:${VERSION}
 FABRIC_ORDERER_LATEST 	:= ${FABRIC_ORDERER_NAME}:latest
 

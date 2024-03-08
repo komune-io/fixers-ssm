@@ -1,5 +1,4 @@
-VERSION = $(shell cat ../../VERSION)
-include ../.env_version
+include ../../.env_version
 
 EX02_CHAINCODE_DOCKERFILE 	:= Dockerfile
 EX02_CHAINCODE_NAME 		:= ${DOCKER_REPOSITORY}komune-io/chaincode-ex02

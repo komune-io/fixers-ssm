@@ -12,7 +12,7 @@ To use this pre-configured network, follow these steps:
    Copy the `docker-compose-it.yaml` file from this directory to your project:
 
    ```bash
-   cp docker-compose-hfabric-sandbox.yaml your-project-directory/docker-compose-hfabric-sandbox.yaml
+   cp docker-compose-c2-sandbox.yaml your-project-directory/docker-compose-c2-sandbox.yaml
    ```
 
 2. **Start the Network:**
@@ -20,7 +20,7 @@ To use this pre-configured network, follow these steps:
    Launch the network using Docker Compose:
 
    ```bash
-   docker-compose -f docker-compose-hfabric-sandbox.yaml up -d
+   docker-compose -f docker-compose-c2-sandbox.yaml up -d
    ```
 
 3. **Copy Configuration:**
@@ -43,7 +43,7 @@ The network's configuration and user credentials are structured as follows:
 You can inspect the configuration using the following command:
 
 ```bash
-docker run -it komune-io/hfabric-sandbox-cli:latest /bin/bash
+docker run -it komune-io/c2-sandbox-cli:latest /bin/bash
 find /opt/commune-sandbox/
 ```
 
@@ -56,6 +56,6 @@ To package and push the Docker image:
 ```bash
 export VERSION=$(cat VERSION)
 export DOCKER_REPOSITORY=ghcr.io/
-make hfabric-sandbox-package -e VERSION=${VERSION} -e DOCKER_REPOSITORY=${DOCKER_REPOSITORY}
+make c2-sandbox-package -e VERSION=${VERSION} -e DOCKER_REPOSITORY=${DOCKER_REPOSITORY}
 ```
 

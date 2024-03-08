@@ -2,7 +2,7 @@ include ../../.env_version
 include ../config/.env
 export
 
-FABRIC_PEER_NAME		:= ${DOCKER_REPOSITORY}komune-io/hfabric-sandbox-peer
+FABRIC_PEER_NAME		:= ${DOCKER_REPOSITORY}komune-io/c2-sandbox-peer
 FABRIC_PEER_IMG			:= ${FABRIC_PEER_NAME}:${VERSION}
 FABRIC_PEER_LATEST 		:= ${FABRIC_PEER_NAME}:latest
 

@@ -52,4 +52,9 @@ object Dependencies {
 		"org.junit.jupiter:junit-jupiter-api:${Versions.junit}",
 		"org.assertj:assertj-core:${Versions.assertj}"
 	)
+
+	fun nettyTcnative(scope: Scope) = scope.add(
+		"io.netty:netty-tcnative-boringssl-static:2.0.48.Final",
+		"io.netty:netty-tcnative-classes:2.0.48.Final"
+	)
 }

@@ -1,5 +1,5 @@
 
-rootProject.name = "fixers-ssm"
+rootProject.name = "fixers-c2"
 
 plugins {
 	id("com.gradle.enterprise") version "3.16.2"
@@ -76,7 +76,7 @@ include(
 )
 
 include(
-	"chaincode:chaincode-api:chaincode-api-fabric",
-	"chaincode:chaincode-api:chaincode-api-gateway",
-	"chaincode:chaincode-api:chaincode-api-rest-i2-keycloak"
+	"c2-chaincode:chaincode-api:chaincode-api-fabric",
+	"c2-chaincode:chaincode-api:chaincode-api-gateway",
+	"c2-chaincode:chaincode-api:chaincode-api-rest-i2-keycloak"
 )

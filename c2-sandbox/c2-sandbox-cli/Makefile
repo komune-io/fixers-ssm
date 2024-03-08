@@ -2,7 +2,7 @@ include ../../.env_version
 include ../config/.env
 export
 
-FABRIC_CLI_NAME			:= ${DOCKER_REPOSITORY}komune-io/hfabric-sandbox-cli
+FABRIC_CLI_NAME			:= ${DOCKER_REPOSITORY}komune-io/c2-sandbox-cli
 FABRIC_CLI_IMG			:= ${FABRIC_CLI_NAME}:${VERSION}
 FABRIC_CLI_LATEST 		:= ${FABRIC_CLI_NAME}:latest
 

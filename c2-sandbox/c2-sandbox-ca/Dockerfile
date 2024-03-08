@@ -9,6 +9,13 @@ ARG ca__TLS_KEYFILE
 ARG ca__ADMIN
 ARG ca__PASSWD
 
+RUN echo ${COOP_CA_HOSTNAME} && \
+     echo ${COOP_PEER_DOMAIN} && \
+     echo ${ca__CA_KEYFILE} && \
+     echo ${ca__TLS_KEYFILE} && \
+     echo ${ca__ADMIN} && \
+     echo ${ca__PASSWD}
+
 ENV CA_ADMIN=$ca__ADMIN
 ENV CA_PASSWD=$ca__PASSWD
 ENV FABRIC_CA_HOME /etc/hyperledger/fabric-ca-server
@@ -22,4 +29,4 @@ ENV FABRIC_CA_SERVER_TLS_KEYFILE /etc/hyperledger/tlsca/${ca__TLS_KEYFILE}
 COPY ../config/fabric/crypto-config/peerOrganizations/${COOP_PEER_DOMAIN}/ca /etc/hyperledger/ca
 COPY ../config/fabric/crypto-config/peerOrganizations/${COOP_PEER_DOMAIN}/tlsca /etc/hyperledger/tlsca
 
-CMD ["fabric-ca-server", "start", "-b", "${CA_ADMIN}:${CA_PASSWD}"]
+CMD ["sh", "-c", "fabric-ca-server start -b \"$CA_ADMIN:$CA_PASSWD\""]

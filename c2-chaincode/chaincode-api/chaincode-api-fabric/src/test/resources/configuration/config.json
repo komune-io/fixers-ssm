@@ -1,30 +1,25 @@
 {
   "network": {
     "orderer": {
-      "url": "grpcs://orderer0.or-bc0.thingagora.org:7050",
-      "serverHostname": "orderer0",
-      "tlsCacerts": "crypto-config/ordererOrganizations/or-bc0.thingagora.org/orderers/orderer0.or-bc0.thingagora.org/msp/tlscacerts/tlsca.or-bc0.thingagora.org-cert.pem"
+      "url": "grpcs://orderer.bclan:7050",
+      "serverHostname": "orderer.bclan",
+      "tlsCacerts": "crypto-config/ordererOrganizations/bclan/orderers/orderer.bclan/msp/tlscacerts/tlsca.bclan-cert.pem"
     },
     "organisations": {
-      "bc0": {
-        "name": "ThingagoraBC0Peer",
-        "mspid": "ThingagoraBC0PeerMSP",
+      "bclan": {
+        "name": "BlockchainLANCoop",
+        "mspid": "BlockchainLANCoopMSP",
         "ca": {
-          "url": "https://ca.pr-bc0.thingagora.org:7054",
-          "name": "ca"
+          "url": "https://ca.bc-coop.bclan:7054",
+          "name": "ca",
+          "tlsCacerts": "crypto-config/peerOrganizations/bc-coop.bclan/users/Admin@bc-coop.bclan/tls/ca.crt"
         },
         "peers": {
           "peer0": {
-            "requests": "grpcs://peer0.pr-bc0.thingagora.org:7051",
-            "events": "grpcs://peer0.pr-bc0.thingagora.org:7053",
-            "serverHostname": "peer0.pr-bc0.thingagora.org",
-            "tlsCacerts": "crypto-config/peerOrganizations/pr-bc0.thingagora.org/peers/peer0.pr-bc0.thingagora.org/msp/tlscacerts/tlsca.pr-bc0.thingagora.org-cert.pem"
-          },
-          "peer1": {
-            "requests": "grpcs://peer1.pr-bc0.thingagora.org:7051",
-            "events": "grpcs://peer1.pr-bc0.thingagora.org:7053",
-            "serverHostname": "peer1.pr-bc0.thingagora.org",
-            "tlsCacerts": "crypto-config/peerOrganizations/pr-bc0.thingagora.org/peers/peer1.pr-bc0.thingagora.org/msp/tlscacerts/tlsca.pr-bc0.thingagora.org-cert.pem"
+            "requests": "grpcs://peer0.bc-coop.bclan:7051",
+            "events": "grpcs://peer0.bc-coop.bclan:7053",
+            "serverHostname": "peer0.bc-coop.bclan",
+            "tlsCacerts": "crypto-config/peerOrganizations/bc-coop.bclan/peers/peer0.bc-coop.bclan/msp/tlscacerts/tlsca.bc-coop.bclan-cert.pem"
           }
         }
       }

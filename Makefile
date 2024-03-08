@@ -8,7 +8,7 @@ STORYBOOK_LATEST		:= ${STORYBOOK_NAME}:latest
 
 CHAINCODE_APP_NAME	   	 	:= ghcr.io/komune-io/chaincode-api-gateway
 CHAINCODE_APP_IMG	    	:= ${CHAINCODE_APP_NAME}:${VERSION}
-CHAINCODE_APP_PACKAGE	   	:= :chaincode:chaincode-api:chaincode-api-gateway:bootBuildImage
+CHAINCODE_APP_PACKAGE	   	:= :c2-chaincode:chaincode-api:chaincode-api-gateway:bootBuildImage
 
 
 .PHONY: version
@@ -21,7 +21,7 @@ package: package-libs
 # Old task
 libs: package-kotlin
 docs: package-storybook push-storybook
-package-kotlin: build-libs test-libs package-libs
+package-kotlin: lint-libs build-libs test-libs package-libs
 
 lint-libs:
 	echo 'No Lint'
@@ -47,12 +47,26 @@ version:
 	@VERSION=$$(cat VERSION); \
 	echo "$$VERSION"
 
+chaincode-api-gateway-package: docker-chaincode-api-gateway-build docker-chaincode-api-gateway-push
+
+
 docker-chaincode-api-gateway-build:
 	VERSION=${VERSION} ./gradlew build ${CHAINCODE_APP_PACKAGE} -x test --stacktrace
 
 docker-chaincode-api-gateway-push:
 	@docker push ${CHAINCODE_APP_IMG}
 
+
+## Chaincode
+chaincode: chaincode-api-gateway-package
+	make package -e DOCKER_REPOSITORY=${DOCKER_REPOSITORY} -C c2-chaincode
+
+## Sandbox
+sandbox:
+	make package -e DOCKER_REPOSITORY=${DOCKER_REPOSITORY} -C c2-sandbox
+
+## ssm
+ssm: package-kotlin
 
 ## DEV ENVIRONMENT
 include infra/docker-compose/dev-compose.mk
