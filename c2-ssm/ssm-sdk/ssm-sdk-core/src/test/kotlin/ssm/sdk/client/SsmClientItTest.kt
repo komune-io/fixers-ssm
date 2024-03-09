@@ -38,8 +38,8 @@ class SsmClientItTest {
 		private val chaincodeUri = ChaincodeUri("chaincode:sandbox:ssm")
 		private const val NETWORK = "bclan-it/"
 		const val ADMIN_NAME = "ssm-admin"
-		val USER1_NAME = "bob" + "-" + uuid
-		val USER2_NAME = "sam" + "-" + uuid
+		val USER1_NAME = "bob-$uuid"
+		val USER2_NAME = "sam-$uuid"
 		const val USER1_FILENAME = NETWORK + "bob"
 		const val USER2_FILENAME = NETWORK + "sam"
 

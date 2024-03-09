@@ -1,6 +1,6 @@
 plugins {
     id("io.spring.dependency-management")
-    kotlin("jvm")
+    id("io.komune.fixers.gradle.kotlin.jvm")
     kotlin("plugin.spring")
 }
 

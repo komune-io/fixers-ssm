@@ -13,13 +13,13 @@ public class FabricConfigTest {
     public void testLoadFromFile() throws IOException {
         FabricConfig config = FabricConfig.loadFromFile("configuration/config.json");
         assertThat(config.getNetwork()).isNotNull();
-        assertThat(config.getNetwork().getOrderer().getServerHostname()).isEqualTo("orderer0");
-        assertThat(config.getNetwork().getOrderer().getUrl()).isEqualTo("grpcs://orderer0.or-bc0.thingagora.org:7050");
-        assertThat(config.getNetwork().getOrderer().getTlsCacerts()).isEqualTo("crypto-config/ordererOrganizations/or-bc0.thingagora.org/orderers/orderer0.or-bc0.thingagora.org/msp/tlscacerts/tlsca.or-bc0.thingagora.org-cert.pem");
+        assertThat(config.getNetwork().getOrderer().getServerHostname()).isEqualTo("orderer.bclan");
+        assertThat(config.getNetwork().getOrderer().getUrl()).isEqualTo("grpcs://orderer.bclan:7050");
+        assertThat(config.getNetwork().getOrderer().getTlsCacerts()).isEqualTo("crypto-config/ordererOrganizations/bclan/orderers/orderer.bclan/msp/tlscacerts/tlsca.bclan-cert.pem");
 
-        assertThat(config.getNetwork().getOrganisations()).containsKeys("bc0");
-        assertThat(config.getNetwork().getOrganisation("bc0").getMspid()).isEqualTo("ThingagoraBC0PeerMSP");
-        assertThat(config.getNetwork().getOrganisation("bc0").getName()).isEqualTo("ThingagoraBC0Peer");
+        assertThat(config.getNetwork().getOrganisations()).containsKeys("bclan");
+        assertThat(config.getNetwork().getOrganisation("bclan").getMspid()).isEqualTo("BlockchainLANCoopMSP");
+        assertThat(config.getNetwork().getOrganisation("bclan").getName()).isEqualTo("BlockchainLANCoop");
 
     }
 

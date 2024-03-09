@@ -82,7 +82,9 @@ class SsmRequester(
 			args = invokeArgs.args,
 			channelId = chaincodeUri.channelId,
 			chaincodeId = chaincodeUri.chaincodeId,
-		).let { jsonConverter.toCompletableObject(InvokeReturn::class.java, it)!! }
+		).let {
+			jsonConverter.toCompletableObject(InvokeReturn::class.java, it)!!
+		}
 	}
 
 	companion object {

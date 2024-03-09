@@ -29,22 +29,22 @@ To use this pre-configured network, follow these steps:
 
    ```bash
    mkdir -p infra
-   docker cp cli-init-bclan-network-it:/opt/commune-sandbox/ ./infra/dev
+   docker cp cli-init-bclan-network-it:/opt/c2-sandbox/ ./infra/dev
    ```
 
 ## Configuration Details
 
 The network's configuration and user credentials are structured as follows:
 
-- **Fabric Configuration:** Located under `/opt/commune-sandbox/fabric`, containing the network configuration files.
-- **SSM User Crypto:** User cryptographic materials are stored under `/opt/commune-sandbox/user` with subdirectories for each user and their corresponding public keys.
+- **Fabric Configuration:** Located under `/opt/c2-sandbox/fabric`, containing the network configuration files.
+- **SSM User Crypto:** User cryptographic materials are stored under `/opt/c2-sandbox/user` with subdirectories for each user and their corresponding public keys.
 - **Utilities:** The `util` directory contains scripts to start the `mobilite.eco` API.
 
 You can inspect the configuration using the following command:
 
 ```bash
 docker run -it komune-io/c2-sandbox-cli:latest /bin/bash
-find /opt/commune-sandbox/
+find /opt/c2-sandbox/
 ```
 
 The output will show the directory structure with configurations for Fabric, users, and utilities.

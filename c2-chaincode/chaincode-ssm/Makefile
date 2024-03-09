@@ -1,7 +1,7 @@
 include ../../.env_version
 
 SSM_CHAINCODE_DOCKERFILE 	:= Dockerfile
-SSM_CHAINCODE_NAME 			:= ${DOCKER_REPOSITORY}komune-io/chaincode-ssm
+SSM_CHAINCODE_NAME 			:= ${DOCKER_REPOSITORY}komune-io/c2-chaincode-ssm
 SSM_CHAINCODE_IMG 			:= ${SSM_CHAINCODE_NAME}:${VERSION}
 SSM_CHAINCODE_LATEST		:= ${SSM_CHAINCODE_NAME}:latest
 

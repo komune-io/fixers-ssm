@@ -19,8 +19,8 @@ test:
 
 build:
 	-@mkdir build
-	echo $$VERSION_FABRIC
-	@sed s/__SSM_VERSION__/${SSM_VERSION}/ Dockerfile > build/Dockerfile
+	@sed 's/__SSM_VERSION__/${VERSION}/' Dockerfile > build/Dockerfile_tmp
+	@sed 's/__EX02_VERSION__/${VERSION}/' build/Dockerfile_tmp > build/Dockerfile
 	@docker build \
  		--platform=linux/amd64 \
 		--no-cache \

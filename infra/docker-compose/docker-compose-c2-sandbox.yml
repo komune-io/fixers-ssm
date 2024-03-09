@@ -12,6 +12,8 @@ services:
   orderer.bclan:
     container_name: orderer-${DOCKER_NETWORK}
     image: ghcr.io/komune-io/c2-sandbox-orderer:0.17.0-SNAPSHOT
+    ports:
+      - "7050:7050"
     networks:
       - net
 

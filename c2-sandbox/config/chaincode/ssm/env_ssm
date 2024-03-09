@@ -1,5 +1,3 @@
-CHAINCODE=ssm
-VERSION=2.3.0-0.8.2
 CHAINCODE_PAK=/opt/chaincode/ssm/ssm.pak
-CHAINCODE_ARG_INIT=/opt/commune-sandbox/chaincode/ssm/init.arg
-CHAINCODE_ARG_TEST=/opt/commune-sandbox/chaincode/ssm/test.arg
+CHAINCODE_ARG_INIT=/opt/c2-sandbox/chaincode/ssm/init.arg
+CHAINCODE_ARG_TEST=/opt/c2-sandbox/chaincode/ssm/test.arg

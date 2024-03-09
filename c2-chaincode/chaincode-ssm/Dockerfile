@@ -29,8 +29,6 @@ RUN go mod init &&\
     go get github.com/hyperledger/fabric-protos-go@a3136dde23548471516ec3eb360e23985d6ebe45 &&\
     go mod vendor
 
-RUN pwd
-RUN ls -al chaincode/go/ssm
 RUN peer chaincode package -n ssm -p chaincode/go/ssm -v $VERSION ssm-$VERSION.pak
 
 FROM alpine:${VERSION_ALPINE}
@@ -41,8 +39,8 @@ WORKDIR /opt/chaincode/ssm
 
 LABEL org.opencontainers.image.source https://github.com/komune-io/connect-ssm
 
-RUN echo "CHAINCODE=ssm" > .env_ssm \
-    && echo VERSION=$VERSION >> .env_ssm
+RUN echo "CHAINCODE=ssm" > env_ssm \
+    && echo VERSION=$VERSION >> env_ssm
 
 COPY --from=FETCHER /git/blockchain-ssm/sdk/cli/util ./bin
 COPY --from=FETCHER /git/blockchain-ssm/chaincode ./chaincode

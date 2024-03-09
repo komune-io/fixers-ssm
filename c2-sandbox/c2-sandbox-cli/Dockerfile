@@ -27,19 +27,19 @@ COPY ./config/fabric/crypto-config/peerOrganizations/${COOP_PEER_DOMAIN}/users/$
 COPY ./config/fabric/crypto-config/ordererOrganizations/${COOP_CA_DOMAIN}/tlsca/ /etc/hyperledger/orderer/
 COPY ./config/fabric/config /etc/hyperledger/config
 
-COPY ./config/chaincode /opt/commune-sandbox/chaincode
+COPY ./config/chaincode /opt/c2-sandbox/chaincode
 
-COPY ./config/user /opt/commune-sandbox/user
-COPY ./config/.env /opt/commune-sandbox
+COPY ./config/user /opt/c2-sandbox/user
+COPY ./config/.env /opt/c2-sandbox
 
-ENV PATH="/opt/commune-sandbox/chaincode/bin:${PATH}"
+ENV PATH="/opt/c2-sandbox/chaincode/bin:${PATH}"
 
 ENV SSM_PATH=/opt/chaincode/ssm
-COPY --from=ghcr.io/komune-io/chaincode-ssm:__SSM_VERSION__ ${SSM_PATH}/ssm-*.pak ${SSM_PATH}/ssm.pak
-COPY --from=ghcr.io/komune-io/chaincode-ssm:__SSM_VERSION__ ${SSM_PATH}/bin ${SSM_PATH}/bin
-#COPY --from=ghcr.io/komune-io/chaincode-ssm:__SSM_VERSION__ ${SSM_PATH}/.env ${SSM_PATH}/.env
+COPY --from=ghcr.io/komune-io/c2-chaincode-ssm:__SSM_VERSION__ ${SSM_PATH}/ssm-*.pak ${SSM_PATH}/ssm.pak
+COPY --from=ghcr.io/komune-io/c2-chaincode-ssm:__SSM_VERSION__ ${SSM_PATH}/env_ssm ${SSM_PATH}/env_ssm
+COPY --from=ghcr.io/komune-io/c2-chaincode-ssm:__SSM_VERSION__ ${SSM_PATH}/bin ${SSM_PATH}/bin
 
 
-#ENV EX02_PATH=/opt/chaincode/ex02
-#COPY --from=ghcr.io/komune-io/chaincode-ex02:__EX02_VERSION__ ${EX02_PATH}/ex02-*.pak ${EX02_PATH}/ssm.pak
-#COPY --from=ghcr.io/komune-io/chaincode-ex02:__EX02_VERSION__ ${EX02_PATH}/env_ssm ${EX02_PATH}/env_ssm
+ENV EX02_PATH=/opt/chaincode/ex02
+COPY --from=ghcr.io/komune-io/c2-chaincode-ex02:__EX02_VERSION__ ${EX02_PATH}/ex02-*.pak ${EX02_PATH}/ex02.pak
+COPY --from=ghcr.io/komune-io/c2-chaincode-ex02:__EX02_VERSION__ ${EX02_PATH}/env_ex02 ${EX02_PATH}/env_ex02

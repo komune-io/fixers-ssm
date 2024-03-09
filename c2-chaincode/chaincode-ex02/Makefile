@@ -1,7 +1,7 @@
 include ../../.env_version
 
 EX02_CHAINCODE_DOCKERFILE 	:= Dockerfile
-EX02_CHAINCODE_NAME 		:= ${DOCKER_REPOSITORY}komune-io/chaincode-ex02
+EX02_CHAINCODE_NAME 		:= ${DOCKER_REPOSITORY}komune-io/c2-chaincode-ex02
 EX02_CHAINCODE_IMG 			:= ${EX02_CHAINCODE_NAME}:${VERSION}
 EX02_CHAINCODE_LATEST		:= ${EX02_CHAINCODE_NAME}:latest
 
@@ -20,7 +20,6 @@ chaincode-ex02-lint:
 	docker run --rm -i hadolint/hadolint < Dockerfile
 
 chaincode-ex02-build:
-	echo ${VERSION}
 	docker build \
  		--platform=linux/amd64 \
 		--no-cache \

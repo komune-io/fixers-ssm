@@ -17,7 +17,7 @@ RUN go mod init &&\
     go get github.com/hyperledger/fabric-protos-go@a3136dde23548471516ec3eb360e23985d6ebe45 &&\
     go mod vendor
 
-RUN peer chaincode package -n ex02 -p chaincode-ex02/chaincode/go/ex02 -v ${VERSION} ex02-${VERSION}.pak
+RUN peer chaincode package -n ex02 -p chaincode/go/ex02 -v ${VERSION} ex02-${VERSION}.pak
 
 FROM alpine:${VERSION_ALPINE}
 
@@ -27,8 +27,8 @@ WORKDIR /opt/chaincode/ex02
 
 LABEL org.opencontainers.image.source https://github.com/komune-io/connect-ssm
 
-RUN echo "CHAINCODE=ex02" > .env_ssm \
-    && echo VERSION=${VERSION} >> .env_ssm
+RUN echo "CHAINCODE=ex02" > env_ex02 \
+    && echo VERSION=${VERSION} >> env_ex02
 
 COPY ./chaincode ./chaincode
 

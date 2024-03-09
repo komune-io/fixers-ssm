@@ -2,10 +2,10 @@ version: '3.8'
 
 services:
 
-  cli-init.bc-coop.bclan:
-    container_name: cli-init-bclan-${DOCKER_NETWORK}
+  cli-init-ex02.bc-coop.bclan:
+    container_name: cli-init-ex02-bclan-${DOCKER_NETWORK}
     image: ghcr.io/komune-io/c2-sandbox-cli:0.17.0-SNAPSHOT
-    command: /opt/commune-sandbox/chaincode/ssm/init.sh
+    command: /opt/c2-sandbox/chaincode/ex02/init.sh
     networks:
       - net
 

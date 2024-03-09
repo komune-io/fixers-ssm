@@ -17,6 +17,7 @@ class ChannelChaincodePair(
 	val channelId: ChannelId,
 	val chainCodeId: ChainCodeId
 ) {
+
 	companion object {
 		fun fromConfig(defaultValue: String): ChannelChaincodePair {
 			val ccidByChannel = defaultValue.split("/")

@@ -6,6 +6,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties
 
 @ConfigurationProperties("coop")
 class HeraclesConfigProps {
+
 	companion object {
 		const val CCID_SEPARATOR = "/"
 	}
@@ -22,7 +23,7 @@ class HeraclesConfigProps {
 		}
 	}
 
-	fun getChannelChaincodes(): Map<ChannelId, ChannelChaincode> {
+	fun getChannelChainCodes(): Map<ChannelId, ChannelChaincode> {
 		val user = requireNotNull(user) { "Bad user[${user}] in application.yml" }
 		val config = requireNotNull(config) { "Bad config[${config}] in application.yml" }
 		return ChannelChaincode.fromConfig(ccid, user, config, getEndorsers())

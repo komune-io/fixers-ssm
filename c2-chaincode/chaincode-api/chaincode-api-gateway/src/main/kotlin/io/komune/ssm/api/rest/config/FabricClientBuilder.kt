@@ -10,7 +10,7 @@ import io.komune.ssm.api.rest.ChannelConfigNotFoundException
 class FabricClientBuilder(val coopConfig: HeraclesConfigProps) {
 
 	fun getChannelConfig(channelId: ChannelId): ChannelChaincode {
-		return coopConfig.getChannelChaincodes().get(channelId)
+		return coopConfig.getChannelChainCodes().get(channelId)
 			?: throw ChannelConfigNotFoundException(channelId)
 	}
 
