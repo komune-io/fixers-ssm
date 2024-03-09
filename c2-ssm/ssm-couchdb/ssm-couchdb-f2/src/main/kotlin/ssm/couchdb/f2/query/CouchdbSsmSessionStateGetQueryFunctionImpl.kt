@@ -16,8 +16,8 @@ class CouchdbSsmSessionStateGetQueryFunctionImpl(
 	private val couchdbClient: CouchdbSsmClient,
 ) : CouchdbSsmSessionStateGetQueryFunction {
 
-	override suspend fun invoke(msg: Flow<CouchdbSsmSessionStateGetQueryDTO>):
-			Flow<CouchdbSsmSessionStateGetQueryResultDTO> = msg.map { payload ->
+	override suspend fun invoke(msgs: Flow<CouchdbSsmSessionStateGetQueryDTO>):
+			Flow<CouchdbSsmSessionStateGetQueryResultDTO> = msgs.map { payload ->
 		val filters = mapOf(SsmSessionStateDTO::session.name to payload.sessionName)
 		val uri = payload.chaincodeUri.burst()
 		couchdbClient.fetchAllByDocType(chainCodeDbName(uri.channelId, uri.chaincodeId), DocType.State, filters)

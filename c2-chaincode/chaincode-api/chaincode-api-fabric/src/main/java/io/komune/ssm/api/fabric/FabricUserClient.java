@@ -3,8 +3,8 @@ package io.komune.ssm.api.fabric;
 import io.komune.ssm.api.fabric.config.FabricConfig;
 import io.komune.ssm.api.fabric.factory.FabricClientFactory;
 import io.komune.ssm.api.fabric.model.FabricUser;
-import org.hyperledger.fabric.sdk.User;
 import org.hyperledger.fabric.sdk.Enrollment;
+import org.hyperledger.fabric.sdk.User;
 import org.hyperledger.fabric_ca.sdk.HFCAClient;
 import org.hyperledger.fabric_ca.sdk.RegistrationRequest;
 
@@ -19,16 +19,16 @@ public class FabricUserClient {
     }
 
     private final FabricConfig fabricConfig;
-    private final FabricClientFactory clientFactory;
+    private final FabricClientFactory clientFactoty;
 
 
     public FabricUserClient(FabricConfig fabricConfig, FabricClientFactory clientFactoty) {
         this.fabricConfig = fabricConfig;
-        this.clientFactory = clientFactoty;
+        this.clientFactoty = clientFactoty;
     }
 
     public String register(String user, String password, String orgName, String newUser, String newPassword) throws Exception {
-        HFCAClient caClient = clientFactory.getHfCaClient(orgName);
+        HFCAClient caClient = clientFactoty.getHfCaClient(orgName);
 
         User registerUser = enroll(caClient, user, password, orgName);
 
@@ -41,7 +41,7 @@ public class FabricUserClient {
     }
 
     public User enroll(String user, String password, String orgName) throws Exception {
-        HFCAClient caClient = clientFactory.getHfCaClient(orgName);
+        HFCAClient caClient = clientFactoty.getHfCaClient(orgName);
         return enroll(caClient, user, password, orgName);
     }
 
@@ -50,4 +50,5 @@ public class FabricUserClient {
         String mspid = fabricConfig.getNetwork().getOrganisation(orgName).getMspid();
         return new FabricUser(user, orgName, adminEnrollment, mspid);
     }
+
 }

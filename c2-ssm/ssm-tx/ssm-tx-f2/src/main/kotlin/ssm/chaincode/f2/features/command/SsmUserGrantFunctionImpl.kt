@@ -13,7 +13,7 @@ class SsmUserGrantFunctionImpl(
 	private val ssmTxService: SsmTxService
 ): SsmTxUserGrantFunction {
 
-	override suspend fun invoke(msg: Flow<SsmUserGrantCommand>): Flow<SsmUserGrantedResult> = msg.map { payload ->
+	override suspend fun invoke(msgs: Flow<SsmUserGrantCommand>): Flow<SsmUserGrantedResult> = msgs.map { payload ->
 		try {
 			ssmTxService.sendRegisterUser(payload.chaincodeUri.burst(), payload.agent, payload.signerName)!!.let { result ->
 				SsmUserGrantedResult(

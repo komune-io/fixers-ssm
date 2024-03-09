@@ -27,21 +27,28 @@ class WebSecurityConfig {
     @Bean(SPRING_SECURITY_FILTER_CHAIN)
     @ConditionalOnExpression(NO_AUTHENTICATION_REQUIRED_EXPRESSION)
     fun dummyAuthenticationProvider(http: ServerHttpSecurity): SecurityWebFilterChain {
-        http.authorizeExchange().anyExchange().permitAll()
-        http.csrf().disable()
+        http.authorizeExchange {
+            it.anyExchange().permitAll()
+        }
+        http.csrf {
+            it.disable()
+        }
         return http.build()
     }
 
     @Bean(SPRING_SECURITY_FILTER_CHAIN)
     @ConditionalOnExpression(AUTHENTICATION_REQUIRED_EXPRESSION)
     fun oauthAuthenticationProvider(http: ServerHttpSecurity): SecurityWebFilterChain {
-        http.authorizeExchange()
-                .anyExchange()
+        http.authorizeExchange{
+            it.anyExchange()
                 .access(::authenticate)
-                .and()
-                .oauth2ResourceServer()
-                .jwt()
-        http.csrf().disable()
+        }
+        http.oauth2ResourceServer {
+            it.jwt{}
+        }
+        http.csrf {
+            it.disable()
+        }
         return http.build()
     }
 

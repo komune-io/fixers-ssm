@@ -14,8 +14,8 @@ class CouchdbUserListQueryFunctionImpl(
 	private val couchdbClient: CouchdbSsmClient,
 ) : CouchdbUserListQueryFunction {
 
-	override suspend fun invoke(msg: Flow<CouchdbUserListQueryDTO>): Flow<CouchdbUserListQueryResultDTO> =
-		msg.map { payload ->
+	override suspend fun invoke(msgs: Flow<CouchdbUserListQueryDTO>): Flow<CouchdbUserListQueryResultDTO> =
+		msgs.map { payload ->
 			val dbName = payload.chaincodeUri.chainCodeDbName()
 			couchdbClient.fetchAllByDocType(dbName, DocType.User)
 				.let {

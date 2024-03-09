@@ -2,20 +2,23 @@ package io.komune.ssm.api.rest.config
 
 import io.komune.ssm.api.fabric.exception.InvokeException
 import io.komune.ssm.api.fabric.model.Endorser
+import org.slf4j.LoggerFactory
 import org.springframework.boot.context.properties.ConfigurationProperties
 
 @ConfigurationProperties("coop")
-class HeraclesConfigProps {
-
+class HeraclesConfigProps(
+	var defaultCcid: String,
+	var ccid: String,
+	var user: UserConfig? = null,
+	var config: FileConfig? = null ,
+	var endorsers: String
+) {
 	companion object {
 		const val CCID_SEPARATOR = "/"
 	}
-	lateinit var defaultCcid: String
-	lateinit var ccid: Array<String>
 
-	var user: UserConfig? = null
-	var config: FileConfig? = null
-	lateinit var endorsers: String
+	private val logger = LoggerFactory.getLogger(HeraclesConfigProps::class.java)
+
 
 	fun getEndorsers(): List<Endorser> {
 		return endorsers.split(",").map { endorserValue ->
@@ -23,25 +26,31 @@ class HeraclesConfigProps {
 		}
 	}
 
-	fun getChannelChainCodes(): Map<ChannelId, ChannelChaincode> {
+	fun getCcids(): Array<String> = ccid.split(",").toTypedArray()
+
+	fun getChannelChaincodes(): Map<ChannelId, ChannelChaincode> {
 		val user = requireNotNull(user) { "Bad user[${user}] in application.yml" }
 		val config = requireNotNull(config) { "Bad config[${config}] in application.yml" }
-		return ChannelChaincode.fromConfig(ccid, user, config, getEndorsers())
+		return ChannelChaincode.fromConfig(getCcids(), user, config, getEndorsers()).also {
+			println(it)
+		}
 	}
 
-	fun getChannelChaincodePair(channelId: String?, chainCodeId: String?): ChannelChaincodePair {
-		if(channelId == null && chainCodeId == null) {
-			 return ChannelChaincodePair.fromConfig(defaultCcid)
-		}
+	fun getChannelChaincodePair(channelId: ChannelId?, chainCodeId: String?): ChannelChaincodePair {
+		val channelAndChaincodeFromConfig = ChannelChaincodePair.fromConfig(defaultCcid)
 
-		val givenCcid = "$channelId$CCID_SEPARATOR$chainCodeId"
-		if(!ccid.contains(givenCcid)) {
+		val actualChannelChaincodePair = ChannelChaincodePair(
+			channelId = channelId ?: channelAndChaincodeFromConfig.channelId,
+			chainCodeId = chainCodeId ?: channelAndChaincodeFromConfig.chainCodeId
+		)
+
+		val givenCcid = "${actualChannelChaincodePair.channelId}$CCID_SEPARATOR${actualChannelChaincodePair.chainCodeId}"
+		if (!ccid.contains(givenCcid)) {
 			throw InvokeException(listOf("Invalid $givenCcid"))
 		}
-		return ChannelChaincodePair(
-			channelId = channelId!!,
-			chainCodeId = chainCodeId!!
-		)
+
+		logger.info("chaincode found from [$channelId:$chainCodeId] is ${actualChannelChaincodePair.channelId}:${actualChannelChaincodePair.chainCodeId}")
+		return actualChannelChaincodePair
 	}
 
 	class UserConfig {
@@ -54,7 +63,4 @@ class HeraclesConfigProps {
 		lateinit var file: String
 		lateinit var crypto: String
 	}
-
-
-
 }

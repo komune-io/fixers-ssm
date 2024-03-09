@@ -1,7 +1,6 @@
 coop:
-  defaultCcid: sandbox/ssm
-  ccid:
-    - sandbox/ssm
+  defaultCcid: sandbox/ex02
+  ccid: sandbox/ex02, sandbox/ssm
   user:
     name: dfef919ef60296ca173d99f2132becde
     password: 660bd560b383333750f629362e0160f9

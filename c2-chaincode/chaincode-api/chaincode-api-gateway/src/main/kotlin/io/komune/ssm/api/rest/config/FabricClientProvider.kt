@@ -1,7 +1,5 @@
-package io.komune.ssm.api.rest
+package io.komune.ssm.api.rest.config
 
-import io.komune.ssm.api.rest.config.ChannelId
-import io.komune.ssm.api.rest.config.FabricClientBuilder
 import org.hyperledger.fabric.sdk.HFClient
 import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Component
@@ -9,7 +7,7 @@ import org.springframework.stereotype.Component
 @Component
 @Scope("singleton")
 class FabricClientProvider(
-    val fabricClientBuilder: FabricClientBuilder,
+	val fabricClientBuilder: FabricClientBuilder,
 ) {
 
 	private var client: MutableMap<ChannelId, HFClient> = mutableMapOf()

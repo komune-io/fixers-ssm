@@ -12,7 +12,7 @@ class SsmListUserQueryFunctionImpl(
 ): SsmListUserQueryFunction {
 
 
-	override suspend fun invoke(msg: Flow<SsmListUserQuery>): Flow<SsmListUserResult> = msg.map { payload ->
+	override suspend fun invoke(msgs: Flow<SsmListUserQuery>): Flow<SsmListUserResult> = msgs.map { payload ->
 		queryService.listUsers(payload.chaincodeUri).let { items ->
 			SsmListUserResult(items.toTypedArray())
 		}

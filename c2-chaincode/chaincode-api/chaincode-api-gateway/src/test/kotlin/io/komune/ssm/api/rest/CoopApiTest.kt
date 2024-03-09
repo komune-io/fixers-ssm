@@ -1,9 +1,9 @@
 package io.komune.ssm.api.rest
 
-import io.komune.ssm.api.rest.model.Cmd
-import io.komune.ssm.api.rest.model.ErrorResponse
-import io.komune.ssm.api.rest.model.InvokeParams
-import io.komune.ssm.api.rest.model.InvokeReturn
+import io.komune.ssm.api.rest.chaincode.model.Cmd
+import io.komune.ssm.api.rest.chaincode.model.ErrorResponse
+import io.komune.ssm.api.rest.chaincode.model.InvokeParams
+import io.komune.ssm.api.rest.chaincode.model.InvokeReturn
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.http.HttpEntity
@@ -65,7 +65,7 @@ class CoopApiTest : WebBaseTest() {
 	@Test
 	fun shouldSUCCESSMessage_WhenInvokeWithGet() {
 		val uri = baseUrl().build().toUri()
-		val params = InvokeParams(Cmd.invoke, "invoke", arrayOf("a", "b", "10"))
+		val params = InvokeParams(cmd = Cmd.invoke, fcn = "invoke", args = arrayOf("a", "b", "10"))
 		val headers = HttpHeaders()
 		headers.contentType = MediaType.APPLICATION_JSON
 
@@ -81,8 +81,8 @@ class CoopApiTest : WebBaseTest() {
 	fun `should fail when requesting invalid channelId`() {
 		val channelId = "INVALID_CHANNEL_ID"
 		val chainCodeId = "ex02"
-		val uri = baseUrl().query("channelid=$channelId&chaincodeid=$chainCodeId").build().toUri()
-		val params = InvokeParams(Cmd.invoke, "invoke", arrayOf("a", "b", "10"))
+		val uri = baseUrl().build().toUri()
+		val params = InvokeParams(channelId, chainCodeId, Cmd.invoke, "invoke", arrayOf("a", "b", "10"))
 		val headers = HttpHeaders()
 		headers.contentType = MediaType.APPLICATION_JSON
 
@@ -97,8 +97,8 @@ class CoopApiTest : WebBaseTest() {
 	fun `should fail when requesting invalid chainCodeId`() {
 		val channelId = "sandbox"
 		val chainCodeId = "INVALID_CHAINCODE_ID"
-		val uri = baseUrl().query("channelid=$channelId&chaincodeid=$chainCodeId").build().toUri()
-		val params = InvokeParams(Cmd.invoke, "invoke", arrayOf("a", "b", "10"))
+		val uri = baseUrl().build().toUri()
+		val params = InvokeParams(channelId, chainCodeId, Cmd.invoke, "invoke", arrayOf("a", "b", "10"))
 		val headers = HttpHeaders()
 		headers.contentType = MediaType.APPLICATION_JSON
 
@@ -114,7 +114,7 @@ class CoopApiTest : WebBaseTest() {
 		val channelId = "sandbox"
 		val chainCodeId = "ex02"
 		val uri = baseUrl().query("channelid=$channelId&chaincodeid=$chainCodeId").build().toUri()
-		val params = InvokeParams(Cmd.invoke, "invoke", arrayOf("a", "b", "10"))
+		val params = InvokeParams(null, null, Cmd.invoke, "invoke", arrayOf("a", "b", "10"))
 		val headers = HttpHeaders()
 		headers.contentType = MediaType.APPLICATION_JSON
 

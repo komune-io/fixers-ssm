@@ -21,8 +21,8 @@ class DataSsmSessionListQueryFunctionImpl(
 	private val couchdbSsmSessionStateListQueryFunction: CouchdbSsmSessionStateListQueryFunction,
 ) : DataSsmSessionListQueryFunction {
 
-	override suspend fun invoke(msg: Flow<DataSsmSessionListQueryDTO>): Flow<DataSsmSessionListQueryResultDTO> =
-		msg.map { payload ->
+	override suspend fun invoke(msgs: Flow<DataSsmSessionListQueryDTO>): Flow<DataSsmSessionListQueryResultDTO> =
+		msgs.map { payload ->
 			CouchdbSsmSessionStateListQuery(
 				chaincodeUri = ChaincodeUri.from(
 					channelId = payload.ssmUri.burst().channelId,

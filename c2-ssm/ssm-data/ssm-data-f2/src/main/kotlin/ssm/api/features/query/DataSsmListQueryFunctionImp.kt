@@ -28,8 +28,8 @@ class DataSsmListQueryFunctionImp(
 				}
 			}.filterNotNull()
 
-	override suspend fun invoke(msg: Flow<DataSsmListQuery>): Flow<DataSsmListQueryResult> =
-		msg.map { payload ->
+	override suspend fun invoke(msgs: Flow<DataSsmListQuery>): Flow<DataSsmListQueryResult> =
+		msgs.map { payload ->
 			payload.chaincodes
 				.asFlow()
 				.flatMapConcat { chaincodeUri ->

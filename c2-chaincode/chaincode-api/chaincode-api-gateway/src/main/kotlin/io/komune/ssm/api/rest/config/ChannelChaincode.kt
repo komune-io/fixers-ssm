@@ -1,6 +1,7 @@
 package io.komune.ssm.api.rest.config
 
 import io.komune.ssm.api.fabric.model.Endorser
+import org.slf4j.LoggerFactory
 
 class ChannelChaincode(
 	val channelId: ChannelId,
@@ -12,12 +13,10 @@ class ChannelChaincode(
 	companion object
 }
 
-
 class ChannelChaincodePair(
 	val channelId: ChannelId,
 	val chainCodeId: ChainCodeId
 ) {
-
 	companion object {
 		fun fromConfig(defaultValue: String): ChannelChaincodePair {
 			val ccidByChannel = defaultValue.split("/")
@@ -31,7 +30,11 @@ class ChannelChaincodePair(
 }
 
 typealias ChannelId = String
+typealias TxId = String
+typealias BlockId = Long
 typealias ChainCodeId = String
+
+private val logger = LoggerFactory.getLogger(ChannelChaincode::class.java)
 
 fun ChannelChaincode.Companion.fromConfig(
 	lines: Array<String>,

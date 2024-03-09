@@ -11,8 +11,8 @@ class SsmGetTransactionQueryFunctionImpl(
 	private val queryService: SsmQueryService
 ) : SsmGetTransactionQueryFunction {
 
-	override suspend fun invoke(msg: Flow<SsmGetTransactionQuery>): Flow<SsmGetTransactionQueryResult> =
-		msg.map { payload ->
+	override suspend fun invoke(msgs: Flow<SsmGetTransactionQuery>): Flow<SsmGetTransactionQueryResult> =
+		msgs.map { payload ->
 			queryService.getTransaction(payload.chaincodeUri, payload.id)
 				.let(::SsmGetTransactionQueryResult)
 		}

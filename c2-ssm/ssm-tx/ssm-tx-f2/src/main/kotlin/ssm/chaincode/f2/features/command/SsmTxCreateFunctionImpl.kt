@@ -13,7 +13,7 @@ class SsmTxCreateFunctionImpl(
 	private val ssmTxService: SsmTxService
 ): SsmTxCreateFunction {
 
-	override suspend fun invoke(msg: Flow<SsmCreateCommand>): Flow<SsmCreateResult> = msg.map { payload ->
+	override suspend fun invoke(msgs: Flow<SsmCreateCommand>): Flow<SsmCreateResult> = msgs.map { payload ->
 		try {
 			ssmTxService.sendCreate(payload.chaincodeUri.burst(), payload.ssm, payload.signerName).let { invokeReturn ->
 				SsmCreateResult(

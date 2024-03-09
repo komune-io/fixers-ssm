@@ -13,7 +13,7 @@ class SsmUserRegisterFunctionImpl(
 	private val ssmTxService: SsmTxService
 ): SsmTxUserRegisterFunction {
 
-	override suspend fun invoke(msg: Flow<SsmUserRegisterCommand>): Flow<SsmUserRegisteredResult> = msg.map { payload ->
+	override suspend fun invoke(msgs: Flow<SsmUserRegisterCommand>): Flow<SsmUserRegisteredResult> = msgs.map { payload ->
 		try {
 			ssmTxService.sendRegisterUser(payload.chaincodeUri.burst(), payload.agent, payload.signerName)!!.let { result ->
 				SsmUserRegisteredResult(

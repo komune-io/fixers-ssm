@@ -20,8 +20,8 @@ class DataSsmSessionConvertFunctionImpl(
 	private val ssmGetTransactionQueryFunction: SsmGetTransactionQueryFunction
 ) : F2Function<DataSsmSessionConvertQuery, DataSsmSession> {
 
-	override suspend fun invoke(msg: Flow<DataSsmSessionConvertQuery>): Flow<DataSsmSession> =
-		msg.map { payload ->
+	override suspend fun invoke(msgs: Flow<DataSsmSessionConvertQuery>): Flow<DataSsmSession> =
+		msgs.map { payload ->
 			val sessionLogs =
 				payload.sessionState.session.getSessionLogs(payload.ssmUri, ssmGetSessionLogsQueryFunction)
 			val transactions = sessionLogs.mapNotNull { it.txId.getTransaction(ssmGetTransactionQueryFunction,

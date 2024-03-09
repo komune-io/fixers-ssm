@@ -20,7 +20,7 @@ class SsmTxInitFunctionImpl(
 	private val queryService: SsmQueryService,
 ): SsmTxInitFunction {
 
-	override suspend fun invoke(msg: Flow<SsmInitCommand>): Flow<SsmInitdResult> = msg.map { payload ->
+	override suspend fun invoke(msgs: Flow<SsmInitCommand>): Flow<SsmInitdResult> = msgs.map { payload ->
 		val retInitUser = initUser(payload.chaincodeUri.burst(), payload.agent, payload.signerName)
 		val retInitSsm = initSsm(payload.chaincodeUri.burst(), payload.ssm, payload.signerName)
 		val invoke = listOfNotNull(retInitUser, retInitSsm)

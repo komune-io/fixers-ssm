@@ -20,8 +20,8 @@ class CouchDbDatabaseGetChangesQueryFunctionImpl(
 
 	private val logger = LoggerFactory.getLogger(CouchDbDatabaseGetChangesQueryFunctionImpl::class.java)
 
-	override suspend fun invoke(msg: Flow<CouchdbDatabaseGetChangesQueryDTO>)
-	: Flow<CouchdbDatabaseGetChangesQueryResultDTO> = msg.map { payload ->
+	override suspend fun invoke(msgs: Flow<CouchdbDatabaseGetChangesQueryDTO>)
+	: Flow<CouchdbDatabaseGetChangesQueryResultDTO> = msgs.map { payload ->
 		try {
 			getChanges(couchdbClient, payload)
 		} catch (e: Exception) {

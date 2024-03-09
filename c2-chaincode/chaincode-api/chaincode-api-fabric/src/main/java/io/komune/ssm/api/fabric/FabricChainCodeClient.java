@@ -5,17 +5,17 @@ import io.komune.ssm.api.fabric.exception.InvokeException;
 import io.komune.ssm.api.fabric.factory.FabricChannelFactory;
 import io.komune.ssm.api.fabric.model.Endorser;
 import io.komune.ssm.api.fabric.model.InvokeArgs;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.hyperledger.fabric.sdk.Channel;
 import org.hyperledger.fabric.sdk.BlockEvent;
 import org.hyperledger.fabric.sdk.ChaincodeID;
-import org.hyperledger.fabric.sdk.TransactionProposalRequest;
+import org.hyperledger.fabric.sdk.Channel;
+import org.hyperledger.fabric.sdk.HFClient;
 import org.hyperledger.fabric.sdk.ProposalResponse;
 import org.hyperledger.fabric.sdk.QueryByChaincodeRequest;
-import org.hyperledger.fabric.sdk.HFClient;
+import org.hyperledger.fabric.sdk.TransactionProposalRequest;
 import org.hyperledger.fabric.sdk.exception.InvalidArgumentException;
 import org.hyperledger.fabric.sdk.exception.ProposalException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class FabricChainCodeClient {
 
-    private final Logger logger = LoggerFactory.getLogger(FabricChainCodeClient.class);
+    private Logger logger = LoggerFactory.getLogger(FabricChainCodeClient.class);
 
     public static FabricChainCodeClient fromConfigFile(String filename, String cryptoConfigBase) throws IOException {
         FabricConfig fabricConfig = FabricConfig.loadFromFile(filename);
@@ -44,24 +44,25 @@ public class FabricChainCodeClient {
 
     public CompletableFuture<BlockEvent.TransactionEvent> invoke(List<Endorser> endorsers, HFClient client, String channelName, String chainId, InvokeArgs invokeArgs) throws Exception {
         Channel channel = channelFactory.getChannel(endorsers, client, channelName);
-        ChaincodeID chanCodeId = ChaincodeID.newBuilder().setName(chainId).build();
-        return invokeBlockChain(client, channel, chanCodeId, invokeArgs);
+        ChaincodeID chainCodeId = ChaincodeID.newBuilder().setName(chainId).build();
+        return invokeBlockChain(client, channel, chainCodeId, invokeArgs);
     }
 
     public String query(List<Endorser> endorsers, HFClient client, String channelName, String chainId, InvokeArgs invokeArgs) throws Exception {
         Channel channel = channelFactory.getChannel(endorsers, client, channelName);
-        ChaincodeID chanCodeId = ChaincodeID.newBuilder().setName(chainId).build();
-        return queryBlockChain(client, channel, chanCodeId, invokeArgs);
+        ChaincodeID chainCodeId = ChaincodeID.newBuilder().setName(chainId).build();
+        logger.info("channelName["+channelName+"], chainId["+chainId+"]");
+        return queryBlockChain(client, channel, chainCodeId, invokeArgs);
     }
 
-    private CompletableFuture<BlockEvent.TransactionEvent> invokeBlockChain(HFClient client, Channel channel, ChaincodeID chanCodeId, InvokeArgs invokeArgs) throws InvokeException {
+    private CompletableFuture<BlockEvent.TransactionEvent> invokeBlockChain(HFClient client, Channel channel, ChaincodeID chainCodeId, InvokeArgs invokeArgs) throws InvokeException {
         try {
-            TransactionProposalRequest qpr = buildTransactionProposalRequest(client, chanCodeId, invokeArgs);
+            TransactionProposalRequest qpr = buildTransactionProposalRequest(client, chainCodeId, invokeArgs);
             Collection<ProposalResponse> responses = channel.sendTransactionProposal(qpr, channel.getPeers());
             List<String> errors = checkProposals(responses);
             if(errors.size() >= responses.size()) {
                 StringJoiner joiner = new StringJoiner(",");
-                errors.forEach(joiner::add);
+                errors.forEach(error -> joiner.add(error));
                 logger.info("Transaction errors: " + joiner.toString());
                 throw new InvokeException(errors);
             }
@@ -73,9 +74,9 @@ public class FabricChainCodeClient {
         }
     }
 
-    private TransactionProposalRequest buildTransactionProposalRequest(HFClient client, ChaincodeID chanCodeId, InvokeArgs invokeArgs) {
+    private TransactionProposalRequest buildTransactionProposalRequest(HFClient client, ChaincodeID chainCodeId, InvokeArgs invokeArgs) {
         TransactionProposalRequest qpr = client.newTransactionProposalRequest();
-        qpr.setChaincodeID(chanCodeId);
+        qpr.setChaincodeID(chainCodeId);
         qpr.setFcn(invokeArgs.getFunction());
         qpr.setArgs(invokeArgs.getValues());
         return qpr;
@@ -99,5 +100,4 @@ public class FabricChainCodeClient {
         Collection<ProposalResponse> res = channel.queryByChaincode(qpr);
         return new String(res.iterator().next().getChaincodeActionResponsePayload());
     }
-
 }

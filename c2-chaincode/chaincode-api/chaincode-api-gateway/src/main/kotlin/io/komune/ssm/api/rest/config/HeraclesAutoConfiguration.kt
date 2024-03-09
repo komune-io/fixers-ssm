@@ -7,11 +7,10 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 @EnableConfigurationProperties(HeraclesConfigProps::class)
-@ComponentScan("io.civis.blockchain.coop.rest")
-class HeraclesAutoConfiguration(val coopConfig: HeraclesConfigProps) {
+class HeraclesAutoConfiguration {
 
 	@Bean
-	fun builder(): FabricClientBuilder {
+	fun builder(coopConfig: HeraclesConfigProps): FabricClientBuilder {
 		return FabricClientBuilder(coopConfig)
 	}
 

@@ -11,7 +11,7 @@ class SsmGetSessionQueryFunctionImpl(
 	private val queryService: SsmQueryService
 ): SsmGetSessionQueryFunction {
 
-	override suspend fun invoke(msg: Flow<SsmGetSessionQuery>): Flow<SsmGetSessionResult> = msg.map { payload ->
+	override suspend fun invoke(msgs: Flow<SsmGetSessionQuery>): Flow<SsmGetSessionResult> = msgs.map { payload ->
 		queryService.getSession(payload.chaincodeUri, payload.sessionName).let(::SsmGetSessionResult)
 	}
 }

@@ -19,8 +19,8 @@ class DataSsmSessionLogGetQueryFunctionImpl(
 	private val ssmGetTransactionQueryFunction: SsmGetTransactionQueryFunction
 ) : DataSsmSessionLogGetQueryFunction {
 
-	override suspend fun invoke(msg: Flow<DataSsmSessionLogGetQueryDTO>): Flow<DataSsmSessionLogGetQueryResultDTO> =
-		msg.map { payload ->
+	override suspend fun invoke(msgs: Flow<DataSsmSessionLogGetQueryDTO>): Flow<DataSsmSessionLogGetQueryResultDTO> =
+		msgs.map { payload ->
 			val logs = payload.sessionName.getSessionLogs(
 				payload.ssmUri.burst(),
 				ssmGetSessionLogsQueryFunction

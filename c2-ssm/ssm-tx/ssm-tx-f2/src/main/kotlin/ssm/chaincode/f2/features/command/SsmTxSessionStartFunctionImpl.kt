@@ -12,7 +12,7 @@ class SsmTxSessionStartFunctionImpl(
 	private val ssmTxService: SsmTxService
 ): SsmTxSessionStartFunction {
 
-	override suspend fun invoke(msg: Flow<SsmSessionStartCommand>): Flow<SsmSessionStartResult> = msg.map { payload ->
+	override suspend fun invoke(msgs: Flow<SsmSessionStartCommand>): Flow<SsmSessionStartResult> = msgs.map { payload ->
 		ssmTxService.sendStart(payload.chaincodeUri.burst(), payload.session, payload.signerName)!!.let { result ->
 			SsmSessionStartResult(
 				transactionId = result.transactionId,

@@ -15,8 +15,8 @@ class CouchdbAdminListQueryFunctionImpl(
 ) : CouchdbAdminListQueryFunction {
 
 	override suspend fun invoke(
-		msg: Flow<CouchdbAdminListQueryDTO>
-	): Flow<CouchdbAdminListQueryResultDTO> = msg.map { payload ->
+		msgs: Flow<CouchdbAdminListQueryDTO>
+	): Flow<CouchdbAdminListQueryResultDTO> = msgs.map { payload ->
 		val dbName = payload.chaincodeUri.chainCodeDbName()
 		couchdbClient.fetchAllByDocType(dbName, DocType.Admin)
 			.let {

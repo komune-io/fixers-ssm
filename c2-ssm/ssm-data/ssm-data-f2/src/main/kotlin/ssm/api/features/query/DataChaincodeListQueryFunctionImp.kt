@@ -14,8 +14,8 @@ class DataChaincodeListQueryFunctionImp(
 	private val couchdbChaincodeListQueryFunction: CouchdbChaincodeListQueryFunction
 ): DataChaincodeListQueryFunction {
 
-	override suspend fun invoke(msg: Flow<DataChaincodeListQuery>): Flow<DataChaincodeListQueryResult> =
-		msg.map {
+	override suspend fun invoke(msgs: Flow<DataChaincodeListQuery>): Flow<DataChaincodeListQueryResult> =
+		msgs.map {
 			couchdbChaincodeListQueryFunction.invoke(CouchdbChaincodeListQuery()).let {
 				DataChaincodeListQueryResult(it.items.map {it.burst()})
 			}

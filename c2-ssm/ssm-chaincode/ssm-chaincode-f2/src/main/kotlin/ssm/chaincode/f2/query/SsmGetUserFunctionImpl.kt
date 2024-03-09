@@ -11,7 +11,7 @@ class SsmGetUserFunctionImpl(
 	private val queryService: SsmQueryService
 ): SsmGetUserFunction {
 
-	override suspend fun invoke(msg: Flow<SsmGetUserQuery>): Flow<SsmGetUserResult> = msg.map { payload ->
+	override suspend fun invoke(msgs: Flow<SsmGetUserQuery>): Flow<SsmGetUserResult> = msgs.map { payload ->
 		queryService.getAgent(payload.chaincodeUri, payload.name).let { items ->
 			SsmGetUserResult(items)
 		}

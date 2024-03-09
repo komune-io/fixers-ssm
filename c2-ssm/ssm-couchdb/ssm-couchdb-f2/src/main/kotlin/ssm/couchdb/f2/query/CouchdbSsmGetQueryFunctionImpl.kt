@@ -15,7 +15,7 @@ class CouchdbSsmGetQueryFunctionImpl(
 	private val couchdbClient: CouchdbSsmClient,
 ) : CouchdbSsmGetQueryFunction {
 
-	override suspend fun invoke(msg: Flow<CouchdbSsmGetQuery>): Flow<CouchdbSsmGetQueryResult> = msg.map { payload ->
+	override suspend fun invoke(msgs: Flow<CouchdbSsmGetQuery>): Flow<CouchdbSsmGetQueryResult> = msgs.map { payload ->
 		couchdbClient
 			.fetchOneByDocTypeAndName(chainCodeDbName(payload.channelId, payload.chaincodeId), DocType.Ssm, payload.ssmName)
 			.let{ item ->

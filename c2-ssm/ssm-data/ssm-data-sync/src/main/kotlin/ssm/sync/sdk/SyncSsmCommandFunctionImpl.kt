@@ -26,8 +26,8 @@ class SyncSsmCommandFunctionImpl(
 	private val couchdbDatabaseGetChangesQueryFunction: CouchdbDatabaseGetChangesQueryFunction
 ) : SyncSsmCommandFunction {
 
-	override suspend fun invoke(msg: Flow<SyncSsmCommand>): Flow<SyncSsmCommandResult> =
-		msg.map { payload ->
+	override suspend fun invoke(msgs: Flow<SyncSsmCommand>): Flow<SyncSsmCommandResult> =
+		msgs.map { payload ->
 			val result = payload.queryCouchdbDatabaseGetChanges()
 			result.items.applySsmSessionChanges(payload.chaincodeUri).fold()
 				.toResult()

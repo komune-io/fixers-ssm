@@ -54,9 +54,9 @@ class TxSteps : SsmCommandStep(), En {
 		)
 	}
 
-	override suspend fun loadSigner(userName: AgentName, filename: String): SignerUser {
-		return SignerUser.loadFromFile(userName, filename)
+	override suspend fun loadSigner(agentName: AgentName, filename: String): SignerUser {
+		return SignerUser.loadFromFile(agentName, filename)
 	}
 
-	fun getSsmTxAdminServiceImpl() = SsmTxAdminServiceImpl(bag.clientTx(bag.adminSigner), bag.clientQuery)
+	private fun getSsmTxAdminServiceImpl() = SsmTxAdminServiceImpl(bag.clientTx(bag.adminSigner), bag.clientQuery)
 }

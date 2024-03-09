@@ -19,8 +19,8 @@ class DataSsmSessionGetQueryFunctionImpl(
 	private val dataSsmSessionConvertFunctionImpl: DataSsmSessionConvertFunctionImpl,
 ) : DataSsmSessionGetQueryFunction {
 
-	override suspend fun invoke(msg: Flow<DataSsmSessionGetQueryDTO>): Flow<DataSsmSessionGetQueryResultDTO> =
-		msg.map { payload ->
+	override suspend fun invoke(msgs: Flow<DataSsmSessionGetQueryDTO>): Flow<DataSsmSessionGetQueryResultDTO> =
+		msgs.map { payload ->
 			try {
 				SsmGetSessionQuery(
 					chaincodeUri = payload.ssmUri.asChaincodeUri(),

@@ -5,7 +5,10 @@ import io.komune.ssm.api.fabric.config.OrdererConfig;
 import io.komune.ssm.api.fabric.config.OrganisationConfig;
 import io.komune.ssm.api.fabric.config.PeerConfig;
 import io.komune.ssm.api.fabric.model.Endorser;
-import org.hyperledger.fabric.sdk.*;
+import org.hyperledger.fabric.sdk.Channel;
+import org.hyperledger.fabric.sdk.HFClient;
+import org.hyperledger.fabric.sdk.Orderer;
+import org.hyperledger.fabric.sdk.Peer;
 import org.hyperledger.fabric.sdk.exception.InvalidArgumentException;
 import org.hyperledger.fabric.sdk.exception.TransactionException;
 

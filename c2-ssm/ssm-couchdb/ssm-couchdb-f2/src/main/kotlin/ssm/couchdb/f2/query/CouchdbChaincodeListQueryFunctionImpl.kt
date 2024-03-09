@@ -22,8 +22,8 @@ class CouchdbChaincodeListQueryFunctionImpl(
 	}
 
 	override suspend fun invoke(
-		msg: Flow<CouchdbChaincodeListQueryDTO>
-	): Flow<CouchdbChaincodeListQueryResultDTO> = msg.map { _ ->
+		msgs: Flow<CouchdbChaincodeListQueryDTO>
+	): Flow<CouchdbChaincodeListQueryResultDTO> = msgs.map { _ ->
 		couchdbClient.cloudant.allDbs.execute()
 			.result
 			.asFlow()
