@@ -8,8 +8,8 @@ plugins {
 dependencies {
 	implementation("io.komune.f2:f2-spring-boot-starter-function-http:${Versions.f2}")
 
-	implementation(project(":ssm-spring:ssm-data-spring-boot-starter"))
-	implementation(project(":ssm-spring:ssm-tx-spring-boot-starter"))
+	implementation(project(":c2-ssm:ssm-spring:ssm-data-spring-boot-starter"))
+	implementation(project(":c2-ssm:ssm-spring:ssm-tx-spring-boot-starter"))
 
 }
 

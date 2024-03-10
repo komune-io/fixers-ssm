@@ -14,15 +14,23 @@ object PluginVersions {
 }
 
 object Versions {
-//	const val springFramework = FixersVersions.Spring.framework
 	const val slf4j = FixersVersions.Logging.slf4j
 	const val jacksonKotlin = FixersVersions.Json.jacksonKotlin
 	val f2 = PluginVersions.fixers
 	val springBoot = FixersVersions.Spring.boot
+	val springSecurity = FixersVersions.Spring.security
 	val ktor = FixersVersions.Kotlin.ktor
+	val slf4J = FixersVersions.Logging.slf4j
+
+	const val fabric = "2.2.26"
+	const val jackson = "2.16.1"
 
 	const val cloudant = "0.3.1"
 	const val bouncycastleVersion = "1.70"
+	const val reactor = "3.6.3"
+
+	const val junit = FixersVersions.Test.junit
+	const val assertj = FixersVersions.Test.assertj
 }
 
 object Dependencies {
@@ -38,5 +46,15 @@ object Dependencies {
 	)
 	fun jackson(scope: Scope) = scope.add(
 		"com.fasterxml.jackson.module:jackson-module-kotlin:${FixersVersions.Json.jacksonKotlin}"
+	)
+	fun test(scope: Scope) = scope.add(
+		"org.junit.jupiter:junit-jupiter:${Versions.junit}",
+		"org.junit.jupiter:junit-jupiter-api:${Versions.junit}",
+		"org.assertj:assertj-core:${Versions.assertj}"
+	)
+
+	fun nettyTcnative(scope: Scope) = scope.add(
+		"io.netty:netty-tcnative-boringssl-static:2.0.48.Final",
+		"io.netty:netty-tcnative-classes:2.0.48.Final"
 	)
 }

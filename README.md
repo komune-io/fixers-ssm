@@ -7,8 +7,30 @@ It contains three submodules, each with a different level of abstraction.
 <img src="https://docs.smartb.city/s3/docs/ssm/diagrams/architecture.png" alt="drawing" width="300"/>
 <br /><br />
 
+# Infra
+
 ## SSM-Chaincode
 
+[SSM-Chaincode](/docs/chaincode-dsl-signing-state-machine--page) communicates directly with the blockchain API and is able to make simple queries and transactions over Signing State Machines.
+
+* Build
+```
+make ssm-chaincode-package
+```
+
+## SSM-Sandbox
+
+This setup provides a Hyperledger Fabric Network pre-configured with generated cryptographic materials
+and the SSM chaincode installed, facilitating a quick start for development and testing purposes.
+
+* Build
+```
+make ssm-chaincode-package
+```
+
+# Lib 
+
+## SSM-Chaincode
 [SSM-Chaincode](/docs/chaincode-dsl-signing-state-machine--page) communicates directly with the blockchain API and is able to make simple queries and transactions over Signing State Machines.
 
 **Import with Gradle**

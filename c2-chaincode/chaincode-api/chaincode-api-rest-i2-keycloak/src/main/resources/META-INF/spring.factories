@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  io.komune.ssm.api.rest.i2.keycloak.config.ConfigurationLoader,\
+  io.komune.ssm.api.rest.i2.keycloak.config.WebSecurityConfig
