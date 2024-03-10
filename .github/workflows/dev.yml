@@ -7,10 +7,12 @@ on: [push]
 
 jobs:
   Dev:
-    uses: komune-io/fixers-gradle/.github/workflows/dev-workflow.yml@feat/HardforkToKomune
+    uses: komune-io/fixers-gradle/.github/workflows/dev-workflow.yml@07ab873e98d484fee329e097e050d0da5f04dedd
     permissions:
       contents: read
       packages: write
+    with:
+      makeDev: true
     secrets:
       GPG_SIGNING_KEY: ${{ secrets.GPG_SIGNING_KEY }}
       GPG_SIGNING_PASSWORD: ${{ secrets.GPG_SIGNING_PASSWORD }}
