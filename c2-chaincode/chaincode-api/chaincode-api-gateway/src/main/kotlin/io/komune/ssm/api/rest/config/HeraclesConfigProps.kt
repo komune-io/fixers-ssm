@@ -49,7 +49,11 @@ class HeraclesConfigProps(
 			throw InvokeException(listOf("Invalid $givenCcid"))
 		}
 
-		logger.info("chaincode found from [$channelId:$chainCodeId] is ${actualChannelChaincodePair.channelId}:${actualChannelChaincodePair.chainCodeId}")
+		logger.info(
+			"chaincode found " +
+					"from [$channelId:$chainCodeId] " +
+					"is ${actualChannelChaincodePair.channelId}:${actualChannelChaincodePair.chainCodeId}"
+		)
 		return actualChannelChaincodePair
 	}
 

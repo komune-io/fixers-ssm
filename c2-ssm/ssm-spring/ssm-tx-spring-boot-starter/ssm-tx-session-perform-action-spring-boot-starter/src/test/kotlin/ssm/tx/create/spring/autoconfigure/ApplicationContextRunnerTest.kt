@@ -28,7 +28,9 @@ class ApplicationContextRunnerTest {
 			types = arrayOf(ApplicationContextBuilder.SimpleConfiguration::class.java),
 			config = SsmChaincodeConfigTest.localDockerComposeParams
 		)
-		assertThat(context.getBean(SsmTxSessionPerformActionAutoConfiguration::ssmTxSessionPerformActionFunction.name)).isNotNull
+		assertThat(
+			context.getBean(SsmTxSessionPerformActionAutoConfiguration::ssmTxSessionPerformActionFunction.name)
+		).isNotNull
 		assertThat(context.getBean(FunctionCatalog::class.java)).isNotNull
 	}
 }

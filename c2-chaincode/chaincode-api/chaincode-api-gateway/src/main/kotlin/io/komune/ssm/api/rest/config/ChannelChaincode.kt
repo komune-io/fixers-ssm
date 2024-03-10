@@ -34,8 +34,6 @@ typealias TxId = String
 typealias BlockId = Long
 typealias ChainCodeId = String
 
-private val logger = LoggerFactory.getLogger(ChannelChaincode::class.java)
-
 fun ChannelChaincode.Companion.fromConfig(
 	lines: Array<String>,
 	user: HeraclesConfigProps.UserConfig,

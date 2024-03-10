@@ -20,8 +20,8 @@ internal class HasPrivateMessageTest {
 		var context = SsmContext(sessionName, "100 dollars 1978 Camaro", 0, HashMap())
 		val agent = Agent.loadFromFile(SsmClientItTest.USER1_NAME, SsmClientItTest.USER1_FILENAME)
 		context = context.addPrivateMessage("Value to encrypt", agent)
-		val `val` = context.private!![agent.name]
-		Assertions.assertThat(`val`).isNotEmpty.isNotEqualTo("Value to encrypt")
+		val value = context.private!![agent.name]
+		Assertions.assertThat(value).isNotEmpty.isNotEqualTo("Value to encrypt")
 	}
 
 	@Test
@@ -32,8 +32,8 @@ internal class HasPrivateMessageTest {
 		val agent = Agent.loadFromFile(SsmClientItTest.USER1_NAME, SsmClientItTest.USER1_FILENAME)
 		context = context.addPrivateMessage("Value to encrypt", agent)
 		val privKey = loadPrivateKey(SsmClientItTest.USER1_FILENAME)
-		val `val` = context.getPrivateMessage(SsmClientItTest.USER1_NAME, privKey)
-		Assertions.assertThat(`val`).isNotEmpty.isEqualTo("Value to encrypt")
+		val value = context.getPrivateMessage(SsmClientItTest.USER1_NAME, privKey)
+		Assertions.assertThat(value).isNotEmpty.isEqualTo("Value to encrypt")
 	}
 
 	@Test
@@ -44,7 +44,7 @@ internal class HasPrivateMessageTest {
 		val agent = Agent.loadFromFile(SsmClientItTest.USER1_NAME, SsmClientItTest.USER1_FILENAME)
 		context = context.addPrivateMessage("Value to encrypt", agent)
 		val signerUser1 = SignerUser.loadFromFile(SsmClientItTest.USER1_NAME, SsmClientItTest.USER1_FILENAME)
-		val `val` = context.getPrivateMessage(signerUser1)
-		Assertions.assertThat(`val`).isNotEmpty.isEqualTo("Value to encrypt")
+		val value = context.getPrivateMessage(signerUser1)
+		Assertions.assertThat(value).isNotEmpty.isEqualTo("Value to encrypt")
 	}
 }

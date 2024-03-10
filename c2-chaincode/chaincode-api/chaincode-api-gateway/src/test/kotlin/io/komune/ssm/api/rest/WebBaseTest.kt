@@ -13,14 +13,12 @@ import org.springframework.web.util.UriComponentsBuilder
 class WebBaseTest {
 
     @LocalServerPort
-    protected lateinit var port: Integer
+    internal lateinit var port: Integer
 
     @Autowired
-    protected lateinit var restTemplate: TestRestTemplate
+    internal lateinit var restTemplate: TestRestTemplate
 
-
-    protected fun baseUrl(): UriComponentsBuilder {
+    internal fun baseUrl(): UriComponentsBuilder {
         return UriComponentsBuilder.fromHttpUrl("http://localhost:$port")
     }
-
 }

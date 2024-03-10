@@ -10,11 +10,13 @@ import org.springframework.web.reactive.config.WebFluxConfigurer
 @Configuration
 @EnableWebFlux
 class WebFluxConfiguration : WebFluxConfigurer {
-
+    companion object {
+        private const val MAX_AGE = 3600L
+    }
     override fun addCorsMappings(corsRegistry: CorsRegistry) {
         corsRegistry.addMapping("/**")
                 .allowedOrigins("*")
-                .maxAge(3600);
+                .maxAge(MAX_AGE);
     }
 
     override fun addResourceHandlers(registry: ResourceHandlerRegistry) {
@@ -22,5 +24,4 @@ class WebFluxConfiguration : WebFluxConfigurer {
             .addResourceLocations("classpath:/META-INF/resources/webjars/springfox-swagger-ui/")
             .resourceChain(false)
     }
-
 }
