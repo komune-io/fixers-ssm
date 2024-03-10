@@ -31,7 +31,6 @@ build-libs:
 	./gradlew build --scan -x test
 
 test-libs:
-	echo 'No Tests'
 #	./gradlew test
 
 package-libs: build-libs
