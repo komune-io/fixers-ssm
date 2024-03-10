@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   Dev:
-    uses: komune-io/fixers-gradle/.github/workflows/dev-workflow.yml@5ef87fecab83f2b7e9456e4b78c21ae587dd82f1
+    uses: komune-io/fixers-gradle/.github/workflows/dev-workflow.yml@9affbec451029b09e20cd989eb557eacf42b1fe7
     permissions:
       contents: read
       packages: write
