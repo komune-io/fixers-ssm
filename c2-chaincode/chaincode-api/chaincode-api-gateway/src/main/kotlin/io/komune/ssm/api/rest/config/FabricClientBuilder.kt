@@ -48,5 +48,4 @@ class FabricClientBuilder(val coopConfig: HeraclesConfigProps) {
 		val fabricClientFactory = getFabricClientFactory(channelId)
 		return FabricUserClient(fabricConfig, fabricClientFactory)
 	}
-
 }

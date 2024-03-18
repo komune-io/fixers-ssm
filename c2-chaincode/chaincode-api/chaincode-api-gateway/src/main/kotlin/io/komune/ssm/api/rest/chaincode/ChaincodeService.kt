@@ -71,5 +71,4 @@ class ChaincodeService(
 			InvokeReturn("SUCCESS", "", it.transactionID).toJson()
 		}
 	}
-
 }

@@ -22,8 +22,9 @@ class PerformCommandTest {
 //        "{\"session\":\"deal20181201\",\"public\":\"100 dollars 1978 Camaro\",\"iteration\":0}"
 		val context = SsmContext("deal20181201", "100 dollars 1978 Camaro", 0, null)
 		val (fcn, args) = PerformCmd("Sell", context).invoke(signerUser.name, signer).buildArgs()
-		args.forEach(Consumer { s: String? -> println(s) })
+//		args.forEach(Consumer { s: String? -> println(s) })
 		Assertions.assertThat(fcn).isEqualTo("perform")
+		@Suppress("MaxLineLength")
 		Assertions.assertThat(args)
 			.isNotEmpty
 			.containsExactly(
@@ -48,8 +49,9 @@ class PerformCommandTest {
 //        "{\"session\":\"deal20181201\",\"public\":\"100 dollars 1978 Camaro\",\"iteration\":0}"
 		val context = SsmContext("deal20181201", "100 dollars 1978 Camaro", 0, mapOf("vivi" to "message"))
 		val (fcn, args) = PerformCmd("Sell", context).invoke(signerUser.name, signer).buildArgs()
-		args.forEach(Consumer { s: String? -> println(s) })
+//		args.forEach(Consumer { s: String? -> println(s) })
 		Assertions.assertThat(fcn).isEqualTo("perform")
+		@Suppress("MaxLineLength")
 		Assertions.assertThat(args)
 			.isNotEmpty
 			.containsExactly(

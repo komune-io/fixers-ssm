@@ -59,12 +59,15 @@ internal class AESCipherTest {
 	fun generateSecretKey() {
 		val key: SecretKey = AESCipher.generateSecretKey()
 		val encodedKey = Base64.getEncoder().encodeToString(key.encoded)
-		val keyBuilded: SecretKey = AESCipher.secretKeyFromBase64(encodedKey)
-		Assertions.assertThat(key).usingRecursiveComparison(RecursiveComparisonConfiguration.builder().withIgnoredFields("key").build())
-			.isEqualTo(keyBuilded)
-		Assertions.assertThat(key.algorithm).isEqualTo(keyBuilded.algorithm)
-		Assertions.assertThat(key.encoded).isEqualTo(keyBuilded.encoded)
-		Assertions.assertThat(key.format).isEqualTo(keyBuilded.format)
+		val keyBuilt: SecretKey = AESCipher.secretKeyFromBase64(encodedKey)
+		Assertions.assertThat(key)
+			.usingRecursiveComparison(
+				RecursiveComparisonConfiguration.builder().withIgnoredFields("key").build()
+			)
+			.isEqualTo(keyBuilt)
+		Assertions.assertThat(key.algorithm).isEqualTo(keyBuilt.algorithm)
+		Assertions.assertThat(key.encoded).isEqualTo(keyBuilt.encoded)
+		Assertions.assertThat(key.format).isEqualTo(keyBuilt.format)
 
 	}
 }

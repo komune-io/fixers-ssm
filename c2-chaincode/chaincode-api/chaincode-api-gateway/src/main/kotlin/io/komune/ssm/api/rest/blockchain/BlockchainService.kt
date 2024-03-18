@@ -20,6 +20,7 @@ class BlockchainService(
 	private val fabricClientBuilder: FabricClientBuilder,
 ) {
 
+	@Suppress("ReturnCount")
 	fun query(channelId: ChannelId, invokeArgs: InvokeArgs): String {
 		val isList = InvokeArgsUtils.isListQuery(invokeArgs)
 
@@ -36,14 +37,17 @@ class BlockchainService(
 			}
 			return queryTransactionById(channelId, invokeArgs)
 		}
-		throw IllegalArgumentException()
+		throw IllegalArgumentException(
+			"invokeArgs[${invokeArgs}] must be ${InvokeArgsUtils.BLOCK_QUERY} or ${InvokeArgsUtils.TRANSACTION_QUERY}"
+		)
 	}
 
 	fun queryAllBlocks(channelId: ChannelId): String {
 		return getAllBlockIds(channelId).let(JsonUtils::toJson)
 	}
 
-	private fun getAllBlockIds(channelId: ChannelId): List<Long> = queryChannel(channelId) { fabricChannelClient, endorsers, hfClient ->
+	private fun getAllBlockIds(channelId: ChannelId): List<Long> =
+		queryChannel(channelId) { fabricChannelClient, endorsers, hfClient ->
 		val nbBlocks = fabricChannelClient.queryBlockCount(endorsers, hfClient, channelId)
 		(0 until nbBlocks).toList()
 	}
@@ -54,7 +58,8 @@ class BlockchainService(
 			.let(JsonUtils::toJson)
 	}
 
-	private fun queryBlockByNumber(channelId: ChannelId, blockNumber: Long): BlockInfo = queryChannel(channelId) { fabricChannelClient, endorsers, hfClient ->
+	private fun queryBlockByNumber(channelId: ChannelId, blockNumber: Long): BlockInfo
+	= queryChannel(channelId) { fabricChannelClient, endorsers, hfClient ->
 		fabricChannelClient.queryBlockByNumber(endorsers, hfClient, channelId, blockNumber)
 	}
 
@@ -84,7 +89,8 @@ class BlockchainService(
 			.let(JsonUtils::toJson)
 	}
 
-	private fun queryBlockByTransactionId(channelId: ChannelId, txID: String): BlockInfo = queryChannel(channelId) { fabricChannelClient, endorsers, hfClient ->
+	private fun queryBlockByTransactionId(channelId: ChannelId, txID: String): BlockInfo
+	= queryChannel(channelId) { fabricChannelClient, endorsers, hfClient ->
 		fabricChannelClient.queryBlockByTransactionId(endorsers, hfClient, channelId, txID)
 	}
 

@@ -21,7 +21,9 @@ class FabricClientProvider(
 	private fun build(channelId: ChannelId): HFClient {
 		val config = fabricClientBuilder.getChannelConfig(channelId)
 		val clientFactory = fabricClientBuilder.getFabricClientFactory(channelId)
-		val user = fabricClientBuilder.getFabricUserClient(channelId).enroll(config.user.name, config.user.password, config.user.org)
+		val user = fabricClientBuilder
+			.getFabricUserClient(channelId)
+			.enroll(config.user.name, config.user.password, config.user.org)
 		return clientFactory.getHfClient(user)
 	}
 
