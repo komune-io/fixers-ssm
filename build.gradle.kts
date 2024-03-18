@@ -53,7 +53,7 @@ fixers {
 		id = "ssm"
 		name = "Ssm Data"
 		description = "Aggregate all ssm data source to optimize request"
-		url = "https://github.com/komune-io/fixers-ssm"
+		url = "https://github.com/komune-io/fixers-c2"
 	}
 
 }
