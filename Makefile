@@ -24,13 +24,13 @@ lint-libs:
 	./gradlew detekt
 
 build-libs:
-	./gradlew build --scan -x test
+	./gradlew build publishToMavenLocal -x test
 
 test-libs:
-#	./gradlew test
+	./gradlew test
 
 package-libs: build-libs
-	./gradlew publishToMavenLocal publish
+	./gradlew publish
 
 version:
 	echo "$$VERSION"
@@ -39,7 +39,7 @@ chaincode-api-gateway-package: docker-chaincode-api-gateway-build docker-chainco
 
 
 docker-chaincode-api-gateway-build:
-	VERSION=${VERSION} ./gradlew build ${CHAINCODE_APP_PACKAGE} -x test --stacktrace
+	VERSION=${VERSION} ./gradlew build publishToMavenLocal ${CHAINCODE_APP_PACKAGE} -x test --stacktrace
 
 docker-chaincode-api-gateway-push:
 	@docker push ${CHAINCODE_APP_IMG}

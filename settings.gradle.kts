@@ -1,19 +1,4 @@
-
 rootProject.name = "fixers-c2"
-
-plugins {
-	id("com.gradle.enterprise") version "3.16.2"
-}
-
-gradleEnterprise {
-	if (System.getenv("CI") != null) {
-		buildScan {
-			publishAlways()
-			termsOfServiceUrl = "https://gradle.com/terms-of-service"
-			termsOfServiceAgree = "yes"
-		}
-	}
-}
 
 include(
 	"c2-ssm:ssm-bdd:ssm-bdd-config",
