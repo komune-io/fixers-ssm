@@ -11,6 +11,7 @@ lint: lint-libs
 build: build-libs
 test-pre:
 	@make dev up
+	@make dev up
 test: test-libs
 test-post:
 	@make dev down
