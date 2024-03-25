@@ -20,13 +20,13 @@ promote: promote-libs
 
 # Old task
 libs: package-kotlin
-package-kotlin: lint-libs build-libs test-libs package-libs
+package-kotlin: lint-libs build-libs test-libs publish-libs
 
 lint-libs:
 	./gradlew detekt
 
 build-libs:
-	VERSION=$(VERSION) ./gradlew clean build publishToMavenLocal -x test
+	VERSION=$(VERSION) ./gradlew clean build publishToMavenLocal --refresh-dependencies -x test
 
 test-libs:
 	./gradlew test
@@ -45,7 +45,7 @@ chaincode-api-gateway-package: docker-chaincode-api-gateway-build docker-chainco
 
 
 docker-chaincode-api-gateway-build:
-	VERSION=${VERSION} ./gradlew build publishToMavenLocal ${CHAINCODE_APP_PACKAGE} -x test --stacktrace
+	VERSION=${VERSION} ./gradlew build publishToMavenLocal ${CHAINCODE_APP_PACKAGE} --refresh-dependencies -x test
 
 docker-chaincode-api-gateway-push:
 	@docker push ${CHAINCODE_APP_IMG}
