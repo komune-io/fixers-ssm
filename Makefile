@@ -5,8 +5,6 @@ CHAINCODE_APP_NAME	   	 	:= ghcr.io/komune-io/chaincode-api-gateway
 CHAINCODE_APP_IMG	    	:= ${CHAINCODE_APP_NAME}:${VERSION}
 CHAINCODE_APP_PACKAGE	   	:= :c2-chaincode:chaincode-api:chaincode-api-gateway:bootBuildImage
 
-.PHONY: version
-
 lint: lint-libs
 build: build-libs
 test-pre:
@@ -16,7 +14,9 @@ test-pre:
 test: test-libs
 test-post:
 	@make dev down
-package: package-libs
+
+publish: publish-libs
+promote: promote-libs
 
 # Old task
 libs: package-kotlin
@@ -26,16 +26,20 @@ lint-libs:
 	./gradlew detekt
 
 build-libs:
-	./gradlew build publishToMavenLocal -x test
+	VERSION=$(VERSION) ./gradlew clean build publishToMavenLocal -x test
 
 test-libs:
 	./gradlew test
 
-package-libs: build-libs
-	./gradlew publish
+publish-libs:
+	VERSION=$(VERSION) PKG_MAVEN_REPO=github ./gradlew publish --info
 
+promote-libs:
+	VERSION=$(VERSION) PKG_MAVEN_REPO=sonatype_oss ./gradlew publish
+
+.PHONY: version
 version:
-	echo "$$VERSION"
+	@echo "$(VERSION)"
 
 chaincode-api-gateway-package: docker-chaincode-api-gateway-build docker-chaincode-api-gateway-push
 
