@@ -48,7 +48,7 @@ chaincode-api-gateway-package: docker-chaincode-api-gateway-build docker-chainco
 
 
 docker-chaincode-api-gateway-build:
-	VERSION=${VERSION} ./gradlew build publishToMavenLocal ${CHAINCODE_APP_PACKAGE} --refresh-dependencies -x test
+	VERSION=$(VERSION) ./gradlew build publishToMavenLocal ${CHAINCODE_APP_PACKAGE} --refresh-dependencies -x test
 
 docker-chaincode-api-gateway-push:
 	@docker push ${CHAINCODE_APP_IMG}
