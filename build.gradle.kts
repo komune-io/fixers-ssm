@@ -14,7 +14,7 @@ plugins {
 }
 
 allprojects {
-	group = "io.komune.ssm"
+	group = "io.komune.c2"
 	version = System.getenv("VERSION") ?: "experimental-SNAPSHOT"
 }
 
