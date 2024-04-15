@@ -1,11 +1,11 @@
-package io.komune.ssm.api.fabric;
+package io.komune.c2.chaincode.api.fabric;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.primitives.Ints;
-import io.komune.ssm.api.fabric.config.FabricConfig;
-import io.komune.ssm.api.fabric.factory.FabricClientFactory;
-import io.komune.ssm.api.fabric.model.Endorser;
-import io.komune.ssm.api.fabric.model.InvokeArgs;
+import io.komune.c2.chaincode.api.fabric.config.FabricConfig;
+import io.komune.c2.chaincode.api.fabric.factory.FabricClientFactory;
+import io.komune.c2.chaincode.api.fabric.model.Endorser;
+import io.komune.c2.chaincode.api.fabric.model.InvokeArgs;
 import org.hyperledger.fabric.sdk.BlockEvent;
 import org.hyperledger.fabric.sdk.User;
 import org.junit.jupiter.api.Test;

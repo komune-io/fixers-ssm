@@ -61,7 +61,7 @@ include(
 )
 
 include(
+	"c2-chaincode:chaincode-api:chaincode-api-auth",
 	"c2-chaincode:chaincode-api:chaincode-api-fabric",
 	"c2-chaincode:chaincode-api:chaincode-api-gateway",
-	"c2-chaincode:chaincode-api:chaincode-api-rest-i2-keycloak"
 )
