@@ -4,9 +4,9 @@ import io.komune.c2.chaincode.api.fabric.model.Endorser
 import org.slf4j.LoggerFactory
 
 class ChannelChaincode(
-    val channelId: io.komune.c2.chaincode.api.gateway.config.ChannelId,
-    val chaincodeId: List<io.komune.c2.chaincode.api.gateway.config.ChainCodeId>,
-    val user: io.komune.c2.chaincode.api.gateway.config.HeraclesConfigProps.UserConfig,
+    val channelId: ChannelId,
+    val chaincodeId: List<ChainCodeId>,
+    val user: HeraclesConfigProps.UserConfig,
     val config: HeraclesConfigProps.FileConfig,
     val endorsers: List<Endorser>
 ) {

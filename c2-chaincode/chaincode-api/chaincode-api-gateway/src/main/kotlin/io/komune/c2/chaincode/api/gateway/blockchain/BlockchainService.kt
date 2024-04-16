@@ -7,6 +7,7 @@ import io.komune.c2.chaincode.api.fabric.utils.InvokeArgsUtils
 import io.komune.c2.chaincode.api.fabric.utils.JsonUtils
 import io.komune.c2.chaincode.api.gateway.blockchain.model.toBlock
 import io.komune.c2.chaincode.api.gateway.blockchain.model.toTransaction
+import io.komune.c2.chaincode.api.gateway.config.ChannelId
 import io.komune.c2.chaincode.api.gateway.config.FabricClientBuilder
 import io.komune.c2.chaincode.api.gateway.config.FabricClientProvider
 import org.hyperledger.fabric.sdk.BlockInfo
@@ -20,7 +21,7 @@ class BlockchainService(
 ) {
 
 	@Suppress("ReturnCount")
-	fun query(channelId: io.komune.c2.chaincode.api.gateway.config.ChannelId, invokeArgs: InvokeArgs): String {
+	fun query(channelId: ChannelId, invokeArgs: InvokeArgs): String {
 		val isList = InvokeArgsUtils.isListQuery(invokeArgs)
 
 		if (InvokeArgsUtils.isBlockQuery(invokeArgs)) {
@@ -41,34 +42,34 @@ class BlockchainService(
 		)
 	}
 
-	fun queryAllBlocks(channelId: io.komune.c2.chaincode.api.gateway.config.ChannelId): String {
+	fun queryAllBlocks(channelId: ChannelId): String {
 		return getAllBlockIds(channelId).let(JsonUtils::toJson)
 	}
 
-	private fun getAllBlockIds(channelId: io.komune.c2.chaincode.api.gateway.config.ChannelId): List<Long> =
+	private fun getAllBlockIds(channelId: ChannelId): List<Long> =
 		queryChannel(channelId) { fabricChannelClient, endorsers, hfClient ->
 		val nbBlocks = fabricChannelClient.queryBlockCount(endorsers, hfClient, channelId)
 		(0 until nbBlocks).toList()
 	}
 
-	fun queryBlockByNumber(channelId: io.komune.c2.chaincode.api.gateway.config.ChannelId, invokeArgs: InvokeArgs): String {
+	fun queryBlockByNumber(channelId: ChannelId, invokeArgs: InvokeArgs): String {
 		return queryBlockByNumber(channelId, invokeArgs.values.first().toLong())
 			.toBlock()
 			.let(JsonUtils::toJson)
 	}
 
-	private fun queryBlockByNumber(channelId: io.komune.c2.chaincode.api.gateway.config.ChannelId, blockNumber: Long): BlockInfo
+	private fun queryBlockByNumber(channelId: ChannelId, blockNumber: Long): BlockInfo
 	= queryChannel(channelId) { fabricChannelClient, endorsers, hfClient ->
 		fabricChannelClient.queryBlockByNumber(endorsers, hfClient, channelId, blockNumber)
 	}
 
-	fun queryAllTransactions(channelId: io.komune.c2.chaincode.api.gateway.config.ChannelId): String {
+	fun queryAllTransactions(channelId: ChannelId): String {
 		return getAllBlockIds(channelId)
 			.flatMap { blockId -> queryTransactionIdsOfBlock(channelId, blockId) }
 			.let(JsonUtils::toJson)
 	}
 
-	private fun queryTransactionIdsOfBlock(channelId: io.komune.c2.chaincode.api.gateway.config.ChannelId, blockNumber: Long): List<String> {
+	private fun queryTransactionIdsOfBlock(channelId: ChannelId, blockNumber: Long): List<String> {
 		try {
 			val block = queryBlockByNumber(channelId, blockNumber)
 			return block.envelopeInfos
@@ -79,7 +80,7 @@ class BlockchainService(
 		}
 	}
 
-	fun queryTransactionById(channelId: io.komune.c2.chaincode.api.gateway.config.ChannelId, invokeArgs: InvokeArgs): String {
+	fun queryTransactionById(channelId: ChannelId, invokeArgs: InvokeArgs): String {
 		val transactionId = invokeArgs.values.first()
 		val block = queryBlockByTransactionId(channelId, transactionId)
 		return block.envelopeInfos
@@ -88,12 +89,12 @@ class BlockchainService(
 			.let(JsonUtils::toJson)
 	}
 
-	private fun queryBlockByTransactionId(channelId: io.komune.c2.chaincode.api.gateway.config.ChannelId, txID: String): BlockInfo
+	private fun queryBlockByTransactionId(channelId: ChannelId, txID: String): BlockInfo
 	= queryChannel(channelId) { fabricChannelClient, endorsers, hfClient ->
 		fabricChannelClient.queryBlockByTransactionId(endorsers, hfClient, channelId, txID)
 	}
 
-	private fun <T> queryChannel(channelId: io.komune.c2.chaincode.api.gateway.config.ChannelId, query: (FabricChannelClient, List<Endorser>, HFClient) -> T): T {
+	private fun <T> queryChannel(channelId: ChannelId, query: (FabricChannelClient, List<Endorser>, HFClient) -> T): T {
 		val client = fabricClientProvider.get(channelId)
 		val channelConfig = fabricClientBuilder.getChannelConfig(channelId)
 		val fabricChannelClient = fabricClientBuilder.getFabricChannelClient(channelId)

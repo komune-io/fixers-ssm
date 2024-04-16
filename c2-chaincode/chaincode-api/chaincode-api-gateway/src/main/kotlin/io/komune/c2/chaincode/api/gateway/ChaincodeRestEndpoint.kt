@@ -5,6 +5,8 @@ import io.komune.c2.chaincode.api.gateway.chaincode.ChaincodeService
 import io.komune.c2.chaincode.api.gateway.chaincode.model.Cmd
 import io.komune.c2.chaincode.api.gateway.chaincode.model.ErrorResponse
 import io.komune.c2.chaincode.api.gateway.chaincode.model.InvokeParams
+import io.komune.c2.chaincode.api.gateway.config.ChainCodeId
+import io.komune.c2.chaincode.api.gateway.config.ChannelId
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
@@ -30,8 +32,8 @@ class ChaincodeRestEndpoint(
 
 	@GetMapping
 	fun query(
-		@RequestParam(name = io.komune.c2.chaincode.api.gateway.ChaincodeRestEndpoint.Companion.CHANNEL_ID_URL_PARAM, required = false) channel: io.komune.c2.chaincode.api.gateway.config.ChannelId?,
-		@RequestParam(name = io.komune.c2.chaincode.api.gateway.ChaincodeRestEndpoint.Companion.CHAINCODE_ID_URL_PARAM, required = false) chaincode: io.komune.c2.chaincode.api.gateway.config.ChainCodeId?,
+		@RequestParam(name = CHANNEL_ID_URL_PARAM, required = false) channel: ChannelId?,
+		@RequestParam(name = CHAINCODE_ID_URL_PARAM, required = false) chaincode: ChainCodeId?,
 		cmd: Cmd,
 		fcn: String,
 		args: Array<String>
