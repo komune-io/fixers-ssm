@@ -1,16 +1,16 @@
 package io.komune.ssm.api.rest
 
-import io.komune.ssm.api.rest.chaincode.model.Cmd
-import io.komune.ssm.api.rest.chaincode.model.ErrorResponse
-import io.komune.ssm.api.rest.chaincode.model.InvokeParams
-import io.komune.ssm.api.rest.chaincode.model.InvokeReturn
+import io.komune.c2.chaincode.api.gateway.chaincode.model.Cmd
+import io.komune.c2.chaincode.api.gateway.chaincode.model.ErrorResponse
+import io.komune.c2.chaincode.api.gateway.chaincode.model.InvokeParams
+import io.komune.c2.chaincode.api.gateway.chaincode.model.InvokeReturn
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
 import org.springframework.util.LinkedMultiValueMap
-
 
 class CoopApiTest : WebBaseTest() {
 

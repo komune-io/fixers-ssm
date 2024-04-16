@@ -36,19 +36,19 @@ make ssm-chaincode-package
 **Import with Gradle**
 ```kotlin
 // Data models and query function definitions
-implementation("io.komune.ssm:ssm-chaincode-dsl:${Versions.ssm}")
+implementation("io.komune.c2:ssm-chaincode-dsl:${Versions.ssm}")
 
 // Implementation of query functions defined in ssm-chaincode-dsl
-implementation("io.komune.ssm:f2-query:${Versions.ssm}")
+implementation("io.komune.c2:f2-query:${Versions.ssm}")
 
 // Function to create an SSM
-implementation("io.komune.ssm:f2-create-ssm:${Versions.ssm}")
+implementation("io.komune.c2:f2-create-ssm:${Versions.ssm}")
 
 // Function to start a session on a given SSM
-implementation("io.komune.ssm:f2-session-start:${Versions.ssm}")
+implementation("io.komune.c2:f2-session-start:${Versions.ssm}")
 
 // Function to perform an action on a given session
-implementation("io.komune.ssm:f2-session-perform-action:${Versions.ssm}")
+implementation("io.komune.c2:f2-session-perform-action:${Versions.ssm}")
 ```
 > Note: All functions are implemented as Spring Beans, so they can be instantiated with Dependency Injection mechanism
 
@@ -59,10 +59,10 @@ implementation("io.komune.ssm:f2-session-perform-action:${Versions.ssm}")
 **Import with Gradle**
 ```kotlin
 // Data models and query function definitions
-implementation("io.komune.ssm:ssm-couchdb-dsl:${Versions.ssm}")
+implementation("io.komune.c2:ssm-couchdb-dsl:${Versions.ssm}")
 
 // Implementation of query functions defined in ssm-couchdb-dsl
-implementation("io.komune.ssm:ssm-couchdb-f2:${Versions.ssm}")
+implementation("io.komune.c2:ssm-couchdb-f2:${Versions.ssm}")
 ```
 > Note: All functions are implemented as Spring Beans, so they can be instantiated with Dependency Injection mechanism
 
@@ -73,9 +73,9 @@ implementation("io.komune.ssm:ssm-couchdb-f2:${Versions.ssm}")
 **Import with Gradle**
 ```kotlin
 // Data models and query function definitions
-implementation("io.komune.ssm:ssm-data-dsl:${Versions.ssm}")
+implementation("io.komune.c2:ssm-data-dsl:${Versions.ssm}")
 
 // Implementation of query functions defined in ssm-couchdb-dsl
-implementation("io.komune.ssm:ssm-data-f2:${Versions.ssm}")
+implementation("io.komune.c2:ssm-data-f2:${Versions.ssm}")
 ```
 > Note: All functions are implemented as Spring Beans, so they can be instantiated with Dependency Injection mechanism

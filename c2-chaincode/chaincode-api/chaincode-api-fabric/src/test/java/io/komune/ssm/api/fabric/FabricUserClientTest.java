@@ -1,11 +1,11 @@
-package io.komune.ssm.api.fabric;
+package io.komune.c2.chaincode.api.fabric;
 
 import org.hyperledger.fabric.sdk.User;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
-import static io.komune.ssm.api.fabric.FabricChainCodeClientTest.*;
+import static io.komune.c2.chaincode.api.fabric.FabricChainCodeClientTest.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class FabricUserClientTest {
