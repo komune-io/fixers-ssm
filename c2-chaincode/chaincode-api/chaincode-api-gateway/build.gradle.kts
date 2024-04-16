@@ -7,7 +7,7 @@ plugins {
 
 dependencies {
 	implementation(project(":c2-chaincode:chaincode-api:chaincode-api-fabric"))
-	implementation(project(":c2-chaincode:chaincode-api:chaincode-api-auth"))
+//	implementation(project(":c2-chaincode:chaincode-api:chaincode-api-auth"))
 
 	implementation("org.hyperledger.fabric-sdk-java:fabric-sdk-java:${Versions.fabric}")
 
