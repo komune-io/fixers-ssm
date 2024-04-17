@@ -10,7 +10,7 @@ on:
 
 jobs:
   dev:
-    uses: komune-io/fixers-gradle/.github/workflows/make-jvm-workflow.yml@f71ae0d7998ac60c8ff19f5215d94212048e04a8
+    uses: komune-io/fixers-gradle/.github/workflows/make-jvm-workflow.yml@main
     permissions:
       contents: read
       packages: write
