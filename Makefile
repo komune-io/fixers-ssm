@@ -6,6 +6,12 @@ CHAINCODE_APP_IMG	    	:= ${CHAINCODE_APP_NAME}:${VERSION}
 CHAINCODE_APP_PACKAGE	   	:= :c2-chaincode:chaincode-api:chaincode-api-gateway:bootBuildImage
 
 lint: lint-libs
+build-pre:
+	@echo "///////////////////"
+	@echo "$(VERSION)"
+	@cat VERSION
+	@echo "///////////////////"
+
 build: build-libs
 test-pre:
 	@make dev up
@@ -35,6 +41,10 @@ test-libs:
 	./gradlew test
 
 publish-libs:
+	@echo "///////////////////"
+	@echo "$(VERSION)"
+	@cat VERSION
+	@echo "///////////////////"
 	VERSION=$(VERSION) PKG_MAVEN_REPO=github ./gradlew publish --info
 
 promote-libs:
