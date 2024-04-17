@@ -45,7 +45,7 @@ publish-libs:
 	@echo "$(VERSION)"
 	@cat VERSION
 	@echo "///////////////////"
-	#VERSION=$(VERSION) PKG_MAVEN_REPO=github ./gradlew publish --info
+	VERSION=$(VERSION) PKG_MAVEN_REPO=github ./gradlew publish --info
 
 promote-libs:
 	VERSION=$(VERSION) PKG_MAVEN_REPO=sonatype_oss ./gradlew publish
