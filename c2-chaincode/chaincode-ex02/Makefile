@@ -3,7 +3,8 @@ include ../../.env_version
 EX02_CHAINCODE_DOCKERFILE 	:= Dockerfile
 EX02_CHAINCODE_NAME 		:= ${DOCKER_REPOSITORY}komune-io/c2-chaincode-ex02
 EX02_CHAINCODE_IMG 			:= ${EX02_CHAINCODE_NAME}:${VERSION}
-EX02_CHAINCODE_LATEST		:= ${EX02_CHAINCODE_NAME}:latest
+
+.PHONY: lint build test publish promote
 
 lint: chaincode-ex02-lint
 build: chaincode-ex02-build
@@ -11,11 +12,14 @@ build: chaincode-ex02-build
 test:
 	echo 'No Lint'
 
-package: chaincode-ex02-package
+build: chaincode-ex02-build
+
+publish: chaincode-ex02-push
+
+promote:
+	echo 'No Lint'
 
 # chaincode-ex02
-chaincode-ex02-package: chaincode-ex02-build chaincode-ex02-push chaincode-ex02-push-latest
-
 chaincode-ex02-lint:
 	docker run --rm -i hadolint/hadolint < Dockerfile
 
@@ -31,10 +35,6 @@ chaincode-ex02-build:
 
 chaincode-ex02-push:
 	@docker push ${EX02_CHAINCODE_IMG}
-
-chaincode-ex02-push-latest:
-	@docker tag ${EX02_CHAINCODE_IMG} ${EX02_CHAINCODE_LATEST}
-	@docker push ${EX02_CHAINCODE_LATEST}
 
 chaincode-ex02-inspect:
 	@docker run -it ${EX02_CHAINCODE_IMG} sh

@@ -6,6 +6,8 @@ FABRIC_PEER_NAME		:= ${DOCKER_REPOSITORY}komune-io/c2-sandbox-peer
 FABRIC_PEER_IMG			:= ${FABRIC_PEER_NAME}:${VERSION}
 FABRIC_PEER_LATEST 		:= ${FABRIC_PEER_NAME}:latest
 
+.PHONY: lint build test publish promote
+
 package: lint build test push
 
 lint:
@@ -26,8 +28,11 @@ build:
     	-f Dockerfile \
     	-t ${FABRIC_PEER_IMG} ..
 
-push:
+publish:
 	@docker push ${FABRIC_PEER_IMG}
+
+promote:
+	@echo No promote to run
 
 push-latest:
 	@docker tag ${FABRIC_PEER_IMG} ${FABRIC_PEER_LATEST}

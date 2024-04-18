@@ -6,6 +6,8 @@ FABRIC_CA_NAME			:= ${DOCKER_REPOSITORY}komune-io/c2-sandbox-ca
 FABRIC_CA_IMG			:= ${FABRIC_CA_NAME}:${VERSION}
 FABRIC_CA_LATEST 		:= ${FABRIC_CA_NAME}:latest
 
+.PHONY: lint build test publish promote
+
 package: build test push
 
 clean:
@@ -32,8 +34,11 @@ build:
          -f Dockerfile \
          -t ${FABRIC_CA_IMG} ..
 
-push:
+publish:
 	@docker push ${FABRIC_CA_IMG}
+
+promote:
+	@echo No promote to run
 
 push-latest:
 	@docker tag ${FABRIC_CA_IMG} ${FABRIC_CA_LATEST}

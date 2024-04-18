@@ -20,7 +20,3 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test:${Versions.springBoot}")
 	testImplementation("io.projectreactor:reactor-test:${Versions.reactor}")
 }
-
-tasks.withType<org.springframework.boot.gradle.tasks.bundling.BootBuildImage> {
-	imageName.set("ghcr.io/komune-io/c2-chaincode-api-gateway:${this.project.version}")
-}

@@ -6,6 +6,8 @@ FABRIC_ORDERER_NAME		:= ${DOCKER_REPOSITORY}komune-io/c2-sandbox-orderer
 FABRIC_ORDERER_IMG		:= ${FABRIC_ORDERER_NAME}:${VERSION}
 FABRIC_ORDERER_LATEST 	:= ${FABRIC_ORDERER_NAME}:latest
 
+.PHONY: lint build test publish promote
+
 package: lint build test push
 
 test:
@@ -24,8 +26,11 @@ build:
     	-f Dockerfile \
     	-t ${FABRIC_ORDERER_IMG} ..
 
-push:
+publish:
 	@docker push ${FABRIC_ORDERER_IMG}
+
+promote:
+	@echo No promote to run
 
 push-latest:
 	@docker tag ${FABRIC_ORDERER_IMG} ${FABRIC_ORDERER_LATEST}

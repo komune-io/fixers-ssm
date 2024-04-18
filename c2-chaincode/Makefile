@@ -1,13 +1,22 @@
-include ../.env_version
 
+include ../.env_version
 export
 
-package: chaincode-ssm-package chaincode-ex02-package
+.PHONY: lint build test publish promote
 
-## Chaincode SSM
-chaincode-ssm-package:
-	make chaincode-ssm-package -e DOCKER_REPOSITORY=ghcr.io/ -C chaincode-ssm
+lint:
+	make lint -e DOCKER_REPOSITORY=ghcr.io/ -C chaincode-ex02
+	make lint -e DOCKER_REPOSITORY=ghcr.io/ -C chaincode-ssm
 
-## Chaincode EX02
-chaincode-ex02-package:
-	make chaincode-ex02-package -e DOCKER_REPOSITORY=ghcr.io/ -C chaincode-ex02
+build:
+	make build -e DOCKER_REPOSITORY=ghcr.io/ -C chaincode-ex02
+	make build -e DOCKER_REPOSITORY=ghcr.io/ -C chaincode-ssm
+
+publish:
+	make publish -e DOCKER_REPOSITORY=ghcr.io/ -C chaincode-ex02
+	make publish -e DOCKER_REPOSITORY=ghcr.io/ -C chaincode-ssm
+
+promote:
+	make publish -e DOCKER_REPOSITORY=ghcr.io/ -C chaincode-ex02
+	make publish -e DOCKER_REPOSITORY=ghcr.io/ -C chaincode-ssm
+
