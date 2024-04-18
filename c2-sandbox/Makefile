@@ -2,24 +2,32 @@ VERSION = $(shell cat ../VERSION)
 include ../.env_version
 export
 
-package: c2-sandbox-ca-package c2-sandbox-cli-package c2-sandbox-orderer-package c2-sandbox-peer-package c2-sandbox-ssm-gateway-package
+.PHONY: lint build test publish promote
 
-## c2 Sandbox ca
-c2-sandbox-ca-package:
-	make package -e VERSION=${VERSION} -e DOCKER_REPOSITORY=${DOCKER_REPOSITORY} -C c2-sandbox-ca
+lint:
+	make lint -e VERSION=${VERSION} -e DOCKER_REPOSITORY=${DOCKER_REPOSITORY} -C c2-sandbox-ca
+	make lint -e VERSION=${VERSION} -e DOCKER_REPOSITORY=${DOCKER_REPOSITORY} -C c2-sandbox-cli
+	make lint -e VERSION=${VERSION} -e DOCKER_REPOSITORY=${DOCKER_REPOSITORY} -C c2-sandbox-orderer
+	make lint -e VERSION=${VERSION} -e DOCKER_REPOSITORY=${DOCKER_REPOSITORY} -C c2-sandbox-peer
+	make lint -e VERSION=${VERSION} -e DOCKER_REPOSITORY=${DOCKER_REPOSITORY} -C c2-sandbox-ssm-gateway
 
-## c2 Sandbox cli
-c2-sandbox-cli-package:
-	make package -e VERSION=${VERSION} -e DOCKER_REPOSITORY=${DOCKER_REPOSITORY} -C c2-sandbox-cli
+build:
+	make build -e VERSION=${VERSION} -e DOCKER_REPOSITORY=${DOCKER_REPOSITORY} -C c2-sandbox-ca
+	make build -e VERSION=${VERSION} -e DOCKER_REPOSITORY=${DOCKER_REPOSITORY} -C c2-sandbox-cli
+	make build -e VERSION=${VERSION} -e DOCKER_REPOSITORY=${DOCKER_REPOSITORY} -C c2-sandbox-orderer
+	make build -e VERSION=${VERSION} -e DOCKER_REPOSITORY=${DOCKER_REPOSITORY} -C c2-sandbox-peer
+	make build -e VERSION=${VERSION} -e DOCKER_REPOSITORY=${DOCKER_REPOSITORY} -C c2-sandbox-ssm-gateway
 
-## c2 Sandbox orderer
-c2-sandbox-orderer-package:
-	make package -e VERSION=${VERSION} -e DOCKER_REPOSITORY=${DOCKER_REPOSITORY} -C c2-sandbox-orderer
+publish:
+	make publish -e VERSION=${VERSION} -e DOCKER_REPOSITORY=${DOCKER_REPOSITORY} -C c2-sandbox-ca
+	make publish -e VERSION=${VERSION} -e DOCKER_REPOSITORY=${DOCKER_REPOSITORY} -C c2-sandbox-cli
+	make publish -e VERSION=${VERSION} -e DOCKER_REPOSITORY=${DOCKER_REPOSITORY} -C c2-sandbox-orderer
+	make publish -e VERSION=${VERSION} -e DOCKER_REPOSITORY=${DOCKER_REPOSITORY} -C c2-sandbox-peer
+	make publish -e VERSION=${VERSION} -e DOCKER_REPOSITORY=${DOCKER_REPOSITORY} -C c2-sandbox-ssm-gateway
 
-## c2 Sandbox peer
-c2-sandbox-peer-package:
-	make package -e VERSION=${VERSION} -e DOCKER_REPOSITORY=${DOCKER_REPOSITORY} -C c2-sandbox-peer
-
-## c2 Sandbox ssm gateway
-c2-sandbox-ssm-gateway-package:
-	make package -e VERSION=${VERSION} -e DOCKER_REPOSITORY=${DOCKER_REPOSITORY} -C c2-sandbox-ssm-gateway
+promote:
+	make promote -e VERSION=${VERSION} -e DOCKER_REPOSITORY=${DOCKER_REPOSITORY} -C c2-sandbox-ca
+	make promote -e VERSION=${VERSION} -e DOCKER_REPOSITORY=${DOCKER_REPOSITORY} -C c2-sandbox-cli
+	make promote -e VERSION=${VERSION} -e DOCKER_REPOSITORY=${DOCKER_REPOSITORY} -C c2-sandbox-orderer
+	make promote -e VERSION=${VERSION} -e DOCKER_REPOSITORY=${DOCKER_REPOSITORY} -C c2-sandbox-peer
+	make promote -e VERSION=${VERSION} -e DOCKER_REPOSITORY=${DOCKER_REPOSITORY} -C c2-sandbox-ssm-gateway
