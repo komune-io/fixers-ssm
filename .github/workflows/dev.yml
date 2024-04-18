@@ -15,7 +15,6 @@ jobs:
       contents: read
       packages: write
     with:
-      with-docker-registry-login: 'true'
       make-file: 'libs.mk'
     secrets:
       GPG_SIGNING_KEY: ${{ secrets.GPG_SIGNING_KEY }}
@@ -24,6 +23,7 @@ jobs:
       PKG_GITHUB_TOKEN: ${{ secrets.PKG_GITHUB_TOKEN }}
       PKG_SONATYPE_OSS_USERNAME: ${{ secrets.PKG_SONATYPE_OSS_USERNAME }}
       PKG_SONATYPE_OSS_TOKEN: ${{ secrets.PKG_SONATYPE_OSS_TOKEN }}
+
   docker:
     uses: komune-io/fixers-gradle/.github/workflows/make-jvm-workflow.yml@main
     permissions:
@@ -39,6 +39,7 @@ jobs:
       PKG_GITHUB_TOKEN: ${{ secrets.PKG_GITHUB_TOKEN }}
       PKG_SONATYPE_OSS_USERNAME: ${{ secrets.PKG_SONATYPE_OSS_USERNAME }}
       PKG_SONATYPE_OSS_TOKEN: ${{ secrets.PKG_SONATYPE_OSS_TOKEN }}
+
   docs:
     uses: komune-io/fixers-gradle/.github/workflows/publish-storybook-workflow.yml@main
     permissions:
