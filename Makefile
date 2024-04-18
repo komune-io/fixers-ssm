@@ -11,6 +11,9 @@ build:
 	@make -f libs.mk build
 	@make -f docker.mk build
 
+test-pre:
+	@make -f libs.mk test-pre
+
 test:
 	@make -f libs.mk test
 	@make -f docker.mk test
