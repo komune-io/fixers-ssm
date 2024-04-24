@@ -10,7 +10,7 @@ on:
 
 jobs:
   libs:
-    uses: komune-io/fixers-gradle/.github/workflows/make-jvm-workflow.yml@1a6912df194431afbcc6fd19ac17148161572d7a
+    uses: komune-io/fixers-gradle/.github/workflows/make-jvm-workflow.yml@4bce3d5f1fc0bf9b20712e359c133be5adbbe28a
     permissions:
       contents: read
       packages: write
@@ -19,13 +19,13 @@ jobs:
     secrets:
       GPG_SIGNING_KEY: ${{ secrets.GPG_SIGNING_KEY }}
       GPG_SIGNING_PASSWORD: ${{ secrets.GPG_SIGNING_PASSWORD }}
-      PKG_GITHUB_USERNAME: ${{ secrets.PKG_GITHUB_USERNAME }}
-      PKG_GITHUB_TOKEN: ${{ secrets.PKG_GITHUB_TOKEN }}
+      PKG_GITHUB_USERNAME: ${{ github.actor }}
+      PKG_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       PKG_SONATYPE_OSS_USERNAME: ${{ secrets.PKG_SONATYPE_OSS_USERNAME }}
       PKG_SONATYPE_OSS_TOKEN: ${{ secrets.PKG_SONATYPE_OSS_TOKEN }}
 
   docker:
-    uses: komune-io/fixers-gradle/.github/workflows/make-jvm-workflow.yml@1a6912df194431afbcc6fd19ac17148161572d7a
+    uses: komune-io/fixers-gradle/.github/workflows/make-jvm-workflow.yml@4bce3d5f1fc0bf9b20712e359c133be5adbbe28a
     permissions:
       contents: read
       packages: write
@@ -35,8 +35,8 @@ jobs:
     secrets:
       GPG_SIGNING_KEY: ${{ secrets.GPG_SIGNING_KEY }}
       GPG_SIGNING_PASSWORD: ${{ secrets.GPG_SIGNING_PASSWORD }}
-      PKG_GITHUB_USERNAME: ${{ secrets.PKG_GITHUB_USERNAME }}
-      PKG_GITHUB_TOKEN: ${{ secrets.PKG_GITHUB_TOKEN }}
+      PKG_GITHUB_USERNAME: ${{ github.actor }}
+      PKG_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       PKG_SONATYPE_OSS_USERNAME: ${{ secrets.PKG_SONATYPE_OSS_USERNAME }}
       PKG_SONATYPE_OSS_TOKEN: ${{ secrets.PKG_SONATYPE_OSS_TOKEN }}
       DOCKER_PUBLISH_USERNAME: ${{ github.actor }}
