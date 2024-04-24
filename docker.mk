@@ -11,15 +11,15 @@ lint:
 	make lint -C c2-sandbox -e VERSION=$(VERSION)
 
 build: docker-chaincode-api-gateway-build
-	#make build -C c2-chaincode -e VERSION=$(VERSION)
+	make build -C c2-chaincode -e VERSION=$(VERSION)
 	make build -C c2-sandbox -e VERSION=$(VERSION)
 
 publish: docker-chaincode-api-gateway-publish
-	#make publish -e DOCKER_REPOSITORY=ghcr.io/komune-io/ -C c2-chaincode -e VERSION=$(VERSION)
+	make publish -e DOCKER_REPOSITORY=ghcr.io/komune-io/ -C c2-chaincode -e VERSION=$(VERSION)
 	make publish -e DOCKER_REPOSITORY=ghcr.io/komune-io/ -C c2-sandbox -e VERSION=$(VERSION)
 
 promote: docker-chaincode-api-gateway-promote
-	#make promote -e DOCKER_REPOSITORY=docker.io/komune/ -C c2-chaincode -e VERSION=$(VERSION)
+	make promote -e DOCKER_REPOSITORY=docker.io/komune/ -C c2-chaincode -e VERSION=$(VERSION)
 	make promote -e DOCKER_REPOSITORY=docker.io/komune/ -C c2-sandbox -e VERSION=$(VERSION)
 
 ## chaincode-api
