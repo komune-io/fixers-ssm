@@ -10,7 +10,7 @@ on:
 
 jobs:
   libs:
-    uses: komune-io/fixers-gradle/.github/workflows/make-jvm-workflow.yml@main
+    uses: komune-io/fixers-gradle/.github/workflows/make-jvm-workflow.yml@eb86babdf04c99aca063f46592f73617867e6275
     permissions:
       contents: read
       packages: write
@@ -25,7 +25,7 @@ jobs:
       PKG_SONATYPE_OSS_TOKEN: ${{ secrets.PKG_SONATYPE_OSS_TOKEN }}
 
   docker:
-    uses: komune-io/fixers-gradle/.github/workflows/make-jvm-workflow.yml@main
+    uses: komune-io/fixers-gradle/.github/workflows/make-jvm-workflow.yml@eb86babdf04c99aca063f46592f73617867e6275
     permissions:
       contents: read
       packages: write
@@ -39,6 +39,10 @@ jobs:
       PKG_GITHUB_TOKEN: ${{ secrets.PKG_GITHUB_TOKEN }}
       PKG_SONATYPE_OSS_USERNAME: ${{ secrets.PKG_SONATYPE_OSS_USERNAME }}
       PKG_SONATYPE_OSS_TOKEN: ${{ secrets.PKG_SONATYPE_OSS_TOKEN }}
+      DOCKER_PUBLISH_USERNAME: ${{ github.actor }}
+      DOCKER_PUBLISH_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+      DOCKER_PROMOTE_USERNAME: ${{ github.DOCKER_IO_USERNAME }}
+      DOCKER_PROMOTE_PASSWORD: ${{ secrets.DOCKER_IO_PASSWORD }}
 
   docs:
     uses: komune-io/fixers-gradle/.github/workflows/publish-storybook-workflow.yml@main
