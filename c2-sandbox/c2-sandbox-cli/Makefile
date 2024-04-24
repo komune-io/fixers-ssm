@@ -2,7 +2,7 @@ include ../../.env_version
 include ../config/.env
 export
 
-FABRIC_CLI_NAME			:= ${DOCKER_REPOSITORY}komune-io/c2-sandbox-cli
+FABRIC_CLI_NAME			:= c2-sandbox-cli
 FABRIC_CLI_IMG			:= ${FABRIC_CLI_NAME}:${VERSION}
 FABRIC_CLI_LATEST 		:= ${FABRIC_CLI_NAME}:latest
 
@@ -37,12 +37,6 @@ build:
     	-f build/Dockerfile \
     	-t ${FABRIC_CLI_IMG} ..
 
-publish:
-	@docker push ${FABRIC_CLI_IMG}
-
-promote:
-	@echo No promote to run
-
-push-latest:
-	@docker tag ${FABRIC_CLI_IMG} ${FABRIC_CLI_LATEST}
-	@docker push ${FABRIC_CLI_LATEST}
+push:
+	@docker tag ${FABRIC_CLI_IMG} ${DOCKER_REPOSITORY}${FABRIC_CLI_IMG}
+	@docker push ${DOCKER_REPOSITORY}${FABRIC_CLI_IMG}

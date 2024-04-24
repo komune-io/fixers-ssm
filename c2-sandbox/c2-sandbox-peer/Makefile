@@ -2,7 +2,7 @@ include ../../.env_version
 include ../config/.env
 export
 
-FABRIC_PEER_NAME		:= ${DOCKER_REPOSITORY}komune-io/c2-sandbox-peer
+FABRIC_PEER_NAME		:= c2-sandbox-peer
 FABRIC_PEER_IMG			:= ${FABRIC_PEER_NAME}:${VERSION}
 FABRIC_PEER_LATEST 		:= ${FABRIC_PEER_NAME}:latest
 
@@ -28,12 +28,6 @@ build:
     	-f Dockerfile \
     	-t ${FABRIC_PEER_IMG} ..
 
-publish:
-	@docker push ${FABRIC_PEER_IMG}
-
-promote:
-	@echo No promote to run
-
-push-latest:
-	@docker tag ${FABRIC_PEER_IMG} ${FABRIC_PEER_LATEST}
-	@docker push ${FABRIC_PEER_LATEST}
+push:
+	@docker tag ${FABRIC_PEER_IMG} ${DOCKER_REPOSITORY}${FABRIC_PEER_IMG}
+	@docker push ${DOCKER_REPOSITORY}${FABRIC_PEER_IMG}

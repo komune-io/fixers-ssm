@@ -35,11 +35,11 @@ COPY ./config/.env /opt/c2-sandbox
 ENV PATH="/opt/c2-sandbox/chaincode/bin:${PATH}"
 
 ENV SSM_PATH=/opt/chaincode/ssm
-COPY --from=ghcr.io/komune-io/c2-chaincode-ssm:__SSM_VERSION__ ${SSM_PATH}/ssm-*.pak ${SSM_PATH}/ssm.pak
-COPY --from=ghcr.io/komune-io/c2-chaincode-ssm:__SSM_VERSION__ ${SSM_PATH}/env_ssm ${SSM_PATH}/env_ssm
-COPY --from=ghcr.io/komune-io/c2-chaincode-ssm:__SSM_VERSION__ ${SSM_PATH}/bin ${SSM_PATH}/bin
+COPY --from=komune-io/c2-chaincode-ssm:__SSM_VERSION__ ${SSM_PATH}/ssm-*.pak ${SSM_PATH}/ssm.pak
+COPY --from=komune-io/c2-chaincode-ssm:__SSM_VERSION__ ${SSM_PATH}/env_ssm ${SSM_PATH}/env_ssm
+COPY --from=komune-io/c2-chaincode-ssm:__SSM_VERSION__ ${SSM_PATH}/bin ${SSM_PATH}/bin
 
 
 ENV EX02_PATH=/opt/chaincode/ex02
-COPY --from=ghcr.io/komune-io/c2-chaincode-ex02:__EX02_VERSION__ ${EX02_PATH}/ex02-*.pak ${EX02_PATH}/ex02.pak
-COPY --from=ghcr.io/komune-io/c2-chaincode-ex02:__EX02_VERSION__ ${EX02_PATH}/env_ex02 ${EX02_PATH}/env_ex02
+COPY --from=komune-io/c2-chaincode-ex02:__EX02_VERSION__ ${EX02_PATH}/ex02-*.pak ${EX02_PATH}/ex02.pak
+COPY --from=komune-io/c2-chaincode-ex02:__EX02_VERSION__ ${EX02_PATH}/env_ex02 ${EX02_PATH}/env_ex02
