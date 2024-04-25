@@ -2,7 +2,7 @@ include ../../.env_version
 include ../config/.env
 export
 
-FABRIC_SSM_REST_NAME	:= ${DOCKER_REPOSITORY}komune-io/c2-sandbox-ssm-gateway
+FABRIC_SSM_REST_NAME	:= c2-sandbox-ssm-gateway
 FABRIC_SSM_REST_IMG		:= ${FABRIC_SSM_REST_NAME}:${VERSION}
 FABRIC_SSM_REST_LATEST 	:= ${FABRIC_SSM_REST_NAME}:latest
 
@@ -34,12 +34,6 @@ build:
     	-f Dockerfile \
     	-t ${FABRIC_SSM_REST_IMG} ..
 
-publish:
-	@docker push ${FABRIC_SSM_REST_IMG}
-
-promote:
-	@echo No promote to run
-
-push-latest:
-	@docker tag ${FABRIC_SSM_REST_IMG} ${FABRIC_SSM_REST_LATEST}
-	@docker push ${FABRIC_SSM_REST_LATEST}
+push:
+	@docker tag ${FABRIC_SSM_REST_IMG} ${DOCKER_REPOSITORY}${FABRIC_SSM_REST_IMG}
+	@docker push ${DOCKER_REPOSITORY}${FABRIC_SSM_REST_IMG}

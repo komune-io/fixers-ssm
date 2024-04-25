@@ -2,7 +2,7 @@ include ../../.env_version
 include ../config/.env
 export
 
-FABRIC_ORDERER_NAME		:= ${DOCKER_REPOSITORY}komune-io/c2-sandbox-orderer
+FABRIC_ORDERER_NAME		:= c2-sandbox-orderer
 FABRIC_ORDERER_IMG		:= ${FABRIC_ORDERER_NAME}:${VERSION}
 FABRIC_ORDERER_LATEST 	:= ${FABRIC_ORDERER_NAME}:latest
 
@@ -26,12 +26,6 @@ build:
     	-f Dockerfile \
     	-t ${FABRIC_ORDERER_IMG} ..
 
-publish:
-	@docker push ${FABRIC_ORDERER_IMG}
-
-promote:
-	@echo No promote to run
-
-push-latest:
-	@docker tag ${FABRIC_ORDERER_IMG} ${FABRIC_ORDERER_LATEST}
-	@docker push ${FABRIC_ORDERER_LATEST}
+push:
+	@docker tag ${FABRIC_ORDERER_IMG} ${DOCKER_REPOSITORY}${FABRIC_ORDERER_IMG}
+	@docker push ${DOCKER_REPOSITORY}${FABRIC_ORDERER_IMG}

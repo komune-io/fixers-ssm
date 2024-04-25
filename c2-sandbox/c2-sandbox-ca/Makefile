@@ -2,7 +2,7 @@ include ../../.env_version
 include ../config/.env
 export
 
-FABRIC_CA_NAME			:= ${DOCKER_REPOSITORY}komune-io/c2-sandbox-ca
+FABRIC_CA_NAME			:= c2-sandbox-ca
 FABRIC_CA_IMG			:= ${FABRIC_CA_NAME}:${VERSION}
 FABRIC_CA_LATEST 		:= ${FABRIC_CA_NAME}:latest
 
@@ -34,11 +34,9 @@ build:
          -f Dockerfile \
          -t ${FABRIC_CA_IMG} ..
 
-publish:
-	@docker push ${FABRIC_CA_IMG}
-
-promote:
-	@echo No promote to run
+push:
+	@docker tag ${FABRIC_CA_IMG} ${DOCKER_REPOSITORY}${FABRIC_CA_IMG}
+	@docker push ${DOCKER_REPOSITORY}${FABRIC_CA_IMG}
 
 push-latest:
 	@docker tag ${FABRIC_CA_IMG} ${FABRIC_CA_LATEST}

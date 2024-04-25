@@ -5,18 +5,18 @@ export
 .PHONY: lint build test publish promote
 
 lint:
-	make lint -e DOCKER_REPOSITORY=ghcr.io/ -C chaincode-ex02
-	make lint -e DOCKER_REPOSITORY=ghcr.io/ -C chaincode-ssm
+	make lint -C chaincode-ex02
+	make lint -C chaincode-ssm
 
 build:
-	make build -e DOCKER_REPOSITORY=ghcr.io/ -C chaincode-ex02
-	make build -e DOCKER_REPOSITORY=ghcr.io/ -C chaincode-ssm
+	make build -C chaincode-ex02
+	make build -C chaincode-ssm
 
 publish:
-	make publish -e DOCKER_REPOSITORY=ghcr.io/ -C chaincode-ex02
-	make publish -e DOCKER_REPOSITORY=ghcr.io/ -C chaincode-ssm
+	make push -C chaincode-ex02
+	make push -C chaincode-ssm
 
 promote:
-	make publish -e DOCKER_REPOSITORY=ghcr.io/ -C chaincode-ex02
-	make publish -e DOCKER_REPOSITORY=ghcr.io/ -C chaincode-ssm
+	make push -C chaincode-ex02
+	make push -C chaincode-ssm
 
