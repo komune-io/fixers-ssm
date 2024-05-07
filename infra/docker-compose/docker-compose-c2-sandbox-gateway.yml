@@ -3,7 +3,7 @@ version: '3.8'
 services:
   coop-rest-java:
     container_name: coop-rest-bclan-${DOCKER_NETWORK}
-    image: ghcr.io/komune-io/c2-sandbox-ssm-gateway:${VERSION_C2}
+    image: ${DOCKER_REPOSITORY}c2-sandbox-ssm-gateway:${VERSION_C2}
     environment:
       - i2_jwt-issuer-uri=
     ports:
