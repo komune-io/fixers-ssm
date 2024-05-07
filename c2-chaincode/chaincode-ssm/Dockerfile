@@ -22,11 +22,11 @@ WORKDIR /go/src/chaincode-ssm
 
 COPY --from=FETCHER /git/blockchain-ssm/chaincode /go/src/chaincode-ssm/chaincode
 
-RUN go mod init &&\
-    go get github.com/golang/protobuf@v1.3.2 &&\
-    go get google.golang.org/grpc@v1.23.0 &&\
-    go get github.com/hyperledger/fabric-chaincode-go@release-2.3 &&\
-    go get github.com/hyperledger/fabric-protos-go@a3136dde23548471516ec3eb360e23985d6ebe45 &&\
+RUN go mod init github.com/komune-io/c2/c2-chaincode/chaincode-ssm &&\
+    go get github.com/golang/protobuf@v1.5.3 &&\
+    go get google.golang.org/grpc@v1.61.0 &&\
+    go get github.com/hyperledger/fabric-chaincode-go@v0.0.0-20220920210243-7bc6fa0dd58b &&\
+    go get github.com/hyperledger/fabric-protos-go@v0.2.0 &&\
     go mod vendor
 
 RUN peer chaincode package -n ssm -p chaincode/go/ssm -v $VERSION ssm-$VERSION.pak
