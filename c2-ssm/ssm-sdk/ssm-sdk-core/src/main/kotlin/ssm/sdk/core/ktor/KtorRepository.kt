@@ -15,6 +15,7 @@ import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.ktor.http.path
 import io.ktor.serialization.jackson.jackson
+import org.slf4j.LoggerFactory
 import ssm.chaincode.dsl.model.ChaincodeId
 import ssm.chaincode.dsl.model.ChannelId
 import ssm.sdk.core.auth.AuthCredentials
@@ -25,6 +26,7 @@ class KtorRepository(
 	private val baseUrl: String,
 	private val authCredentials: AuthCredentials?,
 ) {
+	private val logger = LoggerFactory.getLogger(javaClass)
 	companion object {
 		const val PATH = "/"
 		const val CMD_PROPS = "cmd"
@@ -35,7 +37,9 @@ class KtorRepository(
 	}
 
 	val client = HttpClient(CIO) {
-		install(Logging)
+		if(logger.isDebugEnabled) {
+			install(Logging)
+		}
 		install(ContentNegotiation) {
 			jackson()
 		}
