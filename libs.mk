@@ -1,10 +1,12 @@
 VERSION = $(shell cat VERSION)
 
+.PHONY: lint build test test-pre publish promote
+
 lint:
 	./gradlew detekt
 
 build:
-	VERSION=$(VERSION) ./gradlew clean build publishToMavenLocal --refresh-dependencies -x test
+	VERSION=$(VERSION) ./gradlew clean build publishToMavenLocal -x test
 
 test-pre:
 	@make dev up
