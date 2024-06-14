@@ -6,6 +6,7 @@ lint:
 	./gradlew detekt
 
 build:
+	@make build -C c2-chaincode -e VERSION=$(VERSION)
 	VERSION=$(VERSION) ./gradlew clean build publishToMavenLocal -x test
 
 test-pre:
