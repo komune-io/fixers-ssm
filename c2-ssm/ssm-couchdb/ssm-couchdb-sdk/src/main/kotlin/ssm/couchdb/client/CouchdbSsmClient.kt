@@ -140,9 +140,7 @@ class CouchdbSsmClient(
 			query.limit(limit)
 		}
 
-		return cloudant.postChanges(query.build(), ssmName, sessionName).execute().result.also {
-			println(it)
-		}
+		return cloudant.postChanges(query.build(), ssmName, sessionName).execute().result
 	}
 
 	suspend fun installSsmChangesFilter(dbName: DatabaseName) = suspendCoroutine<Boolean> { continuation ->

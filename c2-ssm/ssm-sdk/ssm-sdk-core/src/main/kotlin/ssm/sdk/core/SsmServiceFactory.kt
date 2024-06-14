@@ -10,7 +10,7 @@ import ssm.sdk.sign.SsmCmdSigner
 
 class SsmServiceFactory(
 	private var coopRepository: KtorRepository,
-	private var jsonConverter: JSONConverter,
+	private var jsonConverter: JSONConverterObjectMapper,
 ) {
 
 	fun buildQueryService(): SsmQueryService {
@@ -18,10 +18,15 @@ class SsmServiceFactory(
 	}
 
 	fun buildTxService(ssmCmdSigner: SsmCmdSigner): SsmTxService {
-		return SsmTxService(
-			SsmRequester(jsonConverter, coopRepository),
-			ssmCmdSigner
-		)
+		val ssmService = SsmService(SsmRequester(jsonConverter, coopRepository),
+			ssmCmdSigner)
+		return SsmTxService(ssmService)
+	}
+
+	fun buildCommandService(ssmCmdSigner: SsmCmdSigner): SsmCommandService {
+		val ssmService = SsmService(SsmRequester(jsonConverter, coopRepository),
+			ssmCmdSigner)
+		return SsmCommandService(ssmService)
 	}
 
 	companion object {
@@ -33,7 +38,7 @@ class SsmServiceFactory(
 
 		fun builder(config: SsmSdkConfig, bearerTokenHeaderProvider: BearerTokenAuthCredentials? = null): SsmServiceFactory {
 			val coopRepository = KtorRepository(config.baseUrl, bearerTokenHeaderProvider)
-			val converter: JSONConverter = JSONConverterObjectMapper()
+			val converter = JSONConverterObjectMapper()
 			return SsmServiceFactory(
 				coopRepository = coopRepository,
 				jsonConverter = converter,

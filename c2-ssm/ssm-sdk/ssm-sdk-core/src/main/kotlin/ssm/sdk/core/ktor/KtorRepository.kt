@@ -18,8 +18,12 @@ import io.ktor.serialization.jackson.jackson
 import org.slf4j.LoggerFactory
 import ssm.chaincode.dsl.model.ChaincodeId
 import ssm.chaincode.dsl.model.ChannelId
+import ssm.chaincode.dsl.model.uri.ChaincodeUri
+import ssm.chaincode.dsl.model.uri.from
 import ssm.sdk.core.auth.AuthCredentials
 import ssm.sdk.core.auth.BearerTokenAuthCredentials
+import ssm.sdk.dsl.InvokeCommandArgs
+import ssm.sdk.dsl.InvokeType
 
 
 class KtorRepository(
@@ -84,25 +88,53 @@ class KtorRepository(
 	}
 
 	suspend fun invoke(
-		cmd: String,
+		cmd: InvokeType,
 		fcn: String,
 		args: List<String>,
 		channelId: ChannelId?,
 		chaincodeId: ChaincodeId?,
 	): String {
+		return invoke(InvokeCommandArgs(
+			chaincodeUri= ChaincodeUri.from(channelId = channelId, chaincodeId = chaincodeId),
+			cmd = cmd,
+			args = args,
+			fcn = fcn
+		))
+	}
+
+	suspend fun invoke(
+		invokeArgs: InvokeCommandArgs
+	): String {
+		val body = mapOf(
+			CMD_PROPS to invokeArgs.cmd.value,
+			FCN_PROPS to invokeArgs.fcn,
+			ARGS_PROPS to invokeArgs.args,
+			CHANNEL_ID_PROPS to invokeArgs.chaincodeUri?.channelId,
+			CHAINCODE_ID_PROPS to invokeArgs.chaincodeUri?.chaincodeId,
+		)
 		return client.post(baseUrl) {
 			addAuth()
-
 			contentType(ContentType.Application.Json)
-			setBody(
-				mapOf(
-					CMD_PROPS to cmd,
-					FCN_PROPS to fcn,
-					ARGS_PROPS to args,
-					CHANNEL_ID_PROPS to channelId,
-					CHAINCODE_ID_PROPS to chaincodeId,
-				)
+			setBody(body)
+		}.bodyAsText()
+	}
+
+	suspend fun invoke(
+		invokeArgs: List<InvokeCommandArgs>
+	): String {
+		val body = invokeArgs.map { invokeArg ->
+			mapOf(
+				CMD_PROPS to invokeArg.cmd.value,
+				FCN_PROPS to invokeArg.fcn,
+				ARGS_PROPS to invokeArg.args,
+				CHANNEL_ID_PROPS to invokeArg.chaincodeUri?.channelId,
+				CHAINCODE_ID_PROPS to invokeArg.chaincodeUri?.chaincodeId,
 			)
+		}
+		return client.post("$baseUrl/invoke") {
+			addAuth()
+			contentType(ContentType.Application.Json)
+			setBody(body)
 		}.bodyAsText()
 	}
 
@@ -114,5 +146,3 @@ class KtorRepository(
 	}
 
 }
-
-

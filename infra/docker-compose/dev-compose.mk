@@ -1,4 +1,5 @@
 DOCKER_COMPOSE_FILE = c2-sandbox c2-sandbox-gateway c2-sandbox-ssm c2-sandbox-ex02
+VERSION_C2 = $(shell cat VERSION)
 
 DOCKER_COMPOSE_PATH = infra/docker-compose
 DOCKER_COMPOSE_ENV = $(DOCKER_COMPOSE_PATH)/.env_dev

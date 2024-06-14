@@ -13,6 +13,14 @@ import io.komune.c2.chaincode.api.gateway.config.FabricClientProvider
 import io.komune.c2.chaincode.api.gateway.config.HeraclesConfigProps
 import org.springframework.stereotype.Service
 import java.util.concurrent.CompletableFuture
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.mapNotNull
+import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.future.asDeferred
+import kotlinx.coroutines.future.await
+import reactor.core.publisher.Flux
+import reactor.core.publisher.Mono
 
 @Service
 class ChaincodeService(
@@ -27,8 +35,21 @@ class ChaincodeService(
 		val invokeArgs = InvokeArgs(args.fcn, args.args.iterator())
 		return when (args.cmd) {
 			Cmd.invoke -> doInvoke(chainCodePair.channelId, chainCodePair.chainCodeId, invokeArgs)
+				.thenApply { it.toJson() }
 			Cmd.query -> doQuery(chainCodePair.channelId, chainCodePair.chainCodeId, invokeArgs)
 		}
+	}
+
+	suspend fun execute(args: List<InvokeParams>): List<InvokeReturn> {
+		val futureList = args.mapNotNull { params ->
+			val chainCodePair = coopConfigProps.getChannelChaincodePair(params.channelid, params.chaincodeid)
+			val invokeArgs = InvokeArgs(params.fcn, params.args.iterator())
+			when (params.cmd) {
+				Cmd.invoke -> doInvoke(chainCodePair.channelId, chainCodePair.chainCodeId, invokeArgs).asDeferred()
+				Cmd.query -> null
+			}
+		}
+		return futureList.awaitAll()
 	}
 
 	private fun doQuery(
@@ -62,13 +83,13 @@ class ChaincodeService(
         channelId: ChannelId,
         chainCodeId: ChainCodeId,
         invokeArgs: InvokeArgs,
-	): CompletableFuture<String> {
+	): CompletableFuture<InvokeReturn> {
 		val client = fabricClientProvider.get(channelId)
 		val channelConfig = fabricClientBuilder.getChannelConfig(channelId)
 		val fabricChainCodeClient = fabricClientBuilder.getFabricChainCodeClient(channelId)
 		val future = fabricChainCodeClient.invoke(channelConfig.endorsers, client, channelId, chainCodeId, invokeArgs)
 		return future.thenApply {
-			InvokeReturn("SUCCESS", "", it.transactionID).toJson()
+			InvokeReturn("SUCCESS", "", it.transactionID)
 		}
 	}
 }

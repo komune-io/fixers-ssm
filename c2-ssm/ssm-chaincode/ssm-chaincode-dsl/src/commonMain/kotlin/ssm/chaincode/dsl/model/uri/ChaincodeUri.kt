@@ -43,6 +43,6 @@ fun ChaincodeUriDTO.toSsmUri(ssmName: SsmName): SsmUri {
 	return SsmUri.from(burst().channelId, burst().chaincodeId, ssmName)
 }
 
-fun ChaincodeUri.Companion.from(channelId: ChannelId, chaincodeId: ChaincodeId): ChaincodeUri {
+fun ChaincodeUri.Companion.from(channelId: ChannelId?, chaincodeId: ChaincodeId?): ChaincodeUri {
 	return ChaincodeUri("chaincode:$channelId:$chaincodeId")
 }

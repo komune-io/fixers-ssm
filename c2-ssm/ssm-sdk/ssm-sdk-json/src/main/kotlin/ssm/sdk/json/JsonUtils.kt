@@ -9,12 +9,13 @@ import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinModule
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import java.io.IOException
 import java.io.Reader
 
 object JsonUtils {
 
-	private val mapper: ObjectMapper = ObjectMapper()
+	val mapper: ObjectMapper = ObjectMapper()
 		.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
 		.setSerializationInclusion(JsonInclude.Include.NON_NULL)
 		.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY)

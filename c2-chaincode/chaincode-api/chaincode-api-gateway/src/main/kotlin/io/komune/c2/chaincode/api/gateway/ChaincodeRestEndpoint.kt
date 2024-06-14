@@ -5,6 +5,7 @@ import io.komune.c2.chaincode.api.gateway.chaincode.ChaincodeService
 import io.komune.c2.chaincode.api.gateway.chaincode.model.Cmd
 import io.komune.c2.chaincode.api.gateway.chaincode.model.ErrorResponse
 import io.komune.c2.chaincode.api.gateway.chaincode.model.InvokeParams
+import io.komune.c2.chaincode.api.gateway.chaincode.model.InvokeReturn
 import io.komune.c2.chaincode.api.gateway.config.ChainCodeId
 import io.komune.c2.chaincode.api.gateway.config.ChannelId
 import org.springframework.http.HttpStatus
@@ -48,6 +49,11 @@ class ChaincodeRestEndpoint(
 	fun invokeJson(
 		@RequestBody args: InvokeParams
 	): CompletableFuture<String> = chaincodeService.execute(args)
+
+	@PostMapping(path = ["invoke"], consumes = [MediaType.APPLICATION_JSON_VALUE])
+	suspend fun invokeJson(
+		@RequestBody args: List<InvokeParams>
+	): List<InvokeReturn> = chaincodeService.execute(args)
 
 	@ExceptionHandler(InvokeException::class)
 	fun handleException(invokeException: InvokeException): ResponseEntity<ErrorResponse> {
