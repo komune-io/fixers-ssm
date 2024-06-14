@@ -6,6 +6,7 @@ lint:
 	./gradlew detekt
 
 build:
+	@make -f docker.mk build
 	VERSION=$(VERSION) ./gradlew clean build publishToMavenLocal -x test
 
 test-pre:

@@ -18,7 +18,7 @@ services:
       - net
 
   couchdb.bc-coop.bclan:
-    container_name: couchdb-bclan-network-it
+    container_name: couchdb-bclan-${DOCKER_NETWORK}
     image: couchdb:3.1.2
     environment:
       - COUCHDB_USER=${BCLAN_COUCH_USER}

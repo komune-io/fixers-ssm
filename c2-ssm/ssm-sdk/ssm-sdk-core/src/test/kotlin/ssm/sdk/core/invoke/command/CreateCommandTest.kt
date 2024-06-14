@@ -44,7 +44,7 @@ class CreateCommandTest {
 
 		val (fcn, args) = CreateCmd(ssm).invoke(signerUser.name, signer).buildArgs()
 
-		args.forEach(Consumer { s: String? -> println(s) })
+		args.forEach { s: String? -> println(s) }
 		/**
 		 * {
 		 * "InvokeArgs": [

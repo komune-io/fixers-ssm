@@ -31,9 +31,7 @@ class HeraclesConfigProps(
 	fun getChannelChaincodes(): Map<ChannelId, ChannelChaincode> {
 		val user = requireNotNull(user) { "Bad user[${user}] in application.yml" }
 		val config = requireNotNull(config) { "Bad config[${config}] in application.yml" }
-		return ChannelChaincode.fromConfig(getCcids(), user, config, getEndorsers()).also {
-			println(it)
-		}
+		return ChannelChaincode.fromConfig(getCcids(), user, config, getEndorsers())
 	}
 
 	fun getChannelChaincodePair(channelId: ChannelId?, chainCodeId: String?): ChannelChaincodePair {

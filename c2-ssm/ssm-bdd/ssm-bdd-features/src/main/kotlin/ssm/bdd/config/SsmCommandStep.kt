@@ -202,7 +202,7 @@ abstract class SsmCommandStep {
 
 	protected abstract suspend fun registerUser(agent: Agent)
 
-	protected suspend fun loadSignerAdmin(adminName: AgentName? = null, filename: String? = null): SignerAdmin {
+	private fun loadSignerAdmin(adminName: AgentName? = null, filename: String? = null): SignerAdmin {
 		return when {
 			adminName != null -> {
 				SignerAdmin.loadFromFile("ssm-admin", filename)
@@ -214,7 +214,6 @@ abstract class SsmCommandStep {
 				SignerAdmin.loadFromFile("ssm-admin", "local/admin/ssm-admin")
 			}
 		}
-
 	}
 
 	protected abstract suspend fun loadSigner(agentName: AgentName, filename: String): SignerUser
