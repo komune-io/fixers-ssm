@@ -6,7 +6,8 @@ lint:
 	./gradlew detekt
 
 build:
-	@make build -C c2-chaincode -e VERSION=$(VERSION)
+	# Build chaincode-api-gateway docker because it used in infra/dev/docker-compose-c2-sandbox-gateway.yml
+	@make -f docker.mk docker-chaincode-api-gateway-build
 	VERSION=$(VERSION) ./gradlew clean build publishToMavenLocal -x test
 
 test-pre:
