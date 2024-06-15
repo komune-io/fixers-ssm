@@ -9,17 +9,14 @@ build:
 	VERSION=$(VERSION) ./gradlew clean build publishToMavenLocal -x test
 
 test-pre:
+	@make dev pull
 	@make dev up
-	@echo "///////////////////////1"
-	@make dev c2-sandbox logs
 	@echo "///////////////////////2"
 	@make dev c2-sandbox-ssm logs
 	@echo "///////////////////////3"
 	@make dev c2-sandbox-ex02 logs
 	@echo "///////////////////////4"
 	@make dev up
-	@echo "///////////////////////5"
-	@make dev c2-sandbox logs
 	@echo "///////////////////////6"
 	@make dev c2-sandbox-ssm logs
 	@echo "///////////////////////7"
