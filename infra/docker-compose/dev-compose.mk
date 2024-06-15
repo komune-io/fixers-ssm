@@ -34,7 +34,7 @@ dev-service-action:
 	elif [ "$(ACTION)" = "down" ]; then \
 		docker compose --env-file $(DOCKER_COMPOSE_ENV) -f $(DOCKER_COMPOSE_PATH)/docker-compose-$(SERVICE).yml down -v; \
 	elif [ "$(ACTION)" = "logs" ]; then \
-		docker compose --env-file $(DOCKER_COMPOSE_ENV) -f $(DOCKER_COMPOSE_PATH)/docker-compose-$(SERVICE).yml logs -f; \
+		docker compose --env-file $(DOCKER_COMPOSE_ENV) -f $(DOCKER_COMPOSE_PATH)/docker-compose-$(SERVICE).yml logs; \
 	else \
 		echo 'No valid action: $(ACTION).'; \
 		echo 'Available actions are:'; \
