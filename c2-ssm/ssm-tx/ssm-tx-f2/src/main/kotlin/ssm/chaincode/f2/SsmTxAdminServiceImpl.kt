@@ -20,7 +20,8 @@ class SsmTxAdminServiceImpl(
 	private val ssmUserGrantFunction: SsmUserGrantFunctionImpl = SsmUserGrantFunctionImpl(ssmTxService),
 	private val ssmUserRegisterFunction: SsmUserRegisterFunctionImpl = SsmUserRegisterFunctionImpl(ssmTxService),
 	private val ssmTxCreateFunction: SsmTxCreateFunctionImpl = SsmTxCreateFunctionImpl(ssmTxService),
-	private val ssmTxSessionStartFunction: SsmTxSessionStartFunctionImpl = SsmTxSessionStartFunctionImpl(ssmTxService),
+	private val ssmTxSessionStartFunction: SsmTxSessionStartFunctionImpl
+		= SsmTxSessionStartFunctionImpl(ssmTxService),
 ) : SsmTxAdminFunctions {
 
 	override fun ssmTxUserGrantFunction(): SsmTxUserGrantFunction {

@@ -57,7 +57,7 @@ class SsmTxInitFunctionImpl(
 
 	private suspend fun createSsm(chaincodeUri: ChaincodeUri, ssm: Ssm, signerName: AgentName): InvokeReturn {
 		try {
-			return txService.sendCreate(chaincodeUri, ssm, signerName)!!
+			return txService.sendCreate(chaincodeUri, ssm, signerName)
 		} catch (e: Exception) {
 			throw SsmException(e)
 		}

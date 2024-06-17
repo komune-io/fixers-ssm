@@ -17,7 +17,7 @@ class SsmTxCreateFunctionImpl(
 		try {
 			ssmTxService.sendCreate(payload.chaincodeUri.burst(), payload.ssm, payload.signerName).let { invokeReturn ->
 				SsmCreateResult(
-					transactionId = invokeReturn!!.transactionId,
+					transactionId = invokeReturn.transactionId,
 				)
 			}
 		} catch (e: Exception) {

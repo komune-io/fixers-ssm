@@ -60,10 +60,11 @@ public class FabricChainCodeClient {
             TransactionProposalRequest qpr = buildTransactionProposalRequest(client, chainCodeId, invokeArgs);
             Collection<ProposalResponse> responses = channel.sendTransactionProposal(qpr, channel.getPeers());
             List<String> errors = checkProposals(responses);
+
             if(errors.size() >= responses.size()) {
                 StringJoiner joiner = new StringJoiner(",");
                 errors.forEach(error -> joiner.add(error));
-                logger.info("Transaction errors: " + joiner.toString());
+                logger.info("Transaction["+invokeArgs.getFunction()+"] errors: " + joiner.toString());
                 throw new InvokeException(errors);
             }
             return channel.sendTransaction(responses);

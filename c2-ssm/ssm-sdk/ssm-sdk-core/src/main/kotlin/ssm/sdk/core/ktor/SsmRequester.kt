@@ -72,11 +72,11 @@ class SsmRequester(
 	}
 
 	@Throws(Exception::class)
-	suspend operator fun invoke(chaincodeUri: ChaincodeUri, cmdSigned: SsmCmdSigned): InvokeReturn {
+	suspend operator fun invoke(cmdSigned: SsmCmdSigned): InvokeReturn {
 		val invokeArgs = cmdSigned.buildArgs()
 		logger.info(
 			"""
-            Invoke the blockchain in channel[${chaincodeUri.chaincodeId}]  with command[${invokeArgs.fcn}] 
+            Invoke the blockchain in channel[${cmdSigned.chaincodeUri.chaincodeId}]  with command[${invokeArgs.fcn}] 
             with args:$invokeArgs
         """.trimIndent()
 		)
@@ -84,20 +84,22 @@ class SsmRequester(
 			cmd = InvokeType.INVOKE,
 			fcn = invokeArgs.fcn,
 			args = invokeArgs.args,
-			channelId = chaincodeUri.channelId,
-			chaincodeId = chaincodeUri.chaincodeId,
+			channelId = cmdSigned.chaincodeUri.channelId,
+			chaincodeId = cmdSigned.chaincodeUri.chaincodeId,
 		).let {
 			jsonConverter.toCompletableObject(InvokeReturn::class.java, it)!!
 		}
 	}
 
 	@Throws(Exception::class)
-	suspend operator fun invoke(chaincodeUri: ChaincodeUri, cmds: List<SsmCmdSigned>): List<InvokeReturn> {
+	suspend operator fun invoke( cmds: List<SsmCmdSigned>): List<InvokeReturn> {
 		val args = cmds.map { cmd ->
-			val invokeArgs = cmd.buildCommandArgs(InvokeType.INVOKE, chaincodeUri)
+			val invokeArgs = cmd.buildCommandArgs(InvokeType.INVOKE)
 			logger.info(
 				"""
-				Invoke the blockchain in channel[${chaincodeUri.chaincodeId}]  with command[${invokeArgs.fcn}] 
+				Invoke the blockchain in channel
+				[${cmd.chaincodeUri.channelId}:${cmd.chaincodeUri.chaincodeId}] 
+				with command[${invokeArgs.fcn}] 
 				with args:$invokeArgs
 			""".trimIndent()
 			)

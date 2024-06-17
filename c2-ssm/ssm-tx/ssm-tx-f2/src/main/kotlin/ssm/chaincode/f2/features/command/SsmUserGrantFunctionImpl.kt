@@ -15,7 +15,7 @@ class SsmUserGrantFunctionImpl(
 
 	override suspend fun invoke(msgs: Flow<SsmUserGrantCommand>): Flow<SsmUserGrantedResult> = msgs.map { payload ->
 		try {
-			ssmTxService.sendRegisterUser(payload.chaincodeUri.burst(), payload.agent, payload.signerName)!!.let { result ->
+			ssmTxService.sendRegisterUser(payload.chaincodeUri.burst(), payload.agent, payload.signerName).let { result ->
 				SsmUserGrantedResult(
 					transactionId = result.transactionId,
 				)
