@@ -20,9 +20,8 @@ import ssm.chaincode.dsl.model.SsmSession
 import ssm.chaincode.dsl.model.SsmSessionState
 import ssm.chaincode.dsl.model.SsmTransition
 import ssm.chaincode.dsl.model.uri.ChaincodeUri
-import ssm.sdk.client.SsmClientItTest.Companion
-import ssm.sdk.core.SsmCommandService
 import ssm.sdk.core.SsmQueryService
+import ssm.sdk.core.SsmTxService
 import ssm.sdk.core.command.SsmCreateCommand
 import ssm.sdk.core.command.SsmPerformCommand
 import ssm.sdk.core.command.SsmStartCommand
@@ -50,7 +49,7 @@ class SsmClientArrayTest {
         const val USER2_FILENAME = NETWORK + "sam"
 
         private lateinit var query: SsmQueryService
-        private lateinit var tx: SsmCommandService
+        private lateinit var tx: SsmTxService
         private lateinit var ssmName: String
         private lateinit var sessionName: String
         private lateinit var session: SsmSession
@@ -84,7 +83,7 @@ class SsmClientArrayTest {
         @Throws(Exception::class)
         fun init() {
             query = SsmClientTestBuilder.build().buildQueryService()
-            tx = SsmClientTestBuilder.build().buildCommandService(signer)
+            tx = SsmClientTestBuilder.build().buildTxService(signer)
             ssmName = "CarDealership-$uuid"
             val roles = mapOf(
                 signerUser1.name to "Buyer", signerUser2.name to "Seller"

@@ -60,6 +60,7 @@ class TxSteps : SsmCommandStep(), En {
 
 	private fun getSsmTxAdminServiceImpl() = SsmTxAdminServiceImpl(
 		ssmTxService = bag.clientTx(bag.adminSigner),
-//		ssmCommandService = bag.clientCommand(bag.adminSigner),
-		ssmQueryService = bag.clientQuery)
+		ssmQueryService = bag.clientQuery,
+		chunking = bag.invokeChunkedProps
+	)
 }

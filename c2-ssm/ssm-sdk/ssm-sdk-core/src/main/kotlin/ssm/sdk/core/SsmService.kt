@@ -1,6 +1,5 @@
 package ssm.sdk.core
 
-import ssm.chaincode.dsl.model.uri.ChaincodeUri
 import ssm.sdk.core.ktor.SsmRequester
 import ssm.sdk.dsl.InvokeReturn
 import ssm.sdk.dsl.SsmCmd

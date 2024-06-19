@@ -10,5 +10,5 @@ import ssm.tx.dsl.features.ssm.SsmTxSessionPerformActionFunction
  * @parent [ssm.tx.dsl.SsmTxD2]
  */
 interface SsmTxUserFunctions {
-	fun ssmTxSessionPerformActionFunction(config: SsmChaincodeConfig): SsmTxSessionPerformActionFunction
+	fun ssmTxSessionPerformActionFunction(): SsmTxSessionPerformActionFunction
 }

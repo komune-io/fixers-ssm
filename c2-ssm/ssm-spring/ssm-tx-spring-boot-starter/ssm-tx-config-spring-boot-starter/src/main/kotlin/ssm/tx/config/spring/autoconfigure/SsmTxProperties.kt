@@ -1,6 +1,7 @@
 package ssm.tx.config.spring.autoconfigure
 
 import org.springframework.boot.context.properties.ConfigurationProperties
+import ssm.chaincode.dsl.config.InvokeChunkedProps
 import ssm.chaincode.dsl.config.SsmChaincodeConfig
 import ssm.sdk.sign.model.SignerAdmin
 
@@ -8,6 +9,7 @@ import ssm.sdk.sign.model.SignerAdmin
 data class SsmTxProperties(
 	val chaincode: SsmChaincodeConfig?,
 	val signer: SignerFileConfig?,
+	val chunking: InvokeChunkedProps = chaincode?.chunking ?: InvokeChunkedProps()
 ) {
 	class SignerFileConfig(
 		val admin: SignerAgentFileConfig?,

@@ -24,8 +24,11 @@ class SsmRequester(
 	suspend fun <T> log(chaincodeUri: ChaincodeUri, value: String, query: HasGet, clazz: TypeReference<List<T>>): List<T> {
 		val args = query.queryArgs(value)
 		logger.info(
-			"Query[${InvokeType.QUERY}] the blockchain in chaincode[${chaincodeUri.uri}] " +
-					"with fcn[${args.fcn}] with args:${args.args}",
+			"Query[{}] the blockchain in chaincode[{}] with fcn[{}] with args:{}",
+			InvokeType.QUERY,
+			chaincodeUri.uri,
+			args.fcn,
+			args.args
 		)
 		val request = coopRepository.query(
 			cmd = InvokeType.QUERY.value,
@@ -49,7 +52,10 @@ class SsmRequester(
 			chaincodeId = chaincodeUri.chaincodeId,
 		)
 		logger.info(
-			"Query the blockchain in chaincode[${chaincodeUri.uri}] with fcn[${args.fcn}] with args:${args.args}",
+			"Query the blockchain in chaincode[{}] with fcn[{}] with args:{}",
+			chaincodeUri.uri,
+			args.fcn,
+			args.args
 		)
 		return request.let { jsonConverter.toCompletableObject(clazz, it) }
 	}
@@ -75,10 +81,10 @@ class SsmRequester(
 	suspend operator fun invoke(cmdSigned: SsmCmdSigned): InvokeReturn {
 		val invokeArgs = cmdSigned.buildArgs()
 		logger.info(
-			"""
-            Invoke the blockchain in channel[${cmdSigned.chaincodeUri.chaincodeId}]  with command[${invokeArgs.fcn}] 
-            with args:$invokeArgs
-        """.trimIndent()
+			"Invoke[single] the blockchain in channel[{}]  with command[{}] with args:{}",
+			cmdSigned.chaincodeUri.chaincodeId,
+			invokeArgs.fcn,
+			invokeArgs
 		)
 		return coopRepository.invoke(
 			cmd = InvokeType.INVOKE,
@@ -93,15 +99,15 @@ class SsmRequester(
 
 	@Throws(Exception::class)
 	suspend operator fun invoke( cmds: List<SsmCmdSigned>): List<InvokeReturn> {
-		val args = cmds.map { cmd ->
+		val total = cmds.size
+		val args = cmds.mapIndexed { index, cmd ->
 			val invokeArgs = cmd.buildCommandArgs(InvokeType.INVOKE)
 			logger.info(
-				"""
-				Invoke the blockchain in channel
-				[${cmd.chaincodeUri.channelId}:${cmd.chaincodeUri.chaincodeId}] 
-				with command[${invokeArgs.fcn}] 
-				with args:$invokeArgs
-			""".trimIndent()
+				"Invoke[${index+1}/$total] the blockchain in channel[{}:{}] with command[{}] with args:{}",
+				cmd.chaincodeUri.channelId,
+				cmd.chaincodeUri.chaincodeId,
+				invokeArgs.fcn,
+				invokeArgs,
 			)
 			invokeArgs
 		}
