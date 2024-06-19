@@ -2,6 +2,7 @@ package ssm.chaincode.f2.features.command
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import ssm.chaincode.dsl.config.InvokeChunkedProps
 import ssm.chaincode.dsl.model.Agent
 import ssm.chaincode.dsl.model.AgentName
 import ssm.chaincode.dsl.model.Ssm
@@ -16,6 +17,7 @@ import ssm.tx.dsl.features.ssm.SsmInitdResult
 import ssm.tx.dsl.features.ssm.SsmTxInitFunction
 
 class SsmTxInitFunctionImpl(
+//	private val chunking: InvokeChunkedProps,
 	private val txService: SsmTxService,
 	private val queryService: SsmQueryService,
 ): SsmTxInitFunction {
@@ -57,7 +59,7 @@ class SsmTxInitFunctionImpl(
 
 	private suspend fun createSsm(chaincodeUri: ChaincodeUri, ssm: Ssm, signerName: AgentName): InvokeReturn {
 		try {
-			return txService.sendCreate(chaincodeUri, ssm, signerName)!!
+			return txService.sendCreate(chaincodeUri, ssm, signerName)
 		} catch (e: Exception) {
 			throw SsmException(e)
 		}

@@ -58,5 +58,9 @@ class TxSteps : SsmCommandStep(), En {
 		return SignerUser.loadFromFile(agentName, filename)
 	}
 
-	private fun getSsmTxAdminServiceImpl() = SsmTxAdminServiceImpl(bag.clientTx(bag.adminSigner), bag.clientQuery)
+	private fun getSsmTxAdminServiceImpl() = SsmTxAdminServiceImpl(
+		ssmTxService = bag.clientTx(bag.adminSigner),
+		ssmQueryService = bag.clientQuery,
+		chunking = bag.invokeChunkedProps
+	)
 }

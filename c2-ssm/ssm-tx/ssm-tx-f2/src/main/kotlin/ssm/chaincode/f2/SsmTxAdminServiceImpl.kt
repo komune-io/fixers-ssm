@@ -1,5 +1,6 @@
 package ssm.chaincode.f2
 
+import ssm.chaincode.dsl.config.InvokeChunkedProps
 import ssm.chaincode.f2.features.command.SsmTxCreateFunctionImpl
 import ssm.chaincode.f2.features.command.SsmTxInitFunctionImpl
 import ssm.chaincode.f2.features.command.SsmTxSessionStartFunctionImpl
@@ -17,30 +18,28 @@ import ssm.tx.dsl.features.user.SsmTxUserRegisterFunction
 class SsmTxAdminServiceImpl(
 	private val ssmTxService: SsmTxService,
 	private val ssmQueryService: SsmQueryService,
-	private val ssmUserGrantFunction: SsmUserGrantFunctionImpl = SsmUserGrantFunctionImpl(ssmTxService),
-	private val ssmUserRegisterFunction: SsmUserRegisterFunctionImpl = SsmUserRegisterFunctionImpl(ssmTxService),
-	private val ssmTxCreateFunction: SsmTxCreateFunctionImpl = SsmTxCreateFunctionImpl(ssmTxService),
-	private val ssmTxSessionStartFunction: SsmTxSessionStartFunctionImpl = SsmTxSessionStartFunctionImpl(ssmTxService),
+	private val chunking: InvokeChunkedProps
 ) : SsmTxAdminFunctions {
 
 	override fun ssmTxUserGrantFunction(): SsmTxUserGrantFunction {
-		return ssmUserGrantFunction
+		return SsmUserGrantFunctionImpl(chunking, ssmTxService)
 	}
 
 		override fun ssmTxUserRegisterFunction(): SsmTxUserRegisterFunction {
-		return ssmUserRegisterFunction
+		return SsmUserRegisterFunctionImpl(chunking, ssmTxService)
 	}
 
 
 	override fun ssmTxCreateFunction(): SsmTxCreateFunction {
-		return ssmTxCreateFunction
+		return SsmTxCreateFunctionImpl(chunking, ssmTxService)
 	}
 
 	override fun ssmTxInitializeFunction(): SsmTxInitFunction {
+//		return SsmTxInitFunctionImpl(chunking, ssmTxService, ssmQueryService)
 		return SsmTxInitFunctionImpl(ssmTxService, ssmQueryService)
 	}
 
 	override fun ssmTxSessionStartFunction(): SsmTxSessionStartFunction {
-		return ssmTxSessionStartFunction
+		return SsmTxSessionStartFunctionImpl(chunking, ssmTxService)
 	}
 }

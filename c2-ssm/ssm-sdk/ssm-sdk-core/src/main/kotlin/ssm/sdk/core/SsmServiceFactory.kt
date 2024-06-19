@@ -23,12 +23,6 @@ class SsmServiceFactory(
 		return SsmTxService(ssmService)
 	}
 
-	fun buildCommandService(ssmCmdSigner: SsmCmdSigner): SsmCommandService {
-		val ssmService = SsmService(SsmRequester(jsonConverter, coopRepository),
-			ssmCmdSigner)
-		return SsmCommandService(ssmService)
-	}
-
 	companion object {
 		@Throws(IOException::class)
 		fun builder(filename: String, bearerTokenHeaderProvider: BearerTokenAuthCredentials? = null): SsmServiceFactory {

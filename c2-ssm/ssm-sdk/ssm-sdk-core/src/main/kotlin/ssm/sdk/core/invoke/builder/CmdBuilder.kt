@@ -1,6 +1,7 @@
 package ssm.sdk.core.invoke.builder
 
 import ssm.chaincode.dsl.model.AgentName
+import ssm.chaincode.dsl.model.uri.ChaincodeUri
 import ssm.sdk.dsl.SsmCmd
 import ssm.sdk.dsl.SsmCmdName
 import ssm.sdk.dsl.SsmCmdSigned
@@ -12,15 +13,21 @@ open class CmdBuilder<T>(
 	private val commandName: SsmCmdName,
 	private val performAction: String? = null) {
 
-	operator fun invoke(agentName: AgentName, signer: SsmCmdSigner): SsmCmdSigned {
-		val cmd = commandToSign()
-		return signer.sign(cmd, agentName)
+	operator fun invoke(chaincodeUri: ChaincodeUri, agentName: AgentName, signer: SsmCmdSigner): SsmCmdSigned {
+		val cmd = commandToSign(chaincodeUri, agentName)
+		return signer.sign(cmd)
 	}
 
-	fun commandToSign(): SsmCmd {
+	fun commandToSign(chaincodeUri: ChaincodeUri, agentName: AgentName): SsmCmd {
 		val json = JsonUtils.toJson(value)
 		val toSign = valueToSign(json)
-		return SsmCmd(json = json, command = commandName, performAction = performAction, valueToSign = toSign)
+		return SsmCmd(
+			json = json, command = commandName,
+			performAction = performAction,
+			valueToSign = toSign,
+			chaincodeUri = chaincodeUri,
+			agentName = agentName
+		)
 	}
 
 	private fun valueToSign(json: String): String {

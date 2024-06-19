@@ -6,6 +6,7 @@ import org.assertj.core.util.Lists
 import org.junit.jupiter.api.Test
 import ssm.chaincode.dsl.model.Ssm
 import ssm.chaincode.dsl.model.SsmTransition
+import ssm.chaincode.dsl.model.uri.ChaincodeUri
 import ssm.sdk.dsl.buildArgs
 import ssm.sdk.sign.SsmCmdSignerSha256RSASigner
 import ssm.sdk.sign.crypto.KeyPairReader.loadKeyPair
@@ -33,6 +34,7 @@ class CreateCommandTest {
 	@Test
 	@Throws(Exception::class)
 	fun testExecute() {
+		val  chaincodeUri = ChaincodeUri("chaincode:sandbox:ssm")
 		val adamPair = loadKeyPair("command/adam")
 		val signerUser = SignerUser("adam", adamPair)
 		val signer = SsmCmdSignerSha256RSASigner(
@@ -42,7 +44,7 @@ class CreateCommandTest {
 		val buy = SsmTransition(1, 2, "Buyer", "Buy")
 		val ssm = Ssm("dealership", Lists.newArrayList(sell, buy))
 
-		val (fcn, args) = CreateCmd(ssm).invoke(signerUser.name, signer).buildArgs()
+		val (fcn, args) = CreateCmd(ssm).invoke(chaincodeUri, signerUser.name, signer).buildArgs()
 
 		args.forEach { s: String? -> println(s) }
 		/**

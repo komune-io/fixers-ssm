@@ -4,6 +4,7 @@ import java.util.function.Consumer
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import ssm.chaincode.dsl.model.Agent
+import ssm.chaincode.dsl.model.uri.ChaincodeUri
 import ssm.sdk.dsl.buildArgs
 import ssm.sdk.sign.SsmCmdSignerSha256RSASigner
 import ssm.sdk.sign.extention.loadFromFile
@@ -13,14 +14,15 @@ class RegisterCommandTest {
 	@Test
 	@Throws(Exception::class)
 	fun test_execute() {
+		val  chaincodeUri = ChaincodeUri("chaincode:sandbox:ssm")
 		val agent = Agent.loadFromFile("vivi", "command/vivi")
 		val signerUser = SignerUser.loadFromFile("adam", "command/adam")
 		val signer = SsmCmdSignerSha256RSASigner(
 			signerUser
 		)
 
-		val (fcn, args) = RegisterCmd(agent).invoke(signerUser.name, signer).buildArgs()
-		args.forEach(Consumer { s: String? -> println(s) })
+		val (fcn, args) = RegisterCmd(agent).invoke(chaincodeUri, signerUser.name, signer).buildArgs()
+		args.forEach { s: String? -> println(s) }
 		Assertions.assertThat(fcn).isEqualTo("register")
 		@Suppress("MaxLineLength")
 		Assertions.assertThat(args)

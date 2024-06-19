@@ -1,15 +1,18 @@
 package ssm.sdk.core.invoke.command
 
-import java.util.function.Consumer
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import ssm.chaincode.dsl.model.SsmContext
+import ssm.chaincode.dsl.model.uri.ChaincodeUri
 import ssm.sdk.dsl.buildArgs
 import ssm.sdk.sign.SsmCmdSignerSha256RSASigner
 import ssm.sdk.sign.crypto.KeyPairReader.loadKeyPair
 import ssm.sdk.sign.model.SignerUser
 
 class PerformCommandTest {
+
+	val  chaincodeUri = ChaincodeUri("chaincode:sandbox:ssm")
+
 	@Test
 	@Throws(Exception::class)
 	fun test_execute() {
@@ -21,7 +24,7 @@ class PerformCommandTest {
 
 //        "{\"session\":\"deal20181201\",\"public\":\"100 dollars 1978 Camaro\",\"iteration\":0}"
 		val context = SsmContext("deal20181201", "100 dollars 1978 Camaro", 0, null)
-		val (fcn, args) = PerformCmd("Sell", context).invoke(signerUser.name, signer).buildArgs()
+		val (fcn, args) = PerformCmd("Sell", context).invoke(chaincodeUri, signerUser.name, signer).buildArgs()
 //		args.forEach(Consumer { s: String? -> println(s) })
 		Assertions.assertThat(fcn).isEqualTo("perform")
 		@Suppress("MaxLineLength")
@@ -48,7 +51,7 @@ class PerformCommandTest {
 
 //        "{\"session\":\"deal20181201\",\"public\":\"100 dollars 1978 Camaro\",\"iteration\":0}"
 		val context = SsmContext("deal20181201", "100 dollars 1978 Camaro", 0, mapOf("vivi" to "message"))
-		val (fcn, args) = PerformCmd("Sell", context).invoke(signerUser.name, signer).buildArgs()
+		val (fcn, args) = PerformCmd("Sell", context).invoke(chaincodeUri, signerUser.name, signer).buildArgs()
 //		args.forEach(Consumer { s: String? -> println(s) })
 		Assertions.assertThat(fcn).isEqualTo("perform")
 		@Suppress("MaxLineLength")
