@@ -16,6 +16,7 @@ jobs:
     permissions:
       contents: read
       packages: write
+    needs: docker
     with:
       make-file: 'libs.mk'
       on-tag: 'promote'
@@ -35,6 +36,7 @@ jobs:
     with:
       with-docker-registry-login: 'true'
       make-file: 'docker.mk'
+      on-tag: 'publish promote'
     secrets:
       PKG_GITHUB_USERNAME: ${{ github.actor }}
       PKG_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
