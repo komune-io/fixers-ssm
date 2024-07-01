@@ -16,6 +16,7 @@ jobs:
     permissions:
       contents: read
       packages: write
+    needs: docker
     with:
       make-file: 'libs.mk'
       on-tag: 'promote'
