@@ -16,20 +16,24 @@ object PluginVersions {
 }
 
 object Versions {
-	const val slf4j = FixersVersions.Logging.slf4j
-	const val jacksonKotlin = FixersVersions.Json.jacksonKotlin
+
 	val f2 = PluginVersions.fixers
-	val springBoot = FixersVersions.Spring.boot
-	val springSecurity = FixersVersions.Spring.security
-	val ktor = FixersVersions.Kotlin.ktor
-	val slf4J = FixersVersions.Logging.slf4j
+
+	const val slf4j = FixersVersions.Logging.slf4j
+	const val jackson = FixersVersions.Json.jackson
+	const val jacksonKotlin = FixersVersions.Json.jacksonKotlin
+
+	const val springBoot = FixersVersions.Spring.boot
+	const val springSecurity = FixersVersions.Spring.security
+	const val reactor = FixersVersions.Spring.reactor
+
+	const val ktor = FixersVersions.Kotlin.ktor
 
 	const val fabric = "2.2.26"
-	const val jackson = "2.16.1"
 
 	const val cloudant = "0.3.1"
 	const val bouncycastleVersion = "1.70"
-	const val reactor = "3.6.3"
+//	const val nettyTcnative = "2.0.48.Final"
 
 	const val junit = FixersVersions.Test.junit
 	const val assertj = FixersVersions.Test.assertj
@@ -61,8 +65,8 @@ object Dependencies {
 		"org.assertj:assertj-core:${Versions.assertj}"
 	)
 
-	fun nettyTcnative(scope: Scope) = scope.add(
-		"io.netty:netty-tcnative-boringssl-static:2.0.48.Final",
-		"io.netty:netty-tcnative-classes:2.0.48.Final"
-	)
+//	fun nettyTcnative(scope: Scope) = scope.add(
+//		"io.netty:netty-tcnative-boringssl-static:${Versions.nettyTcnative}",
+//		"io.netty:netty-tcnative-classes:${Versions.nettyTcnative}"
+//	)
 }

@@ -15,7 +15,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-webflux:${Versions.springBoot}")
 	Dependencies.jackson(::implementation)
 
-	Dependencies.nettyTcnative(::runtimeOnly)
+//	Dependencies.nettyTcnative(::runtimeOnly)
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test:${Versions.springBoot}")
 	testImplementation("io.projectreactor:reactor-test:${Versions.reactor}")
