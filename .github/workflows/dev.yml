@@ -37,6 +37,7 @@ jobs:
       with-docker-registry-login: 'true'
       make-file: 'docker.mk'
       on-tag: 'publish promote'
+      force-publish: 'true'
     secrets:
       PKG_GITHUB_USERNAME: ${{ github.actor }}
       PKG_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
