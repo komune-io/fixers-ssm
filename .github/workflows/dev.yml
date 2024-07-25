@@ -29,7 +29,7 @@ jobs:
       PKG_SONATYPE_OSS_TOKEN: ${{ secrets.PKG_SONATYPE_OSS_TOKEN }}
 
   docker:
-    uses: komune-io/fixers-gradle/.github/workflows/make-jvm-workflow.yml@main
+    uses: komune-io/fixers-gradle/.github/workflows/make-jvm-workflow.yml@d567c63b5960c5b8d3dd083c8fb3691010bd29f1
     permissions:
       contents: read
       packages: write
@@ -37,6 +37,7 @@ jobs:
       with-docker-registry-login: 'true'
       make-file: 'docker.mk'
       on-tag: 'publish promote'
+      force-publish: 'true'
     secrets:
       PKG_GITHUB_USERNAME: ${{ github.actor }}
       PKG_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
