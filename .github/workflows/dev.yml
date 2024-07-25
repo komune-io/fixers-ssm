@@ -29,7 +29,7 @@ jobs:
       PKG_SONATYPE_OSS_TOKEN: ${{ secrets.PKG_SONATYPE_OSS_TOKEN }}
 
   docker:
-    uses: komune-io/fixers-gradle/.github/workflows/make-jvm-workflow.yml@d567c63b5960c5b8d3dd083c8fb3691010bd29f1
+    uses: komune-io/fixers-gradle/.github/workflows/make-jvm-workflow.yml@ec0c3b33910052f5f6b90904573622d7ee0cfd1b
     permissions:
       contents: read
       packages: write
