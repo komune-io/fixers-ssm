@@ -40,13 +40,13 @@ class ChaincodeService(
 		}
 	}
 
-	suspend fun execute(args: List<InvokeParams>): List<InvokeReturn> {
-		val futureList = args.mapNotNull { params ->
+	suspend fun execute(args: List<InvokeParams>): List<Any> {
+		val futureList = args.map { params ->
 			val chainCodePair = coopConfigProps.getChannelChaincodePair(params.channelid, params.chaincodeid)
 			val invokeArgs = InvokeArgs(params.fcn, params.args.iterator())
 			when (params.cmd) {
 				Cmd.invoke -> doInvoke(chainCodePair.channelId, chainCodePair.chainCodeId, invokeArgs).asDeferred()
-				Cmd.query -> null
+				Cmd.query -> doQuery(chainCodePair.channelId, chainCodePair.chainCodeId, invokeArgs).asDeferred()
 			}
 		}
 		return futureList.awaitAll()
@@ -75,7 +75,9 @@ class ChaincodeService(
 		val channelConfig = fabricClientBuilder.getChannelConfig(channelId)
 		val fabricChainCodeClient = fabricClientBuilder.getFabricChainCodeClient(channelId)
 		return CompletableFuture.completedFuture(
-			fabricChainCodeClient.query(channelConfig.endorsers, client, channelId, chainCodeId, invokeArgs)
+			fabricChainCodeClient
+				.query(channelConfig.endorsers, client, channelId, chainCodeId, invokeArgs)
+				.ifBlank { null }
 		)
 	}
 

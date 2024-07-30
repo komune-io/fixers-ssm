@@ -54,8 +54,12 @@ data class SsmUri(override val uri: String): SsmUriDTO {
 	@Transient
 	val chaincodeUri
 		get() = ChaincodeUri.from(channelId, chaincodeId)
-
 }
+
+fun SsmUri.Companion.from(
+		chaincodeUri: ChaincodeUri,
+		ssmName: SsmName,
+) = SsmUri("${PREFIX}:${chaincodeUri.channelId}:${chaincodeUri.chaincodeId}:$ssmName")
 
 fun SsmUri.Companion.from(
 		 channelId: ChannelId,

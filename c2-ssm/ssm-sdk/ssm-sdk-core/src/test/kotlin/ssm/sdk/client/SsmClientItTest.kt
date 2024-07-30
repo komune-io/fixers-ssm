@@ -286,7 +286,7 @@ class SsmClientItTest {
 
 	@Test
 	@Order(150)
-	private fun listSession() = runTest {
+	fun listSession() = runTest {
 		val agentRet = query.listSession(chaincodeUri)
 		Assertions.assertThat(agentRet).contains(sessionName)
 	}

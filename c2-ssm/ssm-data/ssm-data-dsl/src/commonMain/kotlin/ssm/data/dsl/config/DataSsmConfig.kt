@@ -1,5 +1,6 @@
 package ssm.data.dsl.config
 
+import ssm.chaincode.dsl.config.InvokeChunkedProps
 import ssm.chaincode.dsl.config.SsmChaincodeConfig
 import ssm.couchdb.dsl.config.SsmCouchdbConfig
 
@@ -9,6 +10,10 @@ import ssm.couchdb.dsl.config.SsmCouchdbConfig
  * @parent [ssm.data.dsl.DataSsmD2]
  */
 data class DataSsmConfig(
+	/**
+	 * Configuration for chunking.
+	 */
+	val chunking: InvokeChunkedProps,
 	/**
 	 * Configuration for couchdb.
 	 */

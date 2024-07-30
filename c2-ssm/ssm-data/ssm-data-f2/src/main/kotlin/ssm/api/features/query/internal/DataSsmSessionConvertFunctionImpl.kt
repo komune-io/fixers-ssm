@@ -36,7 +36,7 @@ class DataSsmSessionConvertFunctionImpl(
 			payload.toDataSession(payload.ssmUri, firstTransaction, lastTransaction, transactions)
 		}
 
-	fun DataSsmSessionConvertQuery.toDataSession(
+	private fun DataSsmSessionConvertQuery.toDataSession(
 		ssmUri: SsmUri, firstTransaction: Transaction?, lastTransaction: Transaction?, transactions: List<Transaction>
 	): DataSsmSession {
 		return DataSsmSession(

@@ -1,6 +1,7 @@
 package ssm.sync.sdk
 
 import ssm.api.DataSsmQueryFunctionImpl
+import ssm.chaincode.dsl.config.InvokeChunkedProps
 import ssm.couchdb.f2.CouchdbSsmQueriesFunctionImpl
 import ssm.data.dsl.config.DataSsmConfig
 

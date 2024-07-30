@@ -48,11 +48,12 @@ class DataSsmAutoConfiguration {
 	@ConditionalOnMissingBean(DataSsmConfig::class)
 	@ConditionalOnBean(value = [SsmCouchdbConfig::class, SsmChaincodeConfig::class])
 	fun dataSsmConfig(
+		dataSsmProperties: SsmDataProperties,
 		ssmCouchdbConfig: SsmCouchdbConfig,
 		ssmChaincodeConfig: SsmChaincodeConfig
 	): DataSsmConfig {
 		logger.debug("Configuration of ${DataSsmAutoConfiguration::dataSsmConfig.name}...")
-		return DataSsmConfig(ssmCouchdbConfig, ssmChaincodeConfig)
+		return DataSsmConfig(dataSsmProperties.chunking, ssmCouchdbConfig, ssmChaincodeConfig)
 	}
 
 	@Bean

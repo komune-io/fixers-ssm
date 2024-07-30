@@ -53,7 +53,7 @@ class ChaincodeRestEndpoint(
 	@PostMapping(path = ["invoke"], consumes = [MediaType.APPLICATION_JSON_VALUE])
 	suspend fun invokeJson(
 		@RequestBody args: List<InvokeParams>
-	): List<InvokeReturn> = chaincodeService.execute(args)
+	): List<Any> = chaincodeService.execute(args)
 
 	@ExceptionHandler(InvokeException::class)
 	fun handleException(invokeException: InvokeException): ResponseEntity<ErrorResponse> {
