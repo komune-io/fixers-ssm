@@ -1,6 +1,8 @@
 package ssm.api.extentions
 
 import f2.dsl.fnc.invokeWith
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import ssm.chaincode.dsl.blockchain.Transaction
 import ssm.chaincode.dsl.blockchain.TransactionId
 import ssm.chaincode.dsl.model.SessionName
@@ -14,6 +16,7 @@ import ssm.chaincode.dsl.model.uri.SsmUri
 import ssm.chaincode.dsl.model.uri.toSsmUri
 import ssm.chaincode.dsl.query.SsmGetSessionLogsQuery
 import ssm.chaincode.dsl.query.SsmGetSessionLogsQueryFunction
+import ssm.chaincode.dsl.query.SsmGetSessionLogsQueryResult
 import ssm.chaincode.dsl.query.SsmGetTransactionQuery
 import ssm.chaincode.dsl.query.SsmGetTransactionQueryFunction
 import ssm.data.dsl.model.DataChannel

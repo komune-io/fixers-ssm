@@ -2,14 +2,24 @@ package ssm.api.features.query.internal
 
 import f2.dsl.fnc.F2Function
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapNotNull
+import kotlinx.coroutines.flow.toList
 import ssm.api.extentions.getSessionLogs
-import ssm.api.extentions.getTransaction
 import ssm.chaincode.dsl.blockchain.Transaction
+import ssm.chaincode.dsl.blockchain.TransactionId
+import ssm.chaincode.dsl.config.flattenConcurrentlyFlow
+import ssm.chaincode.dsl.config.groupBy
+import ssm.chaincode.dsl.model.SessionName
 import ssm.chaincode.dsl.model.SsmSessionState
+import ssm.chaincode.dsl.model.uri.ChaincodeUri
 import ssm.chaincode.dsl.model.uri.SsmUri
 import ssm.chaincode.dsl.model.uri.asChaincodeUri
+import ssm.chaincode.dsl.query.SsmGetSessionLogsQuery
 import ssm.chaincode.dsl.query.SsmGetSessionLogsQueryFunction
+import ssm.chaincode.dsl.query.SsmGetSessionLogsQueryResult
+import ssm.chaincode.dsl.query.SsmGetTransactionQuery
 import ssm.chaincode.dsl.query.SsmGetTransactionQueryFunction
 import ssm.data.dsl.model.DataChannel
 import ssm.data.dsl.model.DataSsmSession
@@ -20,30 +30,46 @@ class DataSsmSessionConvertFunctionImpl(
 	private val ssmGetTransactionQueryFunction: SsmGetTransactionQueryFunction
 ) : F2Function<DataSsmSessionConvertQuery, DataSsmSession> {
 
-	override suspend fun invoke(msgs: Flow<DataSsmSessionConvertQuery>): Flow<DataSsmSession> =
-		msgs.map { payload ->
-			val sessionLogs =
-				payload.sessionState.session.getSessionLogs(payload.ssmUri, ssmGetSessionLogsQueryFunction)
-			val transactions = sessionLogs.mapNotNull { it.txId.getTransaction(ssmGetTransactionQueryFunction,
-				chaincodeUri = payload.ssmUri.asChaincodeUri()
-			) }
-			val firstTransaction = transactions.minByOrNull { transaction ->
-				transaction.timestamp
+	override suspend fun invoke(msgs: Flow<DataSsmSessionConvertQuery>): Flow<DataSsmSession> {
+		val allMsgs = msgs.toList()
+		val allSessionState = allMsgs.map { it.sessionState }.associateBy { it.session }
+
+		return allMsgs.asFlow().groupBy { it.ssmUri }.map { (ssmUri, flow) ->
+			val allSessionLogs =
+				flow.map { it.sessionState.session }.getSessionLogs(ssmUri, ssmGetSessionLogsQueryFunction)
+			allSessionLogs.map { sessionLogs ->
+				val transactions = sessionLogs.logs.map { it.txId }.getTransactions(ssmUri.asChaincodeUri())
+//				getTransactions
+//				val transactions = sessionLogs.logs.mapNotNull {
+//					it.txId.getTransaction(
+//						ssmGetTransactionQueryFunction,
+//						chaincodeUri = ssmUri.asChaincodeUri()
+//					)
+//				}
+
+				val state = allSessionState[sessionLogs.sessionName]!!
+				sessionLogs.toDataSession(ssmUri, state, transactions)
 			}
-			val lastTransaction = transactions.maxByOrNull { transaction ->
-				transaction.timestamp
-			}
-			payload.toDataSession(payload.ssmUri, firstTransaction, lastTransaction, transactions)
+		}.flattenConcurrentlyFlow()
+	}
+
+	private fun SsmGetSessionLogsQueryResult.toDataSession(
+		ssmUri: SsmUri,
+		state: SsmSessionState,
+		transactions: List<Transaction>
+	): DataSsmSession {
+		val firstTransaction = transactions.minByOrNull { transaction ->
+			transaction.timestamp
+		}
+		val lastTransaction = transactions.maxByOrNull { transaction ->
+			transaction.timestamp
 		}
 
-	private fun DataSsmSessionConvertQuery.toDataSession(
-		ssmUri: SsmUri, firstTransaction: Transaction?, lastTransaction: Transaction?, transactions: List<Transaction>
-	): DataSsmSession {
 		return DataSsmSession(
 			ssmUri = ssmUri,
-			sessionName = this.sessionState.session,
+			sessionName = this.sessionName,
 			state = DataSsmSessionState(
-				details = this.sessionState,
+				details = state,
 				transaction = lastTransaction
 			),
 			channel = DataChannel(ssmUri.channelId),
@@ -51,6 +77,34 @@ class DataSsmSessionConvertFunctionImpl(
 			transactions = transactions
 		)
 	}
+
+
+	suspend fun List<TransactionId>.getTransactions(
+		chaincodeUri: ChaincodeUri
+	): List<Transaction> {
+		val queries = this.map { transactionId ->
+			SsmGetTransactionQuery(
+				chaincodeUri = chaincodeUri,
+				id = transactionId,
+			)
+		}
+		return ssmGetTransactionQueryFunction.invoke(queries.asFlow()).mapNotNull { it.item }.toList()
+	}
+
+	suspend fun Flow<SessionName>.getSessionLogs(
+		ssmUri: SsmUri,
+		ssmGetSessionLogsQueryFunction: SsmGetSessionLogsQueryFunction,
+	): Flow<SsmGetSessionLogsQueryResult> = map { sessionName ->
+		SsmGetSessionLogsQuery(
+			chaincodeUri = ssmUri.chaincodeUri,
+			sessionName = sessionName,
+			ssmName = ssmUri.ssmName
+		)
+	}.let {
+		ssmGetSessionLogsQueryFunction.invoke(it)
+	}.map { it }
+
+
 }
 
 data class DataSsmSessionConvertQuery(

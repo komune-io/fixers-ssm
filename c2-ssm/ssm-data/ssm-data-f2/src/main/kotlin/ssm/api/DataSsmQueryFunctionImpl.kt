@@ -9,7 +9,6 @@ import ssm.api.features.query.DataSsmSessionLogGetQueryFunctionImpl
 import ssm.api.features.query.DataSsmSessionLogListQueryFunctionImpl
 import ssm.api.features.query.internal.DataSsmSessionConvertFunctionImpl
 import ssm.chaincode.dsl.SsmChaincodeQueries
-import ssm.chaincode.dsl.config.InvokeChunkedProps
 import ssm.chaincode.f2.ChaincodeSsmQueriesImpl
 import ssm.couchdb.dsl.SsmCouchDbQueries
 import ssm.couchdb.f2.CouchdbSsmQueriesFunctionImpl

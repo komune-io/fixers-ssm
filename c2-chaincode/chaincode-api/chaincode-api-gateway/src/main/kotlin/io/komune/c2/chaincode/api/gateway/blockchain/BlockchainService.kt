@@ -25,17 +25,19 @@ class BlockchainService(
 		val isList = InvokeArgsUtils.isListQuery(invokeArgs)
 
 		if (InvokeArgsUtils.isBlockQuery(invokeArgs)) {
-			if (isList) {
-				return queryAllBlocks(channelId)
+			return if (isList) {
+				 queryAllBlocks(channelId)
+			} else {
+				queryBlockByNumber(channelId, invokeArgs)
 			}
-			return queryBlockByNumber(channelId, invokeArgs)
 		}
 
 		if (InvokeArgsUtils.isTransactionQuery(invokeArgs)) {
-			if (isList) {
-				return queryAllTransactions(channelId)
+			return if (isList) {
+				queryAllTransactions(channelId)
+			} else {
+				queryTransactionById(channelId, invokeArgs)
 			}
-			return queryTransactionById(channelId, invokeArgs)
 		}
 		throw IllegalArgumentException(
 			"invokeArgs[${invokeArgs}] must be ${InvokeArgsUtils.BLOCK_QUERY} or ${InvokeArgsUtils.TRANSACTION_QUERY}"

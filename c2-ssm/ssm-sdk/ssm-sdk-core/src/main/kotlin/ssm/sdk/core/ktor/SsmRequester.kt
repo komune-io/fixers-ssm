@@ -27,8 +27,7 @@ class SsmRequester(
 	): List<T> {
 		val args = query.queryArgs(value)
 		logger.info(
-			"Query[{}] the blockchain in chaincode[{}] with fcn[{}] with args:{}",
-			InvokeType.QUERY,
+			"Query[Log] the blockchain in chaincode[{}] with fcn[{}] with args:{}",
 			chaincodeUri.uri,
 			args.fcn,
 			args.args

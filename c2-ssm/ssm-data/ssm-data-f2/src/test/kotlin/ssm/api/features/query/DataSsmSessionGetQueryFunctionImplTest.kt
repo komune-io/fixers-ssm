@@ -1,11 +1,7 @@
 package ssm.api.features.query
 
-import f2.dsl.fnc.invoke
-import f2.dsl.fnc.invokeWith
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.toList
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
@@ -13,13 +9,8 @@ import ssm.api.DataSsmQueryFunctionImpl
 import ssm.bdd.config.SsmBddConfig
 import ssm.chaincode.dsl.config.groupBy
 import ssm.chaincode.dsl.model.uri.toSsmUri
-import ssm.data.dsl.features.query.DataSsmGetQuery
-import ssm.data.dsl.features.query.DataSsmListQuery
-import ssm.data.dsl.features.query.DataSsmListQueryFunction
 import ssm.data.dsl.features.query.DataSsmSessionGetQuery
 import ssm.data.dsl.features.query.DataSsmSessionGetQueryFunction
-import ssm.data.dsl.features.query.DataSsmSessionListQuery
-import ssm.data.dsl.features.query.DataSsmSessionListQueryFunction
 
 internal class DataSsmSessionGetQueryFunctionImplTest {
 
@@ -41,12 +32,15 @@ internal class DataSsmSessionGetQueryFunctionImplTest {
 		)
 
 		val ssmListResult = dataSsmSessionGetQueryFunction.invoke(queries).toList()
+		Assertions.assertThat(ssmListResult).hasSize(1)
+		ssmListResult.map {
+			Assertions.assertThat(it.item).isNull()
+		}
 
-		Assertions.assertThat(ssmListResult).isEmpty()
 	}
 
 	@Test
-	fun `test groupBy`() = runBlocking<Unit> {
+	fun `test groupBy`() = runTest {
 		data class Item(val key: String, val value: Int)
 		val flow = flowOf(
 			Item("A", 1),

@@ -119,12 +119,14 @@ class SsmQueryService(private val ssmRequester: SsmRequester): SsmQueryServiceI 
 
 	}
 
-	override suspend fun getTransactions(queries: List<GetTransactionQuery>): List<Transaction> {
+	override suspend fun getTransactions(queries: List<GetTransactionQuery>): List<Transaction?> {
 		val query = TransactionQuery()
 		return queries.map {
 			SsmApiQuery(it.chaincodeUri, it.txId, query)
 		}.let {
-			ssmRequester.query(it, object : TypeReference<List<Transaction>>() {})
+			ssmRequester.query(it, object : TypeReference<List<String?>>() {})
+		}.map { item ->
+			item?.let { JsonUtils.mapper.readValue(it, Transaction::class.java) }
 		}
 
 	}
@@ -135,6 +137,16 @@ class SsmQueryService(private val ssmRequester: SsmRequester): SsmQueryServiceI 
 			SsmApiQuery(it.chaincodeUri, it.blockId, query)
 		}.let {
 			ssmRequester.query(it, object : TypeReference<List<Block>>() {})
+		}
+
+	}
+
+	override suspend fun getLogs(queries: List<GetLogQuery>): List<List<SsmSessionStateLog>> {
+		val query = LogQuery()
+		return queries.map {
+			SsmApiQuery(it.chaincodeUri, it.sessionName, query)
+		}.let {
+			ssmRequester.query(it, object : TypeReference<List<List<SsmSessionStateLog>>>() {})
 		}
 
 	}

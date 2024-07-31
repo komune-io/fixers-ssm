@@ -3,6 +3,7 @@ package ssm.api.features.query
 import f2.dsl.fnc.invoke
 import f2.dsl.fnc.invokeWith
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import ssm.api.DataSsmQueryFunctionImpl
@@ -23,7 +24,7 @@ internal class DataSsmSessionListQueryFunctionImplTest {
 
 
 	@Test
-	fun `test exception`() = runBlocking<Unit> {
+	fun `test exception`() = runTest {
 		val ssmListResult = dataSsmListQueryFunction.invoke(
 			DataSsmListQuery(listOf(SsmBddConfig.Chaincode.chaincodeUri))
 		)
