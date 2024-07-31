@@ -40,6 +40,9 @@ class DataApplicationContextRunnerTest {
 
 	object TestConfiguration {
 		private val localDockerCompose = DataSsmConfig(
+			chunking = SsmBddConfig.Data.config.chunking,
+//			couchdb = SsmBddConfig.Data.config.couchdb,
+//			chaincode = SsmBddConfig.Data.config.chaincode,
 			couchdb = SsmBddConfig.Couchdb.config,
 			chaincode = SsmBddConfig.Chaincode.config
 		)

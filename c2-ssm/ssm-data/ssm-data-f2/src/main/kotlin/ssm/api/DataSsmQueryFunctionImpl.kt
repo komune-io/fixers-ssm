@@ -49,8 +49,9 @@ class DataSsmQueryFunctionImpl(
 
 	override fun dataSsmSessionGetQueryFunction(): DataSsmSessionGetQueryFunction =
 		DataSsmSessionGetQueryFunctionImpl(
+			config.chunking,
 			ssmGetSessionQueryFunction = ssmChaincodeQueries.ssmGetSessionQueryFunction(),
-			dataSsmSessionConvertFunctionImpl = dataSsmSessionConvertFunctionImpl(),
+			dataSsmSessionConvertFunction = dataSsmSessionConvertFunctionImpl(),
 		)
 
 	override fun dataSsmSessionLogListQueryFunction(): DataSsmSessionLogListQueryFunction =

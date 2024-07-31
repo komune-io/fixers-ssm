@@ -31,9 +31,7 @@ fun SsmSession.addPrivateMessage(value: String, agent: Agent) {
 @Throws(Exception::class)
 fun SsmSession.addPrivateMessage(value: String, name: String, publicKey: PublicKey): SsmSession {
 	val newPrivate = addPrivate(value, publicKey, name)
-	return SsmSession(
-		ssm, session, roles, public, newPrivate
-	)
+	return SsmSession(ssm, session, roles, public, newPrivate)
 }
 
 @Throws(Exception::class)

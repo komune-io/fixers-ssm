@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.map
 import ssm.chaincode.dsl.model.uri.burst
 import ssm.chaincode.dsl.config.InvokeChunkedProps
 import ssm.chaincode.dsl.config.chunk
-import ssm.chaincode.dsl.config.flattenConcurrently
+import ssm.chaincode.dsl.config.flattenConcurrentlyList
 import ssm.sdk.core.SsmTxService
 import ssm.sdk.core.command.SsmStartCommand
 import ssm.tx.dsl.features.ssm.SsmSessionStartCommand
@@ -29,5 +29,5 @@ class SsmTxSessionStartFunctionImpl(
 				transactionId = result.transactionId,
 			)
 		}
-	}.flattenConcurrently()
+	}.flattenConcurrentlyList()
 }

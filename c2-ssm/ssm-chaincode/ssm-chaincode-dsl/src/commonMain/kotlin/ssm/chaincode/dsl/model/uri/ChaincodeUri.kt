@@ -19,7 +19,7 @@ fun ChaincodeUriDTO.burst() = ChaincodeUri(uri)
 @Serializable
 @JsExport
 @JsName("ChaincodeUri")
-class ChaincodeUri(override val uri: String): ChaincodeUriDTO {
+data class ChaincodeUri(override val uri: String): ChaincodeUriDTO {
 
 	companion object {
 		const val PARTS = 3

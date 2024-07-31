@@ -20,61 +20,134 @@ import ssm.sdk.core.invoke.query.LogQuery
 import ssm.sdk.core.invoke.query.SessionQuery
 import ssm.sdk.core.invoke.query.SsmQuery
 import ssm.sdk.core.invoke.query.TransactionQuery
+import ssm.sdk.core.ktor.SsmApiQuery
 import ssm.sdk.core.ktor.SsmRequester
+import ssm.sdk.json.JsonUtils
 
-class SsmQueryService(private val ssmRequester: SsmRequester) {
-	suspend fun listAdmins(chaincodeUri: ChaincodeUri): List<AgentName> {
+class SsmQueryService(private val ssmRequester: SsmRequester): SsmQueryServiceI {
+	override suspend fun listAdmins(chaincodeUri: ChaincodeUri): List<AgentName> {
 		val query = AdminQuery()
 		return ssmRequester.list(chaincodeUri, query, String::class.java)
 	}
 
-	suspend fun getAdmin(chaincodeUri: ChaincodeUri, username: AgentName): Agent? {
+	override suspend fun getAdmin(chaincodeUri: ChaincodeUri, username: AgentName): Agent? {
 		val query = AdminQuery()
 		return ssmRequester.query(chaincodeUri, username, query, Agent::class.java)
 	}
 
-	suspend fun listUsers(chaincodeUri: ChaincodeUri): List<AgentName> {
+	override suspend fun listUsers(chaincodeUri: ChaincodeUri): List<AgentName> {
 		val query = AgentQuery()
 		return ssmRequester.list(chaincodeUri, query, String::class.java)
 	}
 
-	suspend fun getAgent(chaincodeUri: ChaincodeUri, agentName: AgentName): Agent? {
+	override suspend fun getAgent(chaincodeUri: ChaincodeUri, agentName: AgentName): Agent? {
 		val query = AgentQuery()
 		return ssmRequester.query(chaincodeUri, agentName, query, Agent::class.java)
 	}
 
-	suspend fun listSsm(chaincodeUri: ChaincodeUri): List<SsmName> {
+	override suspend fun listSsm(chaincodeUri: ChaincodeUri): List<SsmName> {
 		val query = SsmQuery()
 		return ssmRequester.list(chaincodeUri, query, String::class.java)
 	}
 
-	suspend fun getSsm(chaincodeUri: ChaincodeUri, name: SsmName): Ssm? {
+	override suspend fun getSsm(chaincodeUri: ChaincodeUri, name: SsmName): Ssm? {
 		val query = SsmQuery()
 		return ssmRequester.query(chaincodeUri, name, query, Ssm::class.java)
 	}
 
-	suspend fun getSession(chaincodeUri: ChaincodeUri,sessionName: SessionName): SsmSessionState? {
+	override suspend fun getSession(chaincodeUri: ChaincodeUri, sessionName: SessionName): SsmSessionState? {
 		val query = SessionQuery()
 		return ssmRequester.query(chaincodeUri, sessionName, query, SsmSessionState::class.java)
 	}
 
-	suspend fun log(chaincodeUri: ChaincodeUri, sessionName: SessionName): List<SsmSessionStateLog> {
+	override suspend fun log(chaincodeUri: ChaincodeUri, sessionName: SessionName): List<SsmSessionStateLog> {
 		val query = LogQuery()
-		return ssmRequester.log(chaincodeUri, sessionName, query, object : TypeReference<List<SsmSessionStateLog>>() {})
+		return ssmRequester.logger(chaincodeUri, sessionName, query, object : TypeReference<List<SsmSessionStateLog>>() {})
 	}
 
-	suspend fun listSession(chaincodeUri: ChaincodeUri): List<String> {
+	override suspend fun listSession(chaincodeUri: ChaincodeUri): List<String> {
 		val query = SessionQuery()
 		return ssmRequester.list(chaincodeUri, query, String::class.java)
 	}
 
-	suspend fun getTransaction(chaincodeUri: ChaincodeUri, txId: TransactionId): Transaction? {
+	override suspend fun getTransaction(chaincodeUri: ChaincodeUri, txId: TransactionId): Transaction? {
 		val query = TransactionQuery()
 		return ssmRequester.query(chaincodeUri, txId, query, Transaction::class.java)
 	}
 
-	suspend fun getBlock(chaincodeUri: ChaincodeUri, blockId: BlockId): Block? {
+	override suspend fun getBlock(chaincodeUri: ChaincodeUri, blockId: BlockId): Block? {
 		val query = BlockQuery()
-		return ssmRequester.query(chaincodeUri, blockId.toString(), query, Block::class.java)
+		return ssmRequester.query(chaincodeUri, blockId, query, Block::class.java)
+	}
+
+	override suspend fun getAdmins(queries: List<GetAdminQuery>): List<Agent> {
+		val query = AdminQuery()
+		return queries.map {
+			SsmApiQuery(it.chaincodeUri, it.username, query)
+		}.let {
+			ssmRequester.query(it, object : TypeReference<List<Agent>>() {})
+		}
+	}
+
+	override suspend fun getAgents(queries: List<GetAgentQuery>): List<Agent> {
+		val query = AgentQuery()
+		return queries.map {
+			SsmApiQuery(it.chaincodeUri, it.agentName, query)
+		}.let {
+			ssmRequester.query(it, object : TypeReference<List<Agent>>() {})
+		}
+
+	}
+
+	override suspend fun getSsms(queries: List<GetSsmQuery>): List<Ssm> {
+		val query = SsmQuery()
+		return queries.map {
+			SsmApiQuery(it.chaincodeUri, it.name, query)
+		}.let {
+			ssmRequester.query(it, object : TypeReference<List<Ssm>>() {})
+		}
+	}
+	override suspend fun getSessions(queries: List<GetSessionQuery>): List<SsmSessionState?> {
+		val query = SessionQuery()
+		return queries.map {
+			SsmApiQuery(it.chaincodeUri, it.sessionName, query)
+		}.let {
+			ssmRequester.query(it, object : TypeReference<List<String?>>() {})
+		}.map { item ->
+			item?.let { JsonUtils.mapper.readValue(it, SsmSessionState::class.java) }
+		}
+
+	}
+
+	override suspend fun getTransactions(queries: List<GetTransactionQuery>): List<Transaction?> {
+		val query = TransactionQuery()
+		return queries.map {
+			SsmApiQuery(it.chaincodeUri, it.txId, query)
+		}.let {
+			ssmRequester.query(it, object : TypeReference<List<String?>>() {})
+		}.map { item ->
+			item?.let { JsonUtils.mapper.readValue(it, Transaction::class.java) }
+		}
+
+	}
+
+	override suspend fun getBlocks(queries: List<GetBlockQuery>): List<Block> {
+		val query = BlockQuery()
+		return queries.map {
+			SsmApiQuery(it.chaincodeUri, it.blockId, query)
+		}.let {
+			ssmRequester.query(it, object : TypeReference<List<Block>>() {})
+		}
+
+	}
+
+	override suspend fun getLogs(queries: List<GetLogQuery>): List<List<SsmSessionStateLog>> {
+		val query = LogQuery()
+		return queries.map {
+			SsmApiQuery(it.chaincodeUri, it.sessionName, query)
+		}.let {
+			ssmRequester.query(it, object : TypeReference<List<List<SsmSessionStateLog>>>() {})
+		}
+
 	}
 }

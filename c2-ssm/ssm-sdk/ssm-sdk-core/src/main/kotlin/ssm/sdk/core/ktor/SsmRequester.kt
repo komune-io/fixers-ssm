@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory
 import ssm.chaincode.dsl.model.uri.ChaincodeUri
 import ssm.sdk.core.invoke.builder.HasGet
 import ssm.sdk.core.invoke.builder.HasList
+import ssm.sdk.dsl.InvokeCommandArgs
 import ssm.sdk.dsl.InvokeType
 import ssm.sdk.dsl.InvokeReturn
 import ssm.sdk.dsl.SsmCmdSigned
@@ -21,11 +22,12 @@ class SsmRequester(
 
 	private val logger = LoggerFactory.getLogger(SsmRequester::class.java)
 
-	suspend fun <T> log(chaincodeUri: ChaincodeUri, value: String, query: HasGet, clazz: TypeReference<List<T>>): List<T> {
+	suspend fun <T> logger(
+		chaincodeUri: ChaincodeUri, value: String, query: HasGet, clazz: TypeReference<List<T>>
+	): List<T> {
 		val args = query.queryArgs(value)
 		logger.info(
-			"Query[{}] the blockchain in chaincode[{}] with fcn[{}] with args:{}",
-			InvokeType.QUERY,
+			"Query[Log] the blockchain in chaincode[{}] with fcn[{}] with args:{}",
 			chaincodeUri.uri,
 			args.fcn,
 			args.args
@@ -57,8 +59,46 @@ class SsmRequester(
 			args.fcn,
 			args.args
 		)
-		return request.let { jsonConverter.toCompletableObject(clazz, it) }
+		return request.let {
+			jsonConverter.toCompletableObject(clazz, it)
+		}
 	}
+
+	private fun <T> List<T>.logger(type: String, total: Int, toChaincode: (T) -> ChaincodeUri) = map(toChaincode).toSet()
+	.joinToString { "[${it.channelId}:${it.chaincodeId}]]" }
+	.let { chaincodeUri ->
+		logger.info(
+			"$type[$total] the blockchain in channel[$chaincodeUri]",
+		)
+	}
+
+	suspend fun <T> query(queries: List<SsmApiQuery>, type: TypeReference<List<T>>): List<T> {
+		val total = queries.size
+		queries.logger("Query", total, { it.chaincodeUri })
+		val args = queries.mapIndexed { index, query ->
+			val args = query.query.queryArgs(query.value)
+			val invokeArgs = InvokeCommandArgs(
+				cmd = InvokeType.QUERY,
+				chaincodeUri = query.chaincodeUri,
+				fcn = args.fcn,
+				args = args.args
+			)
+			logger.debug(
+				"Invoke[${index+1}/$total] the blockchain in channel[{}:{}] with command[{}] with args:{}",
+				query.chaincodeUri.channelId,
+				query.chaincodeUri.chaincodeId,
+				invokeArgs.fcn,
+				invokeArgs,
+			)
+			invokeArgs
+		}
+		return coopRepository.invoke(
+			args
+		).let {
+			JsonUtils.mapper.readValue(it, type)
+		}
+	}
+
 
 	suspend fun <T> list(chaincodeUri: ChaincodeUri, query: HasList, clazz: Class<T>): List<T> {
 		val args = query.listArgs()
@@ -98,11 +138,13 @@ class SsmRequester(
 	}
 
 	@Throws(Exception::class)
-	suspend operator fun invoke( cmds: List<SsmCmdSigned>): List<InvokeReturn> {
+	suspend operator fun invoke(cmds: List<SsmCmdSigned>): List<InvokeReturn> {
 		val total = cmds.size
+		cmds.logger("Invoke", total, { it.chaincodeUri })
+
 		val args = cmds.mapIndexed { index, cmd ->
 			val invokeArgs = cmd.buildCommandArgs(InvokeType.INVOKE)
-			logger.info(
+			logger.debug(
 				"Invoke[${index+1}/$total] the blockchain in channel[{}:{}] with command[{}] with args:{}",
 				cmd.chaincodeUri.channelId,
 				cmd.chaincodeUri.chaincodeId,
@@ -119,3 +161,9 @@ class SsmRequester(
 		}
 	}
 }
+
+data class SsmApiQuery(
+	val chaincodeUri: ChaincodeUri,
+	val value: String,
+	val query: HasGet,
+)

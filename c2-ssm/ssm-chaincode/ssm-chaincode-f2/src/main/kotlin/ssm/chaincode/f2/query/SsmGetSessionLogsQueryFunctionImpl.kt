@@ -11,6 +11,7 @@ class SsmGetSessionLogsQueryFunctionImpl(
 	private val queryService: SsmQueryService
 ): SsmGetSessionLogsQueryFunction  {
 
+	// TODO CHANGE THAT should better use flow
 	override suspend fun invoke(
 		msgs: Flow<SsmGetSessionLogsQuery>
 	): Flow<SsmGetSessionLogsQueryResult> = msgs.map { payload ->
