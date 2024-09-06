@@ -24,7 +24,6 @@ typealias CouchdbAdminListQueryFunction = F2Function<CouchdbAdminListQueryDTO, C
  * @d2 model
  * @parent [CouchdbAdminListQueryFunction]
  */
-@Serializable
 @JsExport
 @JsName("CouchdbAdminListQueryDTO")
 interface CouchdbAdminListQueryDTO : Query {
@@ -39,7 +38,6 @@ interface CouchdbAdminListQueryDTO : Query {
  * @title Get all admins: Result
  * @parent [CouchdbAdminListQueryFunction]
  */
-@Serializable
 @JsExport
 @JsName("CouchdbAdminListQueryResultDTO")
 interface CouchdbAdminListQueryResultDTO : Event {

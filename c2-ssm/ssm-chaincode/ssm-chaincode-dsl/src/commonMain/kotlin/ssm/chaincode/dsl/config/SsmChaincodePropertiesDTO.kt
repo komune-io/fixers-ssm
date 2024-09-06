@@ -10,7 +10,6 @@ import kotlinx.serialization.Serializable
  * @example "ssm"
  * @parent [ssm.chaincode.dsl.SsmChaincodeD2Model]
  */
-@Serializable
 @JsExport
 @JsName("SsmChaincodePropertiesDTO")
 interface SsmChaincodePropertiesDTO {

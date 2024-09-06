@@ -6,7 +6,6 @@ import kotlinx.serialization.Serializable
 
 typealias BlockId = String
 
-@Serializable
 @JsExport
 @JsName("BlockDTO")
 interface BlockDTO {

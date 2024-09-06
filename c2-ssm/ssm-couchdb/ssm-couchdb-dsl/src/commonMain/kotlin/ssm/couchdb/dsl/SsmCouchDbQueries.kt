@@ -25,7 +25,6 @@ import ssm.couchdb.dsl.query.CouchdbUserListQueryFunction
  * @title Query function
  * @parent [CouchdbSsmD2]
  */
-@Serializable
 @JsExport
 @JsName("SsmCouchDbQueries")
 interface SsmCouchDbQueries {

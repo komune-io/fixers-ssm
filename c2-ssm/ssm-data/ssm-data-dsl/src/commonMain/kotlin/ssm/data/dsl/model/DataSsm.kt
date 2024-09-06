@@ -9,7 +9,6 @@ import ssm.chaincode.dsl.model.uri.SsmUri
 import ssm.chaincode.dsl.model.uri.SsmUriDTO
 import ssm.chaincode.dsl.model.uri.SsmVersion
 
-@Serializable
 @JsExport
 @JsName("DataSsmDTO")
 interface DataSsmDTO {

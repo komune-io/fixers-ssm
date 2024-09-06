@@ -17,7 +17,6 @@ import ssm.data.dsl.model.DataSsmDTO
  */
 typealias DataSsmListQueryFunction = F2Function<DataSsmListQuery, DataSsmListQueryResult>
 
-@Serializable
 @JsExport
 @JsName("DataSsmListQueryDTO")
 interface DataSsmListQueryDTO
@@ -34,7 +33,6 @@ class DataSsmListQuery(
 	val chaincodes: List<ChaincodeUri>
 ) : DataSsmListQueryDTO
 
-@Serializable
 @JsExport
 @JsName("DataSsmListQueryResultDTO")
 interface DataSsmListQueryResultDTO {

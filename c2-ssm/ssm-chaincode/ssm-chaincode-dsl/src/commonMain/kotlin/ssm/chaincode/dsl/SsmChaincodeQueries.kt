@@ -29,7 +29,6 @@ import ssm.chaincode.dsl.query.SsmListUserQueryFunction
  * @title Query function
  * @parent [ssm.chaincode.dsl.SsmChaincodeD2]
  */
-@Serializable
 @JsExport
 @JsName("SsmChaincodeQueries")
 interface SsmChaincodeQueries {

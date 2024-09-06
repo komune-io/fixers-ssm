@@ -7,7 +7,6 @@ import kotlin.js.JsName
 import kotlinx.serialization.Serializable
 import ssm.chaincode.dsl.model.uri.ChaincodeUri
 
-@Serializable
 @JsExport
 @JsName("SsmQueryDTO")
 interface SsmQueryDTO : Query {
@@ -18,14 +17,12 @@ interface SsmQueryDTO : Query {
 	val chaincodeUri: ChaincodeUri
 }
 
-@Serializable
 @JsExport
 @JsName("SsmItemResultDTO")
 interface SsmItemResultDTO<T> : Event {
 	val item: T?
 }
 
-@Serializable
 @JsExport
 @JsName("SsmItemsResultDTO")
 interface SsmItemsResultDTO<T> : Event {

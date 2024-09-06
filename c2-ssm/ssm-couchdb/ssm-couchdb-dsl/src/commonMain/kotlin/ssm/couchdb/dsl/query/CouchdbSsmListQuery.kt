@@ -26,7 +26,6 @@ typealias CouchdbSsmListQueryFunction = F2Function<CouchdbSsmListQuery, CouchdbS
  * @parent [CouchdbSsmListQueryFunction]
  * @title Parameters
  */
-@Serializable
 @JsExport
 @JsName("CouchdbSsmListQueryDTO")
 interface CouchdbSsmListQueryDTO : PageQueryDTO {
@@ -46,7 +45,6 @@ interface CouchdbSsmListQueryDTO : PageQueryDTO {
  * @order 30
  * @title Result
  */
-@Serializable
 @JsExport
 @JsName("CouchdbSsmListQueryResultDTO")
 interface CouchdbSsmListQueryResultDTO: PageQueryResultDTO<SsmDTO> {

@@ -27,7 +27,6 @@ typealias CouchdbSsmGetQueryFunction = F2Function<CouchdbSsmGetQuery, CouchdbSsm
  * @parent [CouchdbSsmGetQueryFunction]
  * @title Parameters
  */
-@Serializable
 @JsExport
 @JsName("CouchdbSsmGetQueryDTO")
 interface CouchdbSsmGetQueryDTO : Query {
@@ -53,7 +52,6 @@ interface CouchdbSsmGetQueryDTO : Query {
  * @order 30
  * @title Result
  */
-@Serializable
 @JsExport
 @JsName("CouchdbSsmGetQueryResultDTO")
 interface CouchdbSsmGetQueryResultDTO: Event {

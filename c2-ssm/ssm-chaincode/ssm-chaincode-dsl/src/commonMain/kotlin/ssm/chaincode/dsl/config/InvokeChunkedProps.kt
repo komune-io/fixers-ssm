@@ -10,7 +10,9 @@ import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.flattenMerge
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
+import kotlinx.serialization.Serializable
 
+@Serializable
 class InvokeChunkedProps(
     val size: Int = 128
 )

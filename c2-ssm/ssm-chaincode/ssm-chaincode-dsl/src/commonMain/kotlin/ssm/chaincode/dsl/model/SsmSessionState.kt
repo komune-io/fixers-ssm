@@ -2,13 +2,13 @@ package ssm.chaincode.dsl.model
 
 import kotlin.js.JsExport
 import kotlin.js.JsName
+import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 import ssm.chaincode.dsl.model.uri.ChaincodeUri
 import ssm.chaincode.dsl.model.uri.SsmUri
 
 typealias SessionName = String
 
-@Serializable
 @JsExport
 @JsName("SsmSessionStateDTO")
 interface SsmSessionStateDTO : SsmSessionDTO, WithPrivate {
@@ -51,6 +51,7 @@ data class SsmSessionState(
 	override val ssm: SsmName?,
 	override val session: SessionName,
 	override val roles: Map<String, String>?,
+	@Contextual
 	override val public: Any?,
 	override val private: Map<String, String>? = hashMapOf(),
 	override val origin: SsmTransition?,

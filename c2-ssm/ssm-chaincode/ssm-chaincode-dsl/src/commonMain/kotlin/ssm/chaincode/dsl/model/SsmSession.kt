@@ -6,7 +6,6 @@ import kotlinx.serialization.Serializable
 import ssm.chaincode.dsl.model.uri.ChaincodeUri
 import ssm.chaincode.dsl.model.uri.SsmUri
 
-@Serializable
 @JsExport
 @JsName("SsmSessionDTO")
 interface SsmSessionDTO : WithPrivate {
