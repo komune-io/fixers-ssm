@@ -5,7 +5,6 @@ import kotlin.js.JsName
 import kotlinx.serialization.Serializable
 import ssm.chaincode.dsl.model.ChannelId
 
-@Serializable
 @JsExport
 @JsName("DataChannelDTO")
 interface DataChannelDTO {

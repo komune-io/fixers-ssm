@@ -4,7 +4,6 @@ import kotlin.js.JsExport
 import kotlin.js.JsName
 import kotlinx.serialization.Serializable
 
-@Serializable
 @JsExport
 @JsName("TransactionDTO")
 interface TransactionDTO {
@@ -67,6 +66,7 @@ interface TransactionDTO {
  * @parent [ssm.chaincode.dsl.SsmChaincodeD2Model]
  * @title SSM-CHAINCODE/Blockchain Content
  */
+@Serializable
 @JsName("Transaction")
 @JsExport
 class Transaction(

@@ -19,7 +19,6 @@ import ssm.data.dsl.model.DataSsmSessionState
 typealias DataSsmSessionLogListQueryFunction
 		= F2Function<DataSsmSessionLogListQueryDTO, DataSsmSessionLogListQueryResultDTO>
 
-@Serializable
 @JsExport
 @JsName("DataSsmSessionLogListQueryDTO")
 interface DataSsmSessionLogListQueryDTO : DataQueryDTO {
@@ -44,7 +43,6 @@ class DataSsmSessionLogListQuery(
 	override val ssmUri: SsmUri,
 ) : DataSsmSessionLogListQueryDTO
 
-@Serializable
 @JsExport
 @JsName("DataSsmSessionLogListQueryResultDTO")
 interface DataSsmSessionLogListQueryResultDTO {

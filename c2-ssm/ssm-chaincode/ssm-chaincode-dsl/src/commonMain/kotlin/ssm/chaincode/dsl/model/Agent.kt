@@ -6,7 +6,6 @@ import kotlinx.serialization.Serializable
 
 typealias AgentName = String
 
-@Serializable
 @JsExport
 @JsName("AgentDTO")
 interface AgentDTO {

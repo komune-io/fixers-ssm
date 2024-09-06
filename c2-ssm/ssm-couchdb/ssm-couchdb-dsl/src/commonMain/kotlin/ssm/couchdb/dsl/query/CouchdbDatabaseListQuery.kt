@@ -24,7 +24,6 @@ typealias CouchdbDatabaseListQueryFunction = F2Function<CouchdbDatabaseListQuery
  * @d2 model
  * @parent [CouchdbDatabaseListQueryFunction]
  */
-@Serializable
 @JsExport
 @JsName("CouchdbDatabaseListQueryDTO")
 interface CouchdbDatabaseListQueryDTO : PageQueryDTO {
@@ -44,7 +43,6 @@ interface CouchdbDatabaseListQueryDTO : PageQueryDTO {
  * @title Results
  * @parent [CouchdbDatabaseListQueryFunction]
  */
-@Serializable
 @JsExport
 @JsName("CouchdbDatabaseListQueryResultDTO")
 interface CouchdbDatabaseListQueryResultDTO : PageQueryResultDTO<DatabaseDTO> {

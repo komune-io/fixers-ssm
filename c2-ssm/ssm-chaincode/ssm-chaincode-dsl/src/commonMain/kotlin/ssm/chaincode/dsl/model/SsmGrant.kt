@@ -4,7 +4,6 @@ import kotlin.js.JsExport
 import kotlin.js.JsName
 import kotlinx.serialization.Serializable
 
-@Serializable
 @JsExport
 @JsName("SsmGrantDTO")
 interface SsmGrantDTO {
@@ -22,7 +21,6 @@ data class SsmGrant(
 	val credits: Map<String, Credit>,
 )
 
-@Serializable
 @JsExport
 @JsName("CreditDTO")
 interface CreditDTO {

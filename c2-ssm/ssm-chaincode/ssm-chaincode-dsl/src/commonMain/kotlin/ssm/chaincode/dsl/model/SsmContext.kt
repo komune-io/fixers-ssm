@@ -4,7 +4,6 @@ import kotlin.js.JsExport
 import kotlin.js.JsName
 import kotlinx.serialization.Serializable
 
-@Serializable
 @JsExport
 @JsName("SsmContextDTO")
 interface SsmContextDTO : WithPrivate {

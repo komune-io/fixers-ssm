@@ -5,7 +5,6 @@ import kotlin.js.JsName
 import kotlinx.serialization.Serializable
 import ssm.chaincode.dsl.blockchain.TransactionId
 
-@Serializable
 @JsExport
 @JsName("SsmSessionStateLogDTO")
 interface SsmSessionStateLogDTO {

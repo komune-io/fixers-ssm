@@ -23,7 +23,6 @@ typealias CouchdbChaincodeListQueryFunction
  * @d2 model
  * @parent [CouchdbChaincodeListQueryFunction]
  */
-@Serializable
 @JsExport
 @JsName("CouchdbChaincodeListQueryDTO")
 interface CouchdbChaincodeListQueryDTO : Query
@@ -33,7 +32,6 @@ interface CouchdbChaincodeListQueryDTO : Query
  * @title Get all chaincodes: Result
  * @parent [CouchdbChaincodeListQueryFunction]
  */
-@Serializable
 @JsExport
 @JsName("CouchdbChaincodeListQueryResultDTO")
 interface CouchdbChaincodeListQueryResultDTO : Event {

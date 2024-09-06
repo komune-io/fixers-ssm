@@ -12,7 +12,6 @@ import kotlinx.serialization.Serializable
  */
 typealias SsmName = String
 
-@Serializable
 @JsExport
 @JsName("SsmDTO")
 interface SsmDTO {

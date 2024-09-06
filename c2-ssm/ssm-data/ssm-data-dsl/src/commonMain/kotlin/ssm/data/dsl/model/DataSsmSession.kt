@@ -8,7 +8,6 @@ import ssm.chaincode.dsl.blockchain.TransactionDTO
 import ssm.chaincode.dsl.model.SessionName
 import ssm.chaincode.dsl.model.uri.SsmUri
 
-@Serializable
 @JsExport
 @JsName("DataSsmSessionDTO")
 interface DataSsmSessionDTO {

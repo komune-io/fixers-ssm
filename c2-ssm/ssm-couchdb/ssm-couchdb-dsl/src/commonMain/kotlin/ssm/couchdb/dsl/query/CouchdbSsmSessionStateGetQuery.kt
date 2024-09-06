@@ -22,7 +22,6 @@ import ssm.chaincode.dsl.model.uri.ChaincodeUriDTO
 typealias CouchdbSsmSessionStateGetQueryFunction
 		= F2Function<CouchdbSsmSessionStateGetQueryDTO, CouchdbSsmSessionStateGetQueryResultDTO>
 
-@Serializable
 @JsExport
 @JsName("CouchdbSsmSessionStateGetQueryDTO")
 interface CouchdbSsmSessionStateGetQueryDTO : Query {
@@ -31,7 +30,6 @@ interface CouchdbSsmSessionStateGetQueryDTO : Query {
 	val sessionName: SessionName
 }
 
-@Serializable
 @JsExport
 @JsName("CouchdbSsmSessionStateGetQueryResultDTO")
 interface CouchdbSsmSessionStateGetQueryResultDTO : Event {

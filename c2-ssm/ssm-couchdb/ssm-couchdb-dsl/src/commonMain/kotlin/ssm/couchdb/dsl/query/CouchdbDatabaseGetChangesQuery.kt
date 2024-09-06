@@ -28,7 +28,6 @@ typealias CouchdbDatabaseGetChangesQueryFunction
  * @d2 model
  * @parent [CouchdbDatabaseGetQueryFunction]
  */
-@Serializable
 @JsExport
 @JsName("CouchdbDatabaseGetChangesQueryDTO")
 interface CouchdbDatabaseGetChangesQueryDTO : Query {
@@ -63,7 +62,6 @@ interface CouchdbDatabaseGetChangesQueryDTO : Query {
  * @title Get Database: Result
  * @parent [CouchdbDatabaseGetQueryFunction]
  */
-@Serializable
 @JsExport
 @JsName("CouchdbDatabaseGetChangesQueryResultDTO")
 interface CouchdbDatabaseGetChangesQueryResultDTO : Event {
@@ -86,7 +84,6 @@ class CouchdbDatabaseGetChangesQuery(
 	override val limit: Long?,
 ) : CouchdbDatabaseGetChangesQueryDTO
 
-@Serializable
 @JsExport
 @JsName("CouchdbDatabaseGetChangesQueryResult")
 class CouchdbDatabaseGetChangesQueryResult(

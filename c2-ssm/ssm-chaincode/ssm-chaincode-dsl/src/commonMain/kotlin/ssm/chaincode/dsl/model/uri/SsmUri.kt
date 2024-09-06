@@ -12,7 +12,6 @@ typealias SsmVersion = String
 
 const val DEFAULT_VERSION = "1.0.0"
 
-@Serializable
 @JsExport
 @JsName("SsmUriDTO")
 interface SsmUriDTO {

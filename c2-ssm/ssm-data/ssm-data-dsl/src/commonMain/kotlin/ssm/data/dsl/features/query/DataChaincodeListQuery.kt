@@ -15,7 +15,6 @@ import ssm.chaincode.dsl.model.uri.ChaincodeUri
  */
 typealias DataChaincodeListQueryFunction = F2Function<DataChaincodeListQuery, DataChaincodeListQueryResult>
 
-@Serializable
 @JsExport
 @JsName("DataChaincodeListQueryDTO")
 interface DataChaincodeListQueryDTO
@@ -30,7 +29,6 @@ interface DataChaincodeListQueryDTO
 @JsName("DataChaincodeListQuery")
 class DataChaincodeListQuery : DataChaincodeListQueryDTO
 
-@Serializable
 @JsExport
 @JsName("DataChaincodeListQueryResultDTO")
 interface DataChaincodeListQueryResultDTO {

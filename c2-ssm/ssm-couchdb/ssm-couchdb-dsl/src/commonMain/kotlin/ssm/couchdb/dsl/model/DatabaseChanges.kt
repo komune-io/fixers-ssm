@@ -2,6 +2,7 @@ package ssm.couchdb.dsl.model
 
 import kotlin.js.JsExport
 import kotlin.js.JsName
+import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 
 typealias ChangeEventId = String
@@ -13,7 +14,6 @@ typealias ChangeEventId = String
  * @title Database
  * @parent [ssm.couchdb.dsl.CouchdbSsmD2Model]
  */
-@Serializable
 @JsExport
 @JsName("DatabaseChangesDTO")
 interface DatabaseChangesDTO {
@@ -22,7 +22,6 @@ interface DatabaseChangesDTO {
 	val objectId: String
 }
 
-@Serializable
 @JsExport
 @JsName("DatabaseChanges")
 class DatabaseChanges(
