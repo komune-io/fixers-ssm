@@ -57,7 +57,7 @@ object Dependencies {
 		"io.ktor:ktor-serialization-jackson:${Versions.ktor}"
 	)
 	fun jackson(scope: Scope) = scope.add(
-		"com.fasterxml.jackson.module:jackson-module-kotlin:${FixersVersions.Json.jacksonKotlin}"
+		"com.fasterxml.jackson.module:jackson-module-kotlin:2.17.2"
 	)
 	fun test(scope: Scope) = scope.add(
 		"org.junit.jupiter:junit-jupiter:${Versions.junit}",

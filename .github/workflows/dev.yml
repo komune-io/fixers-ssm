@@ -19,7 +19,7 @@ jobs:
       packages: write
     needs: docker
     with:
-      make-file: 'libs.mk'
+      make-file: 'make_libs.mk'
       on-tag: 'promote'
     secrets:
       GPG_SIGNING_KEY: ${{ secrets.GPG_SIGNING_KEY }}
@@ -36,7 +36,7 @@ jobs:
       packages: write
     with:
       with-docker-registry-login: 'true'
-      make-file: 'docker.mk'
+      make-file: 'make_docker.mk'
       on-tag: 'publish promote'
       force-publish: 'true'
     secrets:
@@ -56,6 +56,7 @@ jobs:
       id-token: write
     with:
       on-tag: 'publish_promote'
+      make-file: 'make_docs.mk'
       with-chromatic: false
       storybook-dir: storybook
       storybook-static-dir: storybook-static

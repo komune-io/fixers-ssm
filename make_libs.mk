@@ -6,7 +6,7 @@ lint:
 	./gradlew detekt
 
 build:
-	VERSION=$(VERSION) ./gradlew clean build publishToMavenLocal -x test
+	VERSION=$(VERSION) ./gradlew clean build publishToMavenLocal -Dorg.gradle.parallel=true -x test
 
 test-pre:
 	@make dev pull
@@ -32,7 +32,7 @@ test-post:
 	@make dev down
 
 publish:
-	VERSION=$(VERSION) PKG_MAVEN_REPO=github ./gradlew publish --info
+	VERSION=$(VERSION) PKG_MAVEN_REPO=github ./gradlew publish -Dorg.gradle.parallel=true --info
 promote:
 	VERSION=$(VERSION) PKG_MAVEN_REPO=sonatype_oss ./gradlew publish
 
