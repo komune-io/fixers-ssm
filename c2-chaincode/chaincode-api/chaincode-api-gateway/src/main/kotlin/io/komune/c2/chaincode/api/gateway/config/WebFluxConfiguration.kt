@@ -1,7 +1,6 @@
 package io.komune.c2.chaincode.api.gateway.config
 
 import org.springframework.context.annotation.Configuration
-import org.springframework.util.StringUtils
 import org.springframework.web.reactive.config.CorsRegistry
 import org.springframework.web.reactive.config.EnableWebFlux
 import org.springframework.web.reactive.config.ResourceHandlerRegistry

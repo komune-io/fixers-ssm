@@ -1,7 +1,7 @@
 package io.komune.c2.chaincode.api.gateway.blockchain.model
 
-import org.hyperledger.fabric.sdk.BlockInfo
 import java.util.Date
+import org.hyperledger.fabric.sdk.BlockInfo
 
 class TransactionModel(
     val transactionId: String,

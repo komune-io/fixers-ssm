@@ -2,7 +2,6 @@ package ssm.chaincode.f2.features.command
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import ssm.chaincode.dsl.config.InvokeChunkedProps
 import ssm.chaincode.dsl.model.Agent
 import ssm.chaincode.dsl.model.AgentName
 import ssm.chaincode.dsl.model.Ssm

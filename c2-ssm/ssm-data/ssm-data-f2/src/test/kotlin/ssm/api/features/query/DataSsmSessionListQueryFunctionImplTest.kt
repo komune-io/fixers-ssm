@@ -2,7 +2,6 @@ package ssm.api.features.query
 
 import f2.dsl.fnc.invoke
 import f2.dsl.fnc.invokeWith
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test

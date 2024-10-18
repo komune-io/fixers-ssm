@@ -7,8 +7,8 @@ import ssm.chaincode.dsl.model.uri.ChaincodeUri
 import ssm.sdk.core.invoke.builder.HasGet
 import ssm.sdk.core.invoke.builder.HasList
 import ssm.sdk.dsl.InvokeCommandArgs
-import ssm.sdk.dsl.InvokeType
 import ssm.sdk.dsl.InvokeReturn
+import ssm.sdk.dsl.InvokeType
 import ssm.sdk.dsl.SsmCmdSigned
 import ssm.sdk.dsl.buildArgs
 import ssm.sdk.dsl.buildCommandArgs

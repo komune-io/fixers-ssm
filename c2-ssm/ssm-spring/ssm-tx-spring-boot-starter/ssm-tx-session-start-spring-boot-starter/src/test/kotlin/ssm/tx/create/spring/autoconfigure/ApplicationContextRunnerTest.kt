@@ -3,9 +3,9 @@ package ssm.tx.create.spring.autoconfigure
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.cloud.function.context.FunctionCatalog
+import ssm.bdd.config.SsmBddConfig
 import ssm.bdd.spring.autoconfigure.ApplicationContextBuilder
 import ssm.bdd.spring.autoconfigure.ApplicationContextRunnerBuilder
-import ssm.bdd.config.SsmBddConfig
 import ssm.tx.config.spring.autoconfigure.SsmTxProperties
 import ssm.tx.session.start.spring.autoconfigure.SsmSessionStartAutoConfiguration
 

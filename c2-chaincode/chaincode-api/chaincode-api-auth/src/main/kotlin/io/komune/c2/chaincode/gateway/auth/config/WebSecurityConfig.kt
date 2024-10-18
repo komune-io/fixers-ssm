@@ -11,7 +11,6 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.security.web.server.SecurityWebFilterChain
 import org.springframework.security.web.server.authorization.AuthorizationContext
 import reactor.core.publisher.Mono
-import java.util.HashMap
 
 @Configuration
 class WebSecurityConfig {

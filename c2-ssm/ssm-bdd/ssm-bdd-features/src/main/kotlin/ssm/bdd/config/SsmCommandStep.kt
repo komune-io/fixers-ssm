@@ -14,8 +14,6 @@ import ssm.chaincode.dsl.model.SsmContext
 import ssm.chaincode.dsl.model.SsmName
 import ssm.chaincode.dsl.model.SsmSession
 import ssm.chaincode.dsl.model.SsmTransition
-import ssm.chaincode.dsl.model.uri.ChaincodeUri
-import ssm.chaincode.dsl.model.uri.from
 import ssm.sdk.core.extention.SsmJsonReader
 import ssm.sdk.sign.extention.asAgent
 import ssm.sdk.sign.model.SignerAdmin

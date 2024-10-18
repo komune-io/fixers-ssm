@@ -1,7 +1,6 @@
 package io.komune.c2.chaincode.api.gateway.config
 
 import io.komune.c2.chaincode.api.fabric.model.Endorser
-import org.slf4j.LoggerFactory
 
 class ChannelChaincode(
     val channelId: ChannelId,

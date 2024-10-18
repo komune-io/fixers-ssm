@@ -1,7 +1,5 @@
 package ssm.sdk.dsl
 
-import ssm.chaincode.dsl.model.ChaincodeId
-import ssm.chaincode.dsl.model.ChannelId
 import ssm.chaincode.dsl.model.uri.ChaincodeUri
 
 data class InvokeArgs(

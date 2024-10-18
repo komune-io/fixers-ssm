@@ -6,7 +6,6 @@ import io.komune.c2.chaincode.api.gateway.chaincode.model.InvokeParams
 import io.komune.c2.chaincode.api.gateway.chaincode.model.InvokeReturn
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType

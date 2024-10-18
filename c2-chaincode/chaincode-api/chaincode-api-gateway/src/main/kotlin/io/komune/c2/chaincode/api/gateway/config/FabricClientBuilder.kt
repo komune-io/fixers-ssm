@@ -6,8 +6,6 @@ import io.komune.c2.chaincode.api.fabric.FabricUserClient
 import io.komune.c2.chaincode.api.fabric.config.FabricConfig
 import io.komune.c2.chaincode.api.fabric.factory.FabricChannelFactory
 import io.komune.c2.chaincode.api.fabric.factory.FabricClientFactory
-import io.komune.c2.chaincode.api.gateway.config.ChannelChaincode
-import io.komune.c2.chaincode.api.gateway.config.ChannelId
 
 class FabricClientBuilder(val coopConfig: HeraclesConfigProps) {
 
