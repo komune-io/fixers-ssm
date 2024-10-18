@@ -53,10 +53,13 @@ fixers {
 		outputDirectory = file("storybook/stories/d2/")
 	}
 	bundle {
-		id = "ssm"
-		name = "Ssm Data"
+		id = "c2"
+		name = "Chaincode Api and signed state machine"
 		description = "Aggregate all ssm data source to optimize request"
 		url = "https://github.com/komune-io/fixers-c2"
 	}
-
+	sonar {
+		organization = "komune-io"
+		projectKey = "komune-io_connect-c2"
+	}
 }
