@@ -2,10 +2,8 @@ package ssm.tx.session.spring.autoconfigure
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import ssm.chaincode.dsl.config.InvokeChunkedProps
 import ssm.chaincode.f2.features.command.SsmTxCreateFunctionImpl
 import ssm.chaincode.f2.features.command.SsmTxSessionPerformActionFunctionImpl
 import ssm.sdk.core.SsmTxService

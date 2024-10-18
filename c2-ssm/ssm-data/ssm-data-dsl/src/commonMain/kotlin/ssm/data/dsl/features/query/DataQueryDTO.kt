@@ -2,7 +2,6 @@ package ssm.data.dsl.features.query
 
 import kotlin.js.JsExport
 import kotlin.js.JsName
-import kotlinx.serialization.Serializable
 import ssm.chaincode.dsl.model.uri.SsmUriDTO
 
 @JsExport

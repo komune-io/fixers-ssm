@@ -4,7 +4,6 @@ import java.io.IOException
 import ssm.sdk.core.auth.BearerTokenAuthCredentials
 import ssm.sdk.core.ktor.KtorRepository
 import ssm.sdk.core.ktor.SsmRequester
-import ssm.sdk.json.JSONConverter
 import ssm.sdk.json.JSONConverterObjectMapper
 import ssm.sdk.sign.SsmCmdSigner
 

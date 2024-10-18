@@ -2,9 +2,7 @@ package ssm.sdk.json
 
 import com.fasterxml.jackson.core.type.TypeReference
 import java.io.IOException
-import java.lang.reflect.Type
 import java.util.concurrent.CompletionException
-import ssm.sdk.json.JsonUtils.mapper
 
 class JSONConverterObjectMapper : JSONConverter {
 

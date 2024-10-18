@@ -1,6 +1,5 @@
 package ssm.sdk.core.invoke.command
 
-import java.util.function.Consumer
 import org.assertj.core.api.Assertions
 import org.assertj.core.util.Lists
 import org.junit.jupiter.api.Test

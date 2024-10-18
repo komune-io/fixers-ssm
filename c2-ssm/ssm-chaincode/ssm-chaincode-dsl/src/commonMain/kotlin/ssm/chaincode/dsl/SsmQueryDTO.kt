@@ -4,7 +4,6 @@ import f2.dsl.cqrs.Event
 import f2.dsl.cqrs.Query
 import kotlin.js.JsExport
 import kotlin.js.JsName
-import kotlinx.serialization.Serializable
 import ssm.chaincode.dsl.model.uri.ChaincodeUri
 
 @JsExport

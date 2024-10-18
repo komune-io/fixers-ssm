@@ -5,9 +5,9 @@ import io.komune.c2.chaincode.api.gateway.chaincode.ChaincodeService
 import io.komune.c2.chaincode.api.gateway.chaincode.model.Cmd
 import io.komune.c2.chaincode.api.gateway.chaincode.model.ErrorResponse
 import io.komune.c2.chaincode.api.gateway.chaincode.model.InvokeParams
-import io.komune.c2.chaincode.api.gateway.chaincode.model.InvokeReturn
 import io.komune.c2.chaincode.api.gateway.config.ChainCodeId
 import io.komune.c2.chaincode.api.gateway.config.ChannelId
+import java.util.concurrent.CompletableFuture
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
-import java.util.concurrent.CompletableFuture
 
 @RestController
 @RequestMapping("/", produces = [MediaType.APPLICATION_JSON_VALUE])

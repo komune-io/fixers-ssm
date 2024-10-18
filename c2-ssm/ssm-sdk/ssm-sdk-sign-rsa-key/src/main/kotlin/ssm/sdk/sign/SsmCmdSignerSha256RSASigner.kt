@@ -1,7 +1,6 @@
 package ssm.sdk.sign
 
 import java.util.Base64
-import ssm.chaincode.dsl.model.AgentName
 import ssm.sdk.dsl.SsmCmd
 import ssm.sdk.dsl.SsmCmdSigned
 import ssm.sdk.sign.crypto.Sha256RSASigner

@@ -2,8 +2,6 @@ package ssm.couchdb.dsl.model
 
 import kotlin.js.JsExport
 import kotlin.js.JsName
-import kotlinx.serialization.Contextual
-import kotlinx.serialization.Serializable
 
 typealias ChangeEventId = String
 

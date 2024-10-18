@@ -2,7 +2,6 @@ package ssm.chaincode.dsl.model
 
 import kotlin.js.JsExport
 import kotlin.js.JsName
-import kotlinx.serialization.Serializable
 
 @JsExport
 @JsName("WithPrivate")

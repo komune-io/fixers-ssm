@@ -6,7 +6,6 @@ import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.toList
-import ssm.api.extentions.getSessionLogs
 import ssm.chaincode.dsl.blockchain.Transaction
 import ssm.chaincode.dsl.blockchain.TransactionId
 import ssm.chaincode.dsl.config.flattenConcurrentlyFlow
@@ -39,14 +38,6 @@ class DataSsmSessionConvertFunctionImpl(
 				flow.map { it.sessionState.session }.getSessionLogs(ssmUri, ssmGetSessionLogsQueryFunction)
 			allSessionLogs.map { sessionLogs ->
 				val transactions = sessionLogs.logs.map { it.txId }.getTransactions(ssmUri.asChaincodeUri())
-//				getTransactions
-//				val transactions = sessionLogs.logs.mapNotNull {
-//					it.txId.getTransaction(
-//						ssmGetTransactionQueryFunction,
-//						chaincodeUri = ssmUri.asChaincodeUri()
-//					)
-//				}
-
 				val state = allSessionState[sessionLogs.sessionName]!!
 				sessionLogs.toDataSession(ssmUri, state, transactions)
 			}
