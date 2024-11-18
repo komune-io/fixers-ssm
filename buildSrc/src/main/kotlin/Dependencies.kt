@@ -33,7 +33,6 @@ object Versions {
 
 	const val cloudant = "0.3.1"
 	const val bouncycastleVersion = "1.70"
-//	const val nettyTcnative = "2.0.48.Final"
 
 	const val junit = FixersVersions.Test.junit
 	const val assertj = FixersVersions.Test.assertj
@@ -65,8 +64,4 @@ object Dependencies {
 		"org.assertj:assertj-core:${Versions.assertj}"
 	)
 
-//	fun nettyTcnative(scope: Scope) = scope.add(
-//		"io.netty:netty-tcnative-boringssl-static:${Versions.nettyTcnative}",
-//		"io.netty:netty-tcnative-classes:${Versions.nettyTcnative}"
-//	)
 }
