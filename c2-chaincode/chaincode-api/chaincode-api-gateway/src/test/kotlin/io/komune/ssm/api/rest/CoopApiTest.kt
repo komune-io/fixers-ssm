@@ -89,7 +89,7 @@ class CoopApiTest : WebBaseTest() {
 		val res = this.restTemplate.postForEntity(uri, request, ErrorResponse::class.java)
 		assertThat(res.statusCode.value()).isEqualTo(400)
 		assertThat(res.body).isNotNull
-		assertThat(res.body!!.message).isEqualTo("Chaincode invoke error: Invalid INVALID_CHANNEL_ID/ex02")
+		assertThat(res.body!!.message).isEqualTo("Invalid INVALID_CHANNEL_ID/ex02")
 	}
 
 	@Test
@@ -105,7 +105,7 @@ class CoopApiTest : WebBaseTest() {
 		val res = this.restTemplate.postForEntity(uri, request, ErrorResponse::class.java)
 		assertThat(res.statusCode.value()).isEqualTo(400)
 		assertThat(res.body).isNotNull
-		assertThat(res.body!!.message).isEqualTo("Chaincode invoke error: Invalid sandbox/INVALID_CHAINCODE_ID")
+		assertThat(res.body!!.message).isEqualTo("Invalid sandbox/INVALID_CHAINCODE_ID")
 	}
 
 	@Test

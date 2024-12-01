@@ -56,7 +56,7 @@ class ChaincodeRestEndpoint(
 
 	@ExceptionHandler(InvokeException::class)
 	fun handleException(invokeException: InvokeException): ResponseEntity<ErrorResponse> {
-		val error = ErrorResponse("Chaincode invoke error: ${invokeException.message}")
+		val error = ErrorResponse(invokeException.message ?: "Unknown error")
 		return ResponseEntity(error, HttpStatus.BAD_REQUEST)
 	}
 }

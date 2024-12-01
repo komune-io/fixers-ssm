@@ -1,12 +1,16 @@
 package ssm.sdk.core.ktor
 
 import com.fasterxml.jackson.core.type.TypeReference
+import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import com.fasterxml.jackson.module.kotlin.readValue
+import com.sun.jdi.InvocationException
 import org.slf4j.LoggerFactory
 import ssm.chaincode.dsl.model.uri.ChaincodeUri
 import ssm.sdk.core.invoke.builder.HasGet
 import ssm.sdk.core.invoke.builder.HasList
 import ssm.sdk.dsl.InvokeCommandArgs
+import ssm.sdk.dsl.InvokeError
+import ssm.sdk.dsl.InvokeException
 import ssm.sdk.dsl.InvokeReturn
 import ssm.sdk.dsl.InvokeType
 import ssm.sdk.dsl.SsmCmdSigned
@@ -94,7 +98,7 @@ class SsmRequester(
 		}
 		return coopRepository.invoke(
 			args
-		).let {
+		).handleResponse {
 			JsonUtils.mapper.readValue(it, type)
 		}
 	}
@@ -112,7 +116,7 @@ class SsmRequester(
 		logger.info(
 			"Query the blockchain in chaincode[${chaincodeUri.uri}] with fcn[${args.fcn}] with args:${args.args}",
 		)
-		return request.let { response ->
+		return request.handleResponse { response ->
 			jsonConverter.toCompletableObjects(clazz, response)
 		}
 	}
@@ -132,7 +136,7 @@ class SsmRequester(
 			args = invokeArgs.args,
 			channelId = cmdSigned.chaincodeUri.channelId,
 			chaincodeId = cmdSigned.chaincodeUri.chaincodeId,
-		).let {
+		).handleResponse {
 			jsonConverter.toCompletableObject(InvokeReturn::class.java, it)!!
 		}
 	}
@@ -156,9 +160,18 @@ class SsmRequester(
 
 		return coopRepository.invoke(
 			args
-		).let {
+		).handleResponse {
 			JsonUtils.mapper.readValue<List<InvokeReturn>>(it)
 		}
+	}
+
+	private fun <R> String.handleResponse(transform: (String)-> R): R = try {
+		transform(this)
+	} catch (e: MismatchedInputException) {
+		val error: InvokeError = JsonUtils.mapper.readValue(this)
+		throw InvokeException(error.message)
+	} catch (e: Exception) {
+		throw InvokeException("Error while parsing response", e)
 	}
 }
 
