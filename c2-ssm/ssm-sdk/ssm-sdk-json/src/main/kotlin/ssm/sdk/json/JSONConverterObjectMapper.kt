@@ -8,12 +8,8 @@ class JSONConverterObjectMapper : JSONConverter {
 
 
 	override fun <T> toCompletableObjects(clazz: Class<T>, value: String): List<T> {
-		try {
-			val type: TypeReference<List<T>> = object : TypeReference<List<T>>() {}
-			 return JsonUtils.toObject(value, type)
-		} catch (e: IOException) {
-			throw CompletionException("Error parsing response: $value", e)
-		}
+		val type: TypeReference<List<T>> = object : TypeReference<List<T>>() {}
+		return JsonUtils.toObject(value, type)
 	}
 
 	override fun <T> toCompletableObject(clazz: Class<T>, value: String): T? {
@@ -21,14 +17,10 @@ class JSONConverterObjectMapper : JSONConverter {
 	}
 
 	override fun <T> toObject(clazz: Class<T>, value: String): T?  {
-		return try {
-			if (value.isBlank()) {
-				null
-			} else {
-				JsonUtils.toObject(value, clazz)
-			}
-		} catch (e: IOException) {
-			throw CompletionException("Error parsing response: $value", e)
+		return if (value.isBlank()) {
+			null
+		} else {
+			JsonUtils.toObject(value, clazz)
 		}
 	}
 }

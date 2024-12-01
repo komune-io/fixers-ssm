@@ -169,7 +169,7 @@ class SsmRequester(
 		transform(this)
 	} catch (e: MismatchedInputException) {
 		val error: InvokeError = JsonUtils.mapper.readValue(this)
-		throw InvokeException(error.message, e)
+		throw InvokeException(error.message)
 	} catch (e: Exception) {
 		throw InvokeException("Error while parsing response", e)
 	}

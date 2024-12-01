@@ -86,12 +86,6 @@ class SsmClientItTest {
 		private var privateMessage: Map<String, String>? = null
 	}
 
-	@AfterEach
-	fun waitBetweenTest() {
-		//Node rest api return http response before the transaction had been mined
-		Thread.sleep(2000)
-	}
-
 	@Order(5)
 	@Test
 	fun listAdmin() = runBlocking<Unit> {
@@ -185,14 +179,14 @@ class SsmClientItTest {
 			chaincodeUri,
 			sessionName
 		)
-		val sesReq = ses
-		Assertions.assertThat(sesReq?.current).isEqualTo(0)
-		Assertions.assertThat(sesReq?.iteration).isEqualTo(0)
-		Assertions.assertThat(sesReq?.origin).isNull()
-		Assertions.assertThat(sesReq?.ssm).isEqualTo(ssmName)
-		Assertions.assertThat(sesReq?.roles).isEqualTo(session.roles)
-		Assertions.assertThat(sesReq?.session).isEqualTo(session.session)
-		Assertions.assertThat(sesReq?.public).isEqualTo(session.public)
+
+		Assertions.assertThat(ses?.current).isEqualTo(0)
+		Assertions.assertThat(ses?.iteration).isEqualTo(0)
+		Assertions.assertThat(ses?.origin).isNull()
+		Assertions.assertThat(ses?.ssm).isEqualTo(ssmName)
+		Assertions.assertThat(ses?.roles).isEqualTo(session.roles)
+		Assertions.assertThat(ses?.session).isEqualTo(session.session)
+		Assertions.assertThat(ses?.public).isEqualTo(session.public)
 	}
 
 	@Test

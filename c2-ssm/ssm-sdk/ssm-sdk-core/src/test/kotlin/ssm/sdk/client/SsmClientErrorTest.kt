@@ -2,33 +2,25 @@ package ssm.sdk.client
 
 import java.util.UUID
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.runTest
+import org.assertj.core.api.AbstractThrowableAssert
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.AssertionsForClassTypes
-import org.assertj.core.api.ThrowableAssert
 import org.assertj.core.util.Lists
-import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation
-import org.junit.jupiter.api.Order
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestMethodOrder
-import ssm.chaincode.dsl.blockchain.Block
-import ssm.chaincode.dsl.blockchain.Transaction
 import ssm.chaincode.dsl.model.Agent
 import ssm.chaincode.dsl.model.Ssm
 import ssm.chaincode.dsl.model.SsmContext
 import ssm.chaincode.dsl.model.SsmSession
-import ssm.chaincode.dsl.model.SsmSessionState
 import ssm.chaincode.dsl.model.SsmTransition
 import ssm.chaincode.dsl.model.uri.ChaincodeUri
 import ssm.sdk.core.SsmQueryService
 import ssm.sdk.core.SsmTxService
 import ssm.sdk.dsl.InvokeException
-import ssm.sdk.dsl.InvokeReturn
 import ssm.sdk.sign.SsmCmdSignerSha256RSASigner
 import ssm.sdk.sign.extention.addPrivateMessage
-import ssm.sdk.sign.extention.getPrivateMessage
 import ssm.sdk.sign.extention.loadFromFile
 import ssm.sdk.sign.model.Signer
 import ssm.sdk.sign.model.SignerAdmin
@@ -64,7 +56,6 @@ class SsmClientErrorTest {
 			SignerUser.loadFromFile(USER2_NAME, USER2_FILENAME)
 		)
 
-//		private var agentAdmin: Agent = Agent.loadFromFile(ADMIN_NAME, NETWORK + ADMIN_NAME)
 		private var agentUser1: Agent = Agent.loadFromFile(signerUser1.name, USER1_FILENAME)
 		private var agentUser2: Agent = Agent.loadFromFile(signerUser2.name, USER2_FILENAME)
 
@@ -89,59 +80,45 @@ class SsmClientErrorTest {
 		private var privateMessage: Map<String, String>? = null
 	}
 
-	@AfterEach
-	fun waitBetweenTest() {
-		//Node rest api return http response before the transaction had been mined
-		Thread.sleep(1000)
-	}
-
+	@Suppress("LongMethod")
 	@Test
-	@Order(20)
-	fun registerUser1() = runTest {
-		// First call to register the user (no exception expected)
+	fun fullTest() = runBlocking<Unit> {
+		println("//////////////////////////////")
+		println("registerUser1")
 		tx.sendRegisterUser(chaincodeUri, agentUser1, signerAdmin.name)
-
 		// Catch the exception from the second call
-		val throwable = catchThrowableSuspense {
-			tx.sendRegisterUser(chaincodeUri, agentUser1, signerAdmin.name)
-		}
-
-		// Assertions on the throwable
-		Assertions.assertThat(throwable)
-			.isInstanceOf(InvokeException::class.java)
+		assertThatThrowable {
+			tx.sendRegisterUser(
+				chaincodeUri,
+				agentUser1, signerAdmin.name)
+		}.isInstanceOf(InvokeException::class.java)
 			.hasMessage("Identifier USER_${agentUser1.name} already in use.")
-	}
 
 
-	@Test
-	@Order(60)
-	fun createSsm() = runBlocking<Unit> {
+		println("//////////////////////////////")
+		println("registerUser2")
+		tx.sendRegisterUser(chaincodeUri, agentUser2, signerAdmin.name)
+		assertThatThrowable {
+			tx.sendRegisterUser(
+				chaincodeUri,
+				agentUser2, signerAdmin.name)
+		}.isInstanceOf(InvokeException::class.java)
+			.hasMessage("Identifier USER_${agentUser2.name} already in use.")
+
+		println("//////////////////////////////")
+		println("createSsm")
 		val sell = SsmTransition(0, 1, "Seller", "Sell")
 		val buy = SsmTransition(1, 2, "Buyer", "Buy")
 		val ssm = Ssm(ssmName, Lists.newArrayList(sell, buy))
 		tx.sendCreate(chaincodeUri, ssm, signerAdmin.name)
 
-		val throwable = catchThrowableSuspense {tx.sendCreate(chaincodeUri, ssm, signerAdmin.name)}
-		// Assertions on the throwable
-		Assertions.assertThat(throwable)
-			.isInstanceOf(InvokeException::class.java)
+		assertThatThrowable {
+			tx.sendCreate(chaincodeUri, ssm, signerAdmin.name)
+		}.isInstanceOf(InvokeException::class.java)
 			.hasMessage("Identifier SSM_${ssmName} already in use.")
-	}
 
-	@Order(70)
-	@Test
-	fun ssm() = runTest {
-		val ssmReq = query.getSsm(
-			chaincodeUri,
-			ssmName
-		)
-		Assertions.assertThat(ssmReq).isNotNull
-		Assertions.assertThat(ssmReq!!.name).isEqualTo(ssmName)
-	}
-
-	@Test
-	@Order(80)
-	fun start() = runTest {
+		println("//////////////////////////////")
+		println("startSession")
 		val roles: Map<String, String> = mapOf(
 			agentUser1.name to "Buyer", agentUser2.name to "Seller"
 		)
@@ -149,125 +126,47 @@ class SsmClientErrorTest {
 			ssmName,
 			sessionName, roles, "Used car for 100 dollars.", emptyMap()
 		)
-		val transactionEvent = tx.sendStart(chaincodeUri, session, signerAdmin.name)
-		assertThatTransactionExists(transactionEvent)
-	}
+		tx.sendStart(chaincodeUri, session, signerAdmin.name)
 
-	@Order(90)
-	@Test
-	fun session() = runTest {
-		val ses = query.getSession(
-			chaincodeUri,
-			sessionName
-		)
-		val sesReq = ses
-		Assertions.assertThat(sesReq?.current).isEqualTo(0)
-		Assertions.assertThat(sesReq?.iteration).isEqualTo(0)
-		Assertions.assertThat(sesReq?.origin).isNull()
-		Assertions.assertThat(sesReq?.ssm).isEqualTo(ssmName)
-		Assertions.assertThat(sesReq?.roles).isEqualTo(session.roles)
-		Assertions.assertThat(sesReq?.session).isEqualTo(session.session)
-		Assertions.assertThat(sesReq?.public).isEqualTo(session.public)
-	}
+		assertThatThrowable {
+			tx.sendStart(chaincodeUri, session, signerAdmin.name)
+		}.isInstanceOf(InvokeException::class.java)
+			.hasMessage("Identifier STATE_${sessionName} already in use.")
 
-	@Test
-	@Order(100)
-	fun performSell() = runTest {
-		var context = SsmContext(sessionName, "100 dollars 1978 Camaro", 0, emptyMap())
-		context = context.addPrivateMessage(
+
+		println("//////////////////////////////")
+		println("performSell")
+		var sellcontext = SsmContext(sessionName, "100 dollars 1978 Camaro", 0, emptyMap()).apply {  }
+		sellcontext = sellcontext.addPrivateMessage(
 			"Message to signer1",
 			agentUser1
 		)
-		privateMessage = context.private
-		val transactionEvent = tx.sendPerform(chaincodeUri,"Sell", context, signerUser2.name)
-		assertThatTransactionExists(transactionEvent)
+		privateMessage = sellcontext.private
+		tx.sendPerform(chaincodeUri,"Sell", sellcontext, signerUser2.name)
+
+		assertThatThrowable {
+			tx.sendPerform(chaincodeUri,"Sell", sellcontext, signerUser2.name)
+		}
+			.isInstanceOf(InvokeException::class.java)
+			.hasMessage("No valid transition from state ")
+
+		println("//////////////////////////////")
+		println("performBuy")
+		val buyContext = SsmContext(sessionName, "Deal !", 1, emptyMap())
+		tx.sendPerform(chaincodeUri,"Buy", buyContext, signerUser1.name)
+
+		assertThatThrowable {
+			tx.sendPerform(chaincodeUri,"Buy", buyContext, signerUser1.name)
+		}.isInstanceOf(InvokeException::class.java)
+			.hasMessage("No valid transition from state ")
 	}
 
-	@Order(110)
-	@Test
-	fun sessionAfterSell() = runTest {
-		val sell = SsmTransition(0, 1, "Seller", "Sell")
-		val sesReq = query.getSession(
-			chaincodeUri,
-			sessionName
-		)
-		val stateExpected = SsmSessionState(
-			ssmName,
-			sessionName, session.roles, "100 dollars 1978 Camaro", privateMessage, sell, 1, 1
-		)
-		Assertions.assertThat(sesReq).isEqualTo(stateExpected)
-	}
-
-	@Order(110)
-	@Test
-	fun sessionAfterSellShouldReturnEncryptMessage() = runTest {
-//		val (from, to, role, action) = SsmTransition(0, 1, "Seller", "Sell")
-		val state = query.getSession(chaincodeUri, sessionName)
-		val expectedMessage = state?.getPrivateMessage(signerUser1)
-		Assertions.assertThat(expectedMessage).isEqualTo("Message to signer1")
-	}
-
-	@Test
-	@Order(120)
-	fun performBuy() = runTest {
-		val context = SsmContext(sessionName, "Deal !", 1, emptyMap())
-		val transactionEvent = tx.sendPerform(chaincodeUri,"Buy", context, signerUser1.name)
-		assertThatTransactionExists(transactionEvent)
-	}
-
-	suspend fun assertThatTransactionExists(trans: InvokeReturn) {
-		Assertions.assertThat(trans).isNotNull
-		Assertions.assertThat(trans.status).isEqualTo("SUCCESS")
-		val transaction: Transaction? = query.getTransaction(chaincodeUri, trans.transactionId)
-		Assertions.assertThat(transaction).isNotNull
-		Assertions.assertThat(transaction?.blockId).isNotNull
-		val block: Block? = query.getBlock(chaincodeUri, transaction!!.blockId)
-		Assertions.assertThat(block).isNotNull
-	}
-
-	@Order(130)
-	@Test
-	fun sessionAfterBuy() = runTest {
-		val buy = SsmTransition(1, 2, "Buyer", "Buy")
-		val sesReq = query.getSession(
-			chaincodeUri,
-			sessionName
-		)
-		val state = sesReq
-		val stateExcpected = SsmSessionState(
-			ssmName,
-			sessionName, session.roles, "Deal !", emptyMap(), buy, 2, 2
-		)
-		Assertions.assertThat(state).isEqualTo(stateExcpected)
-	}
-
-	@Test
-	@Order(135)
-	@Throws(Exception::class)
-	fun logSession() = runTest {
-		val sesReq = query.log(
-			chaincodeUri,
-			sessionName
-		)
-		Assertions.assertThat(sesReq.size).isEqualTo(3)
-	}
-
-	@Test
-	@Order(140)
-	fun listSsm() = runTest {
-		val agentRet = query.listSsm(chaincodeUri)
-		Assertions.assertThat(agentRet).contains(ssmName)
-	}
-
-	@Test
-	@Order(150)
-	fun listSession() = runTest {
-		val agentRet = query.listSession(chaincodeUri)
-		Assertions.assertThat(agentRet).contains(sessionName)
-	}
 }
 
 
-fun catchThrowableSuspense(exec : suspend () -> Unit): Throwable {
-	return AssertionsForClassTypes.catchThrowable({ runBlocking { exec() } } )
+fun assertThatThrowable(exec : suspend () -> Unit): AbstractThrowableAssert<*, Throwable> {
+	val throwable = AssertionsForClassTypes.catchThrowable{
+		runBlocking { exec() }
+	}
+	return Assertions.assertThat(throwable)
 }
