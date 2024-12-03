@@ -99,7 +99,6 @@ class SsmRequester(
 		}
 	}
 
-
 	suspend fun <T> list(chaincodeUri: ChaincodeUri, query: HasList, clazz: Class<T>): List<T> {
 		val args = query.listArgs()
 		val request = coopRepository.query(
