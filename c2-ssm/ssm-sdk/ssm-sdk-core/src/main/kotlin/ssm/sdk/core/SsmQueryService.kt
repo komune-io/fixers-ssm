@@ -146,7 +146,9 @@ class SsmQueryService(private val ssmRequester: SsmRequester): SsmQueryServiceI 
 		return queries.map {
 			SsmApiQuery(it.chaincodeUri, it.sessionName, query)
 		}.let {
-			ssmRequester.query(it, object : TypeReference<List<List<SsmSessionStateLog>>>() {})
+			ssmRequester.query(it, object : TypeReference<List<String>>() {})
+		}.map { item ->
+			item.let { JsonUtils.mapper.readValue(it, object : TypeReference<List<SsmSessionStateLog>>() {}) }
 		}
 
 	}

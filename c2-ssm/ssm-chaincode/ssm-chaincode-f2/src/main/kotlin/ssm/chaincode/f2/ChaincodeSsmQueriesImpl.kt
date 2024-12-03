@@ -27,7 +27,7 @@ import ssm.sdk.core.SsmSdkConfig
 import ssm.sdk.core.SsmServiceFactory
 
 class ChaincodeSsmQueriesImpl(
-    config: SsmChaincodeConfig,
+    private val config: SsmChaincodeConfig,
     private val ssmQueryService: SsmQueryService
 		= SsmServiceFactory.builder(SsmSdkConfig(config.url)).buildQueryService()
 ): SsmChaincodeQueries {
@@ -41,7 +41,7 @@ class ChaincodeSsmQueriesImpl(
 	}
 
 	override fun ssmGetSessionLogsQueryFunction(): SsmGetSessionLogsQueryFunction {
-		return SsmGetSessionLogsQueryFunctionImpl(ssmQueryService)
+		return SsmGetSessionLogsQueryFunctionImpl(ssmQueryService, config.chunking)
 	}
 
 	override fun ssmGetSessionQueryFunction(): SsmGetSessionQueryFunction {
