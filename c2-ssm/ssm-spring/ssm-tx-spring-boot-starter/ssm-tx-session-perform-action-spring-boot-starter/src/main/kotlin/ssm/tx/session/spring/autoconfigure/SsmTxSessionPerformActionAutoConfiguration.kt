@@ -20,6 +20,6 @@ class SsmTxSessionPerformActionAutoConfiguration {
 		ssmTxService: SsmTxService,
 		properties: SsmTxProperties
 	): SsmTxSessionPerformActionFunction {
-		return SsmTxSessionPerformActionFunctionImpl(properties.chunking, ssmTxService)
+		return SsmTxSessionPerformActionFunctionImpl(ssmTxService)
 	}
 }

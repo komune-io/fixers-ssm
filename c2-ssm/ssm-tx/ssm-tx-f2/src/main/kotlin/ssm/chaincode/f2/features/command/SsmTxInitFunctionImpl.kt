@@ -16,7 +16,6 @@ import ssm.tx.dsl.features.ssm.SsmInitdResult
 import ssm.tx.dsl.features.ssm.SsmTxInitFunction
 
 class SsmTxInitFunctionImpl(
-//	private val chunking: InvokeChunkedProps,
 	private val txService: SsmTxService,
 	private val queryService: SsmQueryService,
 ): SsmTxInitFunction {

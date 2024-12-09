@@ -53,7 +53,7 @@ class DataSsmAutoConfiguration {
 		ssmChaincodeConfig: SsmChaincodeConfig
 	): DataSsmConfig {
 		logger.debug("Configuration of ${DataSsmAutoConfiguration::dataSsmConfig.name}...")
-		return DataSsmConfig(dataSsmProperties.chunking, ssmCouchdbConfig, ssmChaincodeConfig)
+		return DataSsmConfig(dataSsmProperties.batch, ssmCouchdbConfig, ssmChaincodeConfig)
 	}
 
 	@Bean

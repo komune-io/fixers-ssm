@@ -1,15 +1,12 @@
 package ssm.api.features.query
 
 import f2.dsl.fnc.invokeWith
+import f2.dsl.fnc.operators.flattenConcurrently
+import f2.dsl.fnc.operators.groupBy
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.map
 import ssm.api.features.query.internal.DataSsmSessionConvertFunctionImpl
 import ssm.api.features.query.internal.DataSsmSessionConvertQuery
-import ssm.chaincode.dsl.config.InvokeChunkedProps
-import ssm.chaincode.dsl.config.chunk
-import ssm.chaincode.dsl.config.flattenConcurrentlyFlow
-import ssm.chaincode.dsl.config.groupBy
 import ssm.chaincode.dsl.model.uri.SsmUri
 import ssm.chaincode.dsl.model.uri.asChaincodeUri
 import ssm.chaincode.dsl.query.SsmGetSessionQuery
@@ -20,7 +17,6 @@ import ssm.data.dsl.features.query.DataSsmSessionGetQueryResult
 import ssm.data.dsl.features.query.DataSsmSessionGetQueryResultDTO
 
 class DataSsmSessionGetQueryFunctionImpl(
-	private val chunking: InvokeChunkedProps,
 	private val ssmGetSessionQueryFunction: SsmGetSessionQueryFunction,
 	private val dataSsmSessionConvertFunction: DataSsmSessionConvertFunctionImpl,
 ) : DataSsmSessionGetQueryFunction {
@@ -32,9 +28,9 @@ class DataSsmSessionGetQueryFunctionImpl(
 					chaincodeUri = ssmUri.asChaincodeUri(),
 					sessionName = payload.sessionName,
 				)
-			}.chunk(chunking).map {
-				ssmGetSessionQueryFunction.invoke(it.asFlow())
-			}.flattenConcurrentlyFlow().map { result ->
+			}.let {
+				ssmGetSessionQueryFunction.invoke(it)
+			}.map { result ->
 				result.item?.let { item ->
 					DataSsmSessionConvertQuery(
 						sessionState = item,
@@ -46,6 +42,6 @@ class DataSsmSessionGetQueryFunctionImpl(
 			}.map {
 				DataSsmSessionGetQueryResult(it)
 			}
-		}.flattenConcurrentlyFlow()
+		}.flattenConcurrently()
 	}
 }

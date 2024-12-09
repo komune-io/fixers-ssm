@@ -1,10 +1,8 @@
 package ssm.chaincode.f2.features.command
 
+import f2.dsl.fnc.operators.batch
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import ssm.chaincode.dsl.config.InvokeChunkedProps
-import ssm.chaincode.dsl.config.chunk
-import ssm.chaincode.dsl.config.flattenConcurrentlyList
 import ssm.chaincode.dsl.model.uri.burst
 import ssm.sdk.core.SsmTxService
 import ssm.sdk.core.command.SsmPerformCommand
@@ -13,7 +11,6 @@ import ssm.tx.dsl.features.ssm.SsmSessionPerformActionResult
 import ssm.tx.dsl.features.ssm.SsmTxSessionPerformActionFunction
 
 class SsmTxSessionPerformActionFunctionImpl(
-	private val chunking: InvokeChunkedProps,
 	private val ssmTxService: SsmTxService
 ) : SsmTxSessionPerformActionFunction {
 
@@ -26,11 +23,11 @@ class SsmTxSessionPerformActionFunctionImpl(
 			chaincodeUri = payload.chaincodeUri.burst(),
 			signerName = payload.signerName
 		)
-	}.chunk(chunking) {
+	}.let {
 		ssmTxService.sendPerform(it).map { result ->
 			SsmSessionPerformActionResult(
 				transactionId = result.transactionId,
 			)
 		}
-	}.flattenConcurrentlyList()
+	}
 }

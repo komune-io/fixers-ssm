@@ -17,8 +17,7 @@ class SsmTxCreateAutoConfiguration {
 	@ConditionalOnBean(SsmTxService::class)
 	fun ssmTxCreateFunction(
 		ssmTxService: SsmTxService,
-		properties: SsmTxProperties
 	): SsmTxCreateFunction {
-		return SsmTxCreateFunctionImpl(properties.chunking, ssmTxService)
+		return SsmTxCreateFunctionImpl(ssmTxService)
 	}
 }

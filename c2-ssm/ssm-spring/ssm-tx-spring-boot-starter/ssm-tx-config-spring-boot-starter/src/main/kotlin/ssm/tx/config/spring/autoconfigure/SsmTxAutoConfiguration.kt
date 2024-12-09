@@ -38,7 +38,8 @@ class SsmTxAutoConfiguration {
 	@ConditionalOnMissingBean(SsmTxService::class)
 	fun ssmTxService(ssmCmdSigner: SsmCmdSigner, ssmChaincodeConfig: SsmChaincodeConfig): SsmTxService {
 		return SsmServiceFactory.builder(
-			SsmSdkConfig(ssmChaincodeConfig.url)
+			SsmSdkConfig(ssmChaincodeConfig.url),
+			ssmChaincodeConfig.batch
 		).buildTxService(ssmCmdSigner)
 	}
 
@@ -47,7 +48,8 @@ class SsmTxAutoConfiguration {
 	@ConditionalOnMissingBean(SsmQueryService::class)
 	fun ssmQueryService(ssmChaincodeConfig: SsmChaincodeConfig): SsmQueryService {
 		return SsmServiceFactory.builder(
-			SsmSdkConfig(ssmChaincodeConfig.url)
+			SsmSdkConfig(ssmChaincodeConfig.url),
+			ssmChaincodeConfig.batch
 		).buildQueryService()
 	}
 }
