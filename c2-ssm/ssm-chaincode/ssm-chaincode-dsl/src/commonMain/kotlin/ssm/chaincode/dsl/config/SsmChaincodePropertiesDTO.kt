@@ -18,7 +18,7 @@ interface SsmChaincodePropertiesDTO {
 	 * @example "http://peer.sandbox.Komune.io:9000"
 	 */
 	val url: String
-	val chunking: InvokeChunkedProps
+	val batch: BatchProperties
 }
 
 @Serializable
@@ -26,5 +26,5 @@ interface SsmChaincodePropertiesDTO {
 @JsName("ChaincodeSsmConfig")
 class SsmChaincodeConfig(
 	override val url: String,
-	override val chunking: InvokeChunkedProps = InvokeChunkedProps(),
+	override val batch: BatchProperties = BatchProperties()
 ) : SsmChaincodePropertiesDTO

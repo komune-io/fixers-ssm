@@ -1,6 +1,10 @@
 package ssm.sdk.core
 
+import f2.dsl.fnc.operators.batch
+import kotlinx.coroutines.flow.Flow
 import org.slf4j.LoggerFactory
+import ssm.chaincode.dsl.config.BatchProperties
+import ssm.chaincode.dsl.config.toBatch
 import ssm.chaincode.dsl.model.Agent
 import ssm.chaincode.dsl.model.AgentName
 import ssm.chaincode.dsl.model.Ssm
@@ -20,9 +24,24 @@ import ssm.sdk.dsl.SsmCmd
 
 class SsmTxService(
 	private val ssmService: SsmService,
+	private val batch: BatchProperties,
 ) {
 	private val logger = LoggerFactory.getLogger(SsmTxService::class.java)
 
+
+	fun sendRegisterUser(
+		commands: Flow<UserRegisterCommand>
+	): Flow<InvokeReturn>
+			= commands.batch(batch.toBatch(), ::sendRegisterUser)
+
+	fun sendCreate(commands: Flow<SsmCreateCommand>): Flow<InvokeReturn>
+			= commands.batch(batch.toBatch(), ::sendCreate)
+
+	fun sendStart(commands: Flow<SsmStartCommand>): Flow<InvokeReturn>
+			= commands.batch(batch.toBatch(), ::sendStart)
+
+	fun sendPerform(commands: Flow<SsmPerformCommand>): Flow<InvokeReturn>
+			= commands.batch(batch.toBatch(), ::sendPerform)
 
 	suspend fun sendRegisterUser(
 		commands: List<UserRegisterCommand>

@@ -38,19 +38,14 @@ data class SsmUri(override val uri: String): SsmUriDTO {
 		require(burst.first() == PREFIX)
 	}
 
-	@Transient
 	val channelId
 		get() = burst[1]
-	@Transient
 	val chaincodeId
 		get() = burst[2]
-	@Transient
 	val ssmName
 		get() = burst.get(index = 3)
-	@Transient
 	val ssmVersion
 		get() = DEFAULT_VERSION
-	@Transient
 	val chaincodeUri
 		get() = ChaincodeUri.from(channelId, chaincodeId)
 }

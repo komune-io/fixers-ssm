@@ -22,7 +22,6 @@ class SsmTxInitAutoConfiguration {
 		ssmQueryService: SsmQueryService,
 		properties: SsmTxProperties
 	): SsmTxInitFunction {
-//		return SsmTxInitFunctionImpl(properties.chunking, ssmTxService, ssmQueryService)
 		return SsmTxInitFunctionImpl(ssmTxService, ssmQueryService)
 	}
 }

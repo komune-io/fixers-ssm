@@ -1,6 +1,6 @@
 package ssm.bdd.config
 
-import ssm.chaincode.dsl.config.InvokeChunkedProps
+import ssm.chaincode.dsl.config.BatchProperties
 import ssm.chaincode.dsl.config.SsmChaincodeConfig
 import ssm.chaincode.dsl.model.uri.ChaincodeUri
 import ssm.couchdb.dsl.config.SsmCouchdbConfig
@@ -76,15 +76,15 @@ object SsmBddConfig {
 			}
 		val config: SsmChaincodeConfig
 			get() {
-				return SsmChaincodeConfig(url = url)
+				return SsmChaincodeConfig(batch = BatchProperties(), url = url)
 			}
 	}
 
 	object Data {
 		val config = DataSsmConfig(
-			chunking = InvokeChunkedProps(),
 			couchdb = Couchdb.config,
 			chaincode = Chaincode.config,
+			batch = BatchProperties()
 		)
 	}
 

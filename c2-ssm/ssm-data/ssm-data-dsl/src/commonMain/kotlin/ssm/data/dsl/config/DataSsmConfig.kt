@@ -1,6 +1,7 @@
 package ssm.data.dsl.config
 
-import ssm.chaincode.dsl.config.InvokeChunkedProps
+import f2.dsl.fnc.operators.CHUNK_DEFAULT_SIZE
+import ssm.chaincode.dsl.config.BatchProperties
 import ssm.chaincode.dsl.config.SsmChaincodeConfig
 import ssm.couchdb.dsl.config.SsmCouchdbConfig
 
@@ -13,7 +14,7 @@ data class DataSsmConfig(
 	/**
 	 * Configuration for chunking.
 	 */
-	val chunking: InvokeChunkedProps,
+	val batch: BatchProperties,
 	/**
 	 * Configuration for couchdb.
 	 */

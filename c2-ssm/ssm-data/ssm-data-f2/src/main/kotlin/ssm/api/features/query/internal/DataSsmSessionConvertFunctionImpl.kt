@@ -1,6 +1,7 @@
 package ssm.api.features.query.internal
 
 import f2.dsl.fnc.F2Function
+import f2.dsl.fnc.operators.flattenConcurrently
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.map
@@ -8,8 +9,6 @@ import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.toList
 import ssm.chaincode.dsl.blockchain.Transaction
 import ssm.chaincode.dsl.blockchain.TransactionId
-import ssm.chaincode.dsl.config.flattenConcurrentlyFlow
-import ssm.chaincode.dsl.config.groupBy
 import ssm.chaincode.dsl.model.SessionName
 import ssm.chaincode.dsl.model.SsmSessionState
 import ssm.chaincode.dsl.model.uri.ChaincodeUri
@@ -33,7 +32,7 @@ class DataSsmSessionConvertFunctionImpl(
 		val allMsgs = msgs.toList()
 		val allSessionState = allMsgs.map { it.sessionState }.associateBy { it.session }
 
-		return allMsgs.asFlow().groupBy { it.ssmUri }.map { (ssmUri, flow) ->
+		return allMsgs.groupBy { it.ssmUri }.map { (ssmUri, flow) ->
 			val allSessionLogs =
 				flow.map { it.sessionState.session }.getSessionLogs(ssmUri, ssmGetSessionLogsQueryFunction)
 			allSessionLogs.map { sessionLogs ->
@@ -41,7 +40,7 @@ class DataSsmSessionConvertFunctionImpl(
 				val state = allSessionState[sessionLogs.sessionName]!!
 				sessionLogs.toDataSession(ssmUri, state, transactions)
 			}
-		}.flattenConcurrentlyFlow()
+		}.asFlow().flattenConcurrently()
 	}
 
 	private fun SsmGetSessionLogsQueryResult.toDataSession(
@@ -82,7 +81,7 @@ class DataSsmSessionConvertFunctionImpl(
 		return ssmGetTransactionQueryFunction.invoke(queries.asFlow()).mapNotNull { it.item }.toList()
 	}
 
-	suspend fun Flow<SessionName>.getSessionLogs(
+	suspend fun List<SessionName>.getSessionLogs(
 		ssmUri: SsmUri,
 		ssmGetSessionLogsQueryFunction: SsmGetSessionLogsQueryFunction,
 	): Flow<SsmGetSessionLogsQueryResult> = map { sessionName ->
@@ -92,7 +91,7 @@ class DataSsmSessionConvertFunctionImpl(
 			ssmName = ssmUri.ssmName
 		)
 	}.let {
-		ssmGetSessionLogsQueryFunction.invoke(it)
+		ssmGetSessionLogsQueryFunction.invoke(it.asFlow())
 	}.map { it }
 
 
