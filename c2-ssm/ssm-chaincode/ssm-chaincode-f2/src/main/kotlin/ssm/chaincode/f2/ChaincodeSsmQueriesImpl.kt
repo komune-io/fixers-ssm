@@ -1,7 +1,7 @@
 package ssm.chaincode.f2
 
 import ssm.chaincode.dsl.SsmChaincodeQueries
-import ssm.chaincode.dsl.config.BatchProperties
+import ssm.chaincode.dsl.config.SsmBatchProperties
 import ssm.chaincode.dsl.config.SsmChaincodeProperties
 import ssm.chaincode.dsl.query.SsmGetAdminFunction
 import ssm.chaincode.dsl.query.SsmGetQueryFunction
@@ -28,10 +28,10 @@ import ssm.sdk.core.SsmSdkConfig
 import ssm.sdk.core.SsmServiceFactory
 
 class ChaincodeSsmQueriesImpl(
-	private val batchProperties: BatchProperties,
+	private val ssmBatchProperties: SsmBatchProperties,
 	private val config: SsmChaincodeProperties,
 	private val ssmQueryService: SsmQueryService
-		= SsmServiceFactory.builder(SsmSdkConfig(config.url), batchProperties).buildQueryService()
+		= SsmServiceFactory.builder(SsmSdkConfig(config.url), ssmBatchProperties).buildQueryService()
 ): SsmChaincodeQueries {
 
 	override fun ssmGetAdminFunction(): SsmGetAdminFunction {
@@ -43,7 +43,7 @@ class ChaincodeSsmQueriesImpl(
 	}
 
 	override fun ssmGetSessionLogsQueryFunction(): SsmGetSessionLogsQueryFunction {
-		return SsmGetSessionLogsQueryFunctionImpl(batchProperties, ssmQueryService)
+		return SsmGetSessionLogsQueryFunctionImpl(ssmBatchProperties, ssmQueryService)
 	}
 
 	override fun ssmGetSessionQueryFunction(): SsmGetSessionQueryFunction {
