@@ -1,10 +1,14 @@
 package io.komune.c2.chaincode.api.gateway.config
 
+import org.springframework.boot.CommandLineRunner
+import org.springframework.boot.autoconfigure.codec.CodecProperties
+import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.reactive.config.CorsRegistry
 import org.springframework.web.reactive.config.EnableWebFlux
 import org.springframework.web.reactive.config.ResourceHandlerRegistry
 import org.springframework.web.reactive.config.WebFluxConfigurer
+
 
 @Configuration
 @EnableWebFlux
@@ -23,4 +27,12 @@ class WebFluxConfiguration : WebFluxConfigurer {
             .addResourceLocations("classpath:/META-INF/resources/webjars/springfox-swagger-ui/")
             .resourceChain(false)
     }
+
+    @Bean
+    fun debugCodecProperties(codecProperties: CodecProperties): CommandLineRunner {
+        return CommandLineRunner { args: Array<String?>? ->
+            println("Max In-Memory Size: " + codecProperties.maxInMemorySize)
+        }
+    }
+
 }

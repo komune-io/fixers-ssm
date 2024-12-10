@@ -14,11 +14,5 @@ spring:
   main:
     web-application-type: reactive
 
-#i2:
-#  jwt-issuer-uri: http://localhost:8080/auth/server
-#  jwk-set-uri: ${keycloak.auth-server-url}/realms/${keycloak.realm}/protocol/openid-connect/certs
-#  filter:
-#    organizationId: 919036e9-886a-4798-a3d8-d55b3a651540
-
 server:
-  port : 9090
+  port: 9090
