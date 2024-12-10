@@ -9,6 +9,7 @@ import ssm.api.features.query.DataSsmSessionLogGetQueryFunctionImpl
 import ssm.api.features.query.DataSsmSessionLogListQueryFunctionImpl
 import ssm.api.features.query.internal.DataSsmSessionConvertFunctionImpl
 import ssm.chaincode.dsl.SsmChaincodeQueries
+import ssm.chaincode.dsl.config.BatchProperties
 import ssm.chaincode.f2.ChaincodeSsmQueriesImpl
 import ssm.couchdb.dsl.SsmCouchDbQueries
 import ssm.couchdb.f2.CouchdbSsmQueriesFunctionImpl
@@ -24,7 +25,7 @@ import ssm.data.dsl.features.query.DataSsmSessionLogListQueryFunction
 
 class DataSsmQueryFunctionImpl(
 	private val config: DataSsmConfig,
-	private val ssmChaincodeQueries: SsmChaincodeQueries = ChaincodeSsmQueriesImpl(config.chaincode),
+	private val ssmChaincodeQueries: SsmChaincodeQueries = ChaincodeSsmQueriesImpl(config.batch, config.chaincode),
 	private val couchDbSsmQueries: SsmCouchDbQueries = CouchdbSsmQueriesFunctionImpl(config.couchdb)
 ) : SsmApiQueryFunctions {
 

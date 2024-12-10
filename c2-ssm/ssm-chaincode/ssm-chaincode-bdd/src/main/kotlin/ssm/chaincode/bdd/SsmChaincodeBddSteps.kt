@@ -23,7 +23,7 @@ class SsmChaincodeBddSteps : SsmQueryStep(), En {
 	init {
 		prepareSteps()
 		Before { _: Scenario ->
-			ssmChaincodeQueryFunctions = ChaincodeSsmQueriesImpl(config)
+			ssmChaincodeQueryFunctions = ChaincodeSsmQueriesImpl(batch, config)
 		}
 
 	}

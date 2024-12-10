@@ -14,7 +14,7 @@ class SsmChaincodeApplicationContextRunnerTest {
 		ApplicationContextRunnerBuilder()
 			.buildContext(SsmChaincodeConfigTest.localDockerComposeParams).run { context ->
 				assertThat(context).hasSingleBean(FunctionCatalog::class.java)
-				assertThat(context).hasSingleBean(SsmChaincodeProperties::class.java)
+				assertThat(context).hasSingleBean(SsmChaincodeConfiguration::class.java)
 				assertThat(context).hasBean(SsmChaincodeF2AutoConfiguration::ssmGetAdminFunction.name)
 				assertThat(context).hasBean(SsmChaincodeF2AutoConfiguration::ssmGetSessionLogsQueryFunction.name)
 				assertThat(context).hasBean(SsmChaincodeF2AutoConfiguration::ssmGetSessionLogsQueryFunction.name)
@@ -34,7 +34,7 @@ class SsmChaincodeApplicationContextRunnerTest {
 			types = arrayOf(ApplicationContextBuilder.SimpleConfiguration::class.java),
 			config = SsmChaincodeConfigTest.localDockerComposeParams
 		)
-		assertThat(context.getBean(SsmChaincodeAutoConfiguration::ssmChaincodeConfig.name)).isNotNull
+		assertThat(context.getBean(SsmChaincodeAutoConfiguration::ssmChaincodeProperties.name)).isNotNull
 		assertThat(context.getBean(FunctionCatalog::class.java)).isNotNull
 	}
 

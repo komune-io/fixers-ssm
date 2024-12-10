@@ -1,8 +1,7 @@
 package ssm.data.dsl.config
 
-import f2.dsl.fnc.operators.CHUNK_DEFAULT_SIZE
 import ssm.chaincode.dsl.config.BatchProperties
-import ssm.chaincode.dsl.config.SsmChaincodeConfig
+import ssm.chaincode.dsl.config.SsmChaincodeProperties
 import ssm.couchdb.dsl.config.SsmCouchdbConfig
 
 /**
@@ -22,6 +21,6 @@ data class DataSsmConfig(
 	/**
 	 *  Configuration for couchdb.
 	 */
-	val chaincode: SsmChaincodeConfig,
+	val chaincode: SsmChaincodeProperties,
 
 	)

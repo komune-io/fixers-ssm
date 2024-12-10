@@ -18,13 +18,11 @@ interface SsmChaincodePropertiesDTO {
 	 * @example "http://peer.sandbox.Komune.io:9000"
 	 */
 	val url: String
-	val batch: BatchProperties
 }
 
 @Serializable
 @JsExport
 @JsName("ChaincodeSsmConfig")
-class SsmChaincodeConfig(
+class SsmChaincodeProperties(
 	override val url: String,
-	override val batch: BatchProperties = BatchProperties()
 ) : SsmChaincodePropertiesDTO

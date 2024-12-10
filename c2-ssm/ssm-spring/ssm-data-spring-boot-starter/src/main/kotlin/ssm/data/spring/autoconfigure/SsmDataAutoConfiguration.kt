@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import ssm.api.DataSsmQueryFunctionImpl
-import ssm.chaincode.dsl.config.SsmChaincodeConfig
+import ssm.chaincode.dsl.config.SsmChaincodeProperties
 import ssm.couchdb.dsl.config.SsmCouchdbConfig
 import ssm.data.dsl.SsmApiQueryFunctions
 import ssm.data.dsl.config.DataSsmConfig
@@ -37,23 +37,23 @@ class DataSsmAutoConfiguration {
 		return dataSsmProperties.couchdb
 	}
 	@Bean
-	@ConditionalOnMissingBean(SsmChaincodeConfig::class)
+	@ConditionalOnMissingBean(SsmChaincodeProperties::class)
 	@ConditionalOnProperty(prefix = "ssm.chaincode", name = ["url"])
-	fun ssmChaincodeConfig(dataSsmProperties: SsmDataProperties): SsmChaincodeConfig? {
+	fun ssmChaincodeConfig(dataSsmProperties: SsmDataProperties): SsmChaincodeProperties? {
 		logger.debug("Configuration of ${DataSsmAutoConfiguration::ssmChaincodeConfig.name}...")
 		return dataSsmProperties.chaincode
 	}
 
 	@Bean
 	@ConditionalOnMissingBean(DataSsmConfig::class)
-	@ConditionalOnBean(value = [SsmCouchdbConfig::class, SsmChaincodeConfig::class])
+	@ConditionalOnBean(value = [SsmCouchdbConfig::class, SsmChaincodeProperties::class])
 	fun dataSsmConfig(
 		dataSsmProperties: SsmDataProperties,
 		ssmCouchdbConfig: SsmCouchdbConfig,
-		ssmChaincodeConfig: SsmChaincodeConfig
+		ssmChaincodeProperties: SsmChaincodeProperties
 	): DataSsmConfig {
 		logger.debug("Configuration of ${DataSsmAutoConfiguration::dataSsmConfig.name}...")
-		return DataSsmConfig(dataSsmProperties.batch, ssmCouchdbConfig, ssmChaincodeConfig)
+		return DataSsmConfig(dataSsmProperties.batch, ssmCouchdbConfig, ssmChaincodeProperties)
 	}
 
 	@Bean

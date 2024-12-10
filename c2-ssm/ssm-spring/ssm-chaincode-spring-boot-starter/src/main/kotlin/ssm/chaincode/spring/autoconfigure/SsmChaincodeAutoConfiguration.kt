@@ -1,12 +1,14 @@
 package ssm.chaincode.spring.autoconfigure
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import ssm.chaincode.dsl.SsmChaincodeQueries
-import ssm.chaincode.dsl.config.SsmChaincodeConfig
+import ssm.chaincode.dsl.config.BatchProperties
+import ssm.chaincode.dsl.config.SsmChaincodeProperties
 import ssm.chaincode.dsl.query.SsmGetAdminFunction
 import ssm.chaincode.dsl.query.SsmGetQueryFunction
 import ssm.chaincode.dsl.query.SsmGetSessionLogsQueryFunction
@@ -20,19 +22,27 @@ import ssm.chaincode.dsl.query.SsmListUserQueryFunction
 import ssm.chaincode.f2.ChaincodeSsmQueriesImpl
 
 @ConditionalOnProperty(prefix = "ssm.chaincode", name = ["url"])
-@EnableConfigurationProperties(SsmChaincodeProperties::class)
+@EnableConfigurationProperties(SsmChaincodeConfiguration::class)
 @Configuration(proxyBeanMethods = false)
 class SsmChaincodeAutoConfiguration {
 
 	@Bean
-	fun ssmChaincodeConfig(
-		ssmChaincodeProperties: SsmChaincodeProperties
-	): SsmChaincodeConfig = ssmChaincodeProperties.chaincode
+	@ConditionalOnMissingBean(SsmChaincodeProperties::class)
+	fun ssmChaincodeProperties(
+		ssmChaincodeProperties: SsmChaincodeConfiguration
+	): SsmChaincodeProperties = ssmChaincodeProperties.chaincode
+
+	@Bean
+	@ConditionalOnMissingBean(BatchProperties::class)
+	fun batchProperties(
+		ssmChaincodeProperties: SsmChaincodeConfiguration
+	): BatchProperties = ssmChaincodeProperties.batch
 
 	@Bean
 	fun ssmChaincodeQueryFunctions(
-		ssmChaincodeConfig: SsmChaincodeConfig
-	): ChaincodeSsmQueriesImpl = ChaincodeSsmQueriesImpl(ssmChaincodeConfig)
+		ssmChaincodeProperties: SsmChaincodeProperties,
+		batchProperties: BatchProperties,
+	): ChaincodeSsmQueriesImpl = ChaincodeSsmQueriesImpl(batchProperties, ssmChaincodeProperties)
 }
 
 @ConditionalOnBean(ChaincodeSsmQueriesImpl::class)

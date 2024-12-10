@@ -8,7 +8,7 @@ import org.springframework.beans.factory.aot.BeanFactoryInitializationAotProcess
 import org.springframework.beans.factory.aot.BeanFactoryInitializationCode
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory
 import org.springframework.util.ReflectionUtils
-import ssm.chaincode.dsl.config.SsmChaincodeConfig
+import ssm.chaincode.dsl.config.SsmChaincodeProperties
 
 class SsmTxAutoConfigurationBeanFactoryInitializationAotProcessor : BeanFactoryInitializationAotProcessor {
     override fun processAheadOfTime(bf: ConfigurableListableBeanFactory): BeanFactoryInitializationAotContribution {
@@ -23,7 +23,7 @@ class SsmTxAutoConfigurationBeanFactoryInitializationAotProcessor : BeanFactoryI
             hints.reflection().registerMethod(method, ExecutableMode.INVOKE)
 
             hints.reflection().registerType(SsmTxProperties::class.java)
-            hints.reflection().registerType(SsmChaincodeConfig::class.java)
+            hints.reflection().registerType(SsmChaincodeProperties::class.java)
 
             SsmTxProperties.SignerAgentFileConfig::class.java.getDeclaredConstructors().forEach {
                 hints.reflection().registerConstructor(it, ExecutableMode.INVOKE)
