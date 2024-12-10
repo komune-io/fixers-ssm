@@ -3,7 +3,7 @@ package ssm.chaincode.f2.query
 import f2.dsl.fnc.operators.batch
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import ssm.chaincode.dsl.config.BatchProperties
+import ssm.chaincode.dsl.config.SsmBatchProperties
 import ssm.chaincode.dsl.config.toBatch
 import ssm.chaincode.dsl.model.SsmName
 import ssm.chaincode.dsl.query.SsmGetSessionLogsQuery
@@ -13,8 +13,8 @@ import ssm.sdk.core.GetLogQuery
 import ssm.sdk.core.SsmQueryService
 
 class SsmGetSessionLogsQueryFunctionImpl(
-	private val batch: BatchProperties,
-	private val queryService: SsmQueryService,
+    private val batch: SsmBatchProperties,
+    private val queryService: SsmQueryService,
 ): SsmGetSessionLogsQueryFunction  {
 
 	override suspend fun invoke(

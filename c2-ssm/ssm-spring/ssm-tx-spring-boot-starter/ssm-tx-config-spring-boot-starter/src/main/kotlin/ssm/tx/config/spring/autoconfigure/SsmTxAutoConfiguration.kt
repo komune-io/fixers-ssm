@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import ssm.chaincode.dsl.config.BatchProperties
+import ssm.chaincode.dsl.config.SsmBatchProperties
 import ssm.chaincode.dsl.config.SsmChaincodeProperties
 import ssm.sdk.core.SsmQueryService
 import ssm.sdk.core.SsmSdkConfig
@@ -26,8 +26,8 @@ class SsmTxAutoConfiguration {
 		ssmTxCreateProperties.chaincode!!
 
 	@Bean
-	@ConditionalOnMissingBean(BatchProperties::class)
-	fun batchProperties(ssmTxCreateProperties: SsmTxProperties): BatchProperties =
+	@ConditionalOnMissingBean(SsmBatchProperties::class)
+	fun ssmBatchProperties(ssmTxCreateProperties: SsmTxProperties): SsmBatchProperties =
 		ssmTxCreateProperties.batch
 
 	@Bean
@@ -45,11 +45,11 @@ class SsmTxAutoConfiguration {
 	fun ssmTxService(
 		ssmCmdSigner: SsmCmdSigner,
 		ssmChaincodeProperties: SsmChaincodeProperties,
-		batchProperties: BatchProperties,
+		ssmBatchProperties: SsmBatchProperties,
 	): SsmTxService {
 		return SsmServiceFactory.builder(
 			SsmSdkConfig(ssmChaincodeProperties.url),
-			batchProperties
+			ssmBatchProperties
 		).buildTxService(ssmCmdSigner)
 	}
 
@@ -58,11 +58,11 @@ class SsmTxAutoConfiguration {
 	@ConditionalOnMissingBean(SsmQueryService::class)
 	fun ssmQueryService(
 		ssmChaincodeProperties: SsmChaincodeProperties,
-		batchProperties: BatchProperties,
+		ssmBatchProperties: SsmBatchProperties,
 	): SsmQueryService {
 		return SsmServiceFactory.builder(
 			SsmSdkConfig(ssmChaincodeProperties.url),
-			batchProperties
+			ssmBatchProperties
 		).buildQueryService()
 	}
 }

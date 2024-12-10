@@ -1,7 +1,7 @@
 package ssm.data.spring.autoconfigure
 
 import org.springframework.boot.context.properties.ConfigurationProperties
-import ssm.chaincode.dsl.config.BatchProperties
+import ssm.chaincode.dsl.config.SsmBatchProperties
 import ssm.chaincode.dsl.config.SsmChaincodeProperties
 import ssm.couchdb.dsl.config.SsmCouchdbConfig
 
@@ -18,5 +18,5 @@ data class SsmDataProperties(
 	/**
 	 * Configuration for chunking.
 	 */
-	val batch: BatchProperties = BatchProperties(),
+	val batch: SsmBatchProperties = SsmBatchProperties(),
 )

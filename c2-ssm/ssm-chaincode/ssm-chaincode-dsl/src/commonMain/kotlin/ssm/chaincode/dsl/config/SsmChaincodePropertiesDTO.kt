@@ -7,7 +7,6 @@ import kotlinx.serialization.Serializable
 /**
  * The configuration needed for
  * @d2 model
- * @example "ssm"
  * @parent [ssm.chaincode.dsl.SsmChaincodeD2Model]
  */
 @JsExport

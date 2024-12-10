@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import ssm.chaincode.dsl.SsmChaincodeQueries
-import ssm.chaincode.dsl.config.BatchProperties
+import ssm.chaincode.dsl.config.SsmBatchProperties
 import ssm.chaincode.dsl.config.SsmChaincodeProperties
 import ssm.chaincode.dsl.query.SsmGetAdminFunction
 import ssm.chaincode.dsl.query.SsmGetQueryFunction
@@ -33,16 +33,16 @@ class SsmChaincodeAutoConfiguration {
 	): SsmChaincodeProperties = ssmChaincodeProperties.chaincode
 
 	@Bean
-	@ConditionalOnMissingBean(BatchProperties::class)
-	fun batchProperties(
+	@ConditionalOnMissingBean(SsmBatchProperties::class)
+	fun ssmBatchProperties(
 		ssmChaincodeProperties: SsmChaincodeConfiguration
-	): BatchProperties = ssmChaincodeProperties.batch
+	): SsmBatchProperties = ssmChaincodeProperties.batch
 
 	@Bean
 	fun ssmChaincodeQueryFunctions(
 		ssmChaincodeProperties: SsmChaincodeProperties,
-		batchProperties: BatchProperties,
-	): ChaincodeSsmQueriesImpl = ChaincodeSsmQueriesImpl(batchProperties, ssmChaincodeProperties)
+		ssmBatchProperties: SsmBatchProperties,
+	): ChaincodeSsmQueriesImpl = ChaincodeSsmQueriesImpl(ssmBatchProperties, ssmChaincodeProperties)
 }
 
 @ConditionalOnBean(ChaincodeSsmQueriesImpl::class)

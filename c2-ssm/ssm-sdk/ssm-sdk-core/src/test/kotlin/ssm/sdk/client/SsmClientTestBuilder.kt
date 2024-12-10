@@ -1,7 +1,7 @@
 package ssm.sdk.client
 
 import java.io.IOException
-import ssm.chaincode.dsl.config.BatchProperties
+import ssm.chaincode.dsl.config.SsmBatchProperties
 import ssm.sdk.core.SsmServiceFactory
 
 object SsmClientTestBuilder {
@@ -11,7 +11,7 @@ object SsmClientTestBuilder {
 
 	@Throws(IOException::class)
 	fun build(): SsmServiceFactory {
-		return SsmServiceFactory.builder(configFileName, BatchProperties())
+		return SsmServiceFactory.builder(configFileName, SsmBatchProperties())
 	}
 
 	private val configFileName: String

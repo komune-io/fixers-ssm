@@ -1,6 +1,6 @@
 package ssm.data.dsl.config
 
-import ssm.chaincode.dsl.config.BatchProperties
+import ssm.chaincode.dsl.config.SsmBatchProperties
 import ssm.chaincode.dsl.config.SsmChaincodeProperties
 import ssm.couchdb.dsl.config.SsmCouchdbConfig
 
@@ -13,7 +13,7 @@ data class DataSsmConfig(
 	/**
 	 * Configuration for chunking.
 	 */
-	val batch: BatchProperties,
+	val batch: SsmBatchProperties,
 	/**
 	 * Configuration for couchdb.
 	 */

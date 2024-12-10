@@ -3,7 +3,7 @@ package ssm.sdk.core
 import f2.dsl.fnc.operators.batch
 import kotlinx.coroutines.flow.Flow
 import org.slf4j.LoggerFactory
-import ssm.chaincode.dsl.config.BatchProperties
+import ssm.chaincode.dsl.config.SsmBatchProperties
 import ssm.chaincode.dsl.config.toBatch
 import ssm.chaincode.dsl.model.Agent
 import ssm.chaincode.dsl.model.AgentName
@@ -23,8 +23,8 @@ import ssm.sdk.dsl.InvokeReturn
 import ssm.sdk.dsl.SsmCmd
 
 class SsmTxService(
-	private val ssmService: SsmService,
-	private val batch: BatchProperties,
+    private val ssmService: SsmService,
+    private val batch: SsmBatchProperties,
 ) {
 	private val logger = LoggerFactory.getLogger(SsmTxService::class.java)
 

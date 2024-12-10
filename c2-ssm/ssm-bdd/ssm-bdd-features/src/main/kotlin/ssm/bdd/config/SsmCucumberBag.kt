@@ -2,7 +2,7 @@ package ssm.bdd.config
 
 import io.cucumber.java8.Scenario
 import java.util.UUID
-import ssm.chaincode.dsl.config.BatchProperties
+import ssm.chaincode.dsl.config.SsmBatchProperties
 import ssm.chaincode.dsl.model.AgentName
 import ssm.chaincode.dsl.model.Ssm
 import ssm.chaincode.dsl.model.SsmName
@@ -34,11 +34,11 @@ class SsmCucumberBag(
 	lateinit var uuid: String
 
 	val clientQuery = SsmServiceFactory
-		.builder(config, BatchProperties())
+		.builder(config, SsmBatchProperties())
 		.buildQueryService()
 
 	fun clientTx(signer: Signer) = SsmServiceFactory
-		.builder(config, BatchProperties())
+		.builder(config, SsmBatchProperties())
 		.buildTxService(SsmCmdSignerSha256RSASigner(signer))
 
 	val chaincodeUri: ChaincodeUri = ChaincodeUri("chaincode:sandbox:ssm")

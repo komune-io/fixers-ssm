@@ -1,6 +1,5 @@
 package ssm.chaincode.f2
 
-import ssm.chaincode.dsl.config.BatchProperties
 import ssm.chaincode.f2.features.command.SsmTxCreateFunctionImpl
 import ssm.chaincode.f2.features.command.SsmTxInitFunctionImpl
 import ssm.chaincode.f2.features.command.SsmTxSessionStartFunctionImpl

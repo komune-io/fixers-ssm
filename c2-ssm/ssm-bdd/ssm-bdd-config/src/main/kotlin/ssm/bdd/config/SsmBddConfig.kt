@@ -1,6 +1,6 @@
 package ssm.bdd.config
 
-import ssm.chaincode.dsl.config.BatchProperties
+import ssm.chaincode.dsl.config.SsmBatchProperties
 import ssm.chaincode.dsl.config.SsmChaincodeProperties
 import ssm.chaincode.dsl.model.uri.ChaincodeUri
 import ssm.couchdb.dsl.config.SsmCouchdbConfig
@@ -84,7 +84,7 @@ object SsmBddConfig {
 		val config = DataSsmConfig(
 			couchdb = Couchdb.config,
 			chaincode = Chaincode.config,
-			batch = BatchProperties()
+			batch = SsmBatchProperties()
 		)
 	}
 
