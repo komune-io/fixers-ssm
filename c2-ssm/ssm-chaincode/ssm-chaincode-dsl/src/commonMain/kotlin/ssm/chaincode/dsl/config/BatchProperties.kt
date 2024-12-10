@@ -7,10 +7,16 @@ import kotlin.js.JsExport
 import kotlinx.serialization.Serializable
 
 @JsExport
-@Serializable
-class BatchProperties {
-    val size: Int = BATCH_DEFAULT_SIZE
-    val concurrency: Int = BATCH_DEFAULT_CONCURRENCY
+interface BatchPropertiesDTO {
+    val size: Int
+    val concurrency: Int
 }
+
+@JsExport
+@Serializable
+class BatchProperties(
+    override val size: Int = BATCH_DEFAULT_SIZE,
+    override val concurrency: Int = BATCH_DEFAULT_CONCURRENCY
+):BatchPropertiesDTO
 
 fun BatchProperties.toBatch(): Batch = Batch(size, concurrency)

@@ -1,13 +1,15 @@
 package ssm.tx.config.spring.autoconfigure
 
 import org.springframework.boot.context.properties.ConfigurationProperties
-import ssm.chaincode.dsl.config.SsmChaincodeConfig
+import ssm.chaincode.dsl.config.BatchProperties
+import ssm.chaincode.dsl.config.SsmChaincodeProperties
 import ssm.sdk.sign.model.SignerAdmin
 
 @ConfigurationProperties(prefix = "ssm")
 data class SsmTxProperties(
-	val chaincode: SsmChaincodeConfig?,
+	val chaincode: SsmChaincodeProperties?,
 	val signer: SignerFileConfig?,
+	val batch: BatchProperties = BatchProperties()
 ) {
 	class SignerFileConfig(
 		val admin: SignerAgentFileConfig?,

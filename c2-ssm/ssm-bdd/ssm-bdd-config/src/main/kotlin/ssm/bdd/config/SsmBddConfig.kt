@@ -1,7 +1,7 @@
 package ssm.bdd.config
 
 import ssm.chaincode.dsl.config.BatchProperties
-import ssm.chaincode.dsl.config.SsmChaincodeConfig
+import ssm.chaincode.dsl.config.SsmChaincodeProperties
 import ssm.chaincode.dsl.model.uri.ChaincodeUri
 import ssm.couchdb.dsl.config.SsmCouchdbConfig
 import ssm.data.dsl.config.DataSsmConfig
@@ -74,9 +74,9 @@ object SsmBddConfig {
 						.orIfGitlab(Commune.Chaincode.chaincodeUri)
 				)
 			}
-		val config: SsmChaincodeConfig
+		val config: SsmChaincodeProperties
 			get() {
-				return SsmChaincodeConfig(batch = BatchProperties(), url = url)
+				return SsmChaincodeProperties(url = url)
 			}
 	}
 

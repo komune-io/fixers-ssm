@@ -8,7 +8,7 @@ import org.springframework.beans.factory.aot.BeanFactoryInitializationAotProcess
 import org.springframework.beans.factory.aot.BeanFactoryInitializationCode
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory
 import org.springframework.util.ReflectionUtils
-import ssm.chaincode.dsl.config.SsmChaincodeConfig
+import ssm.chaincode.dsl.config.SsmChaincodeProperties
 
 class SsmChaincodeAutoConfigurationBeanFactoryInitializationAotProcessor : BeanFactoryInitializationAotProcessor {
     override fun processAheadOfTime(bf: ConfigurableListableBeanFactory): BeanFactoryInitializationAotContribution {
@@ -17,13 +17,13 @@ class SsmChaincodeAutoConfigurationBeanFactoryInitializationAotProcessor : BeanF
             val hints = ctx.runtimeHints
             val method: Method = ReflectionUtils.findMethod(
                 SsmChaincodeAutoConfiguration::class.java,
-                SsmChaincodeAutoConfiguration::ssmChaincodeConfig.name,
+                SsmChaincodeAutoConfiguration::ssmChaincodeProperties.name,
                 SsmChaincodeProperties::class.java
             )!!
             hints.reflection().registerMethod(method, ExecutableMode.INVOKE)
 
             hints.reflection().registerType(SsmChaincodeProperties::class.java)
-            hints.reflection().registerType(SsmChaincodeConfig::class.java)
+            hints.reflection().registerType(SsmChaincodeProperties::class.java)
         }
     }
 }

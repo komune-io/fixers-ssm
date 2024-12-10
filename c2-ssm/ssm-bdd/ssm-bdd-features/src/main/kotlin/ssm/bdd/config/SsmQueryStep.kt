@@ -6,7 +6,7 @@ import io.cucumber.java8.Scenario
 import kotlinx.coroutines.runBlocking
 import org.assertj.core.api.Assertions
 import ssm.chaincode.dsl.config.BatchProperties
-import ssm.chaincode.dsl.config.SsmChaincodeConfig
+import ssm.chaincode.dsl.config.SsmChaincodeProperties
 import ssm.chaincode.dsl.model.SessionName
 import ssm.chaincode.dsl.model.SsmAction
 import ssm.chaincode.dsl.model.SsmName
@@ -20,15 +20,15 @@ import ssm.chaincode.dsl.model.uri.toSsmUri
 abstract class SsmQueryStep {
 
 	lateinit var bag: SsmCucumberBag
-	lateinit var config: SsmChaincodeConfig
+	lateinit var config: SsmChaincodeProperties
+	var batch: BatchProperties = BatchProperties()
 
 	@Suppress("LongMethod")
 	fun En.prepareSteps() {
 		Before { scenario: Scenario ->
 			bag = SsmCucumberBag.init(scenario)
-			config = SsmChaincodeConfig(
+			config = SsmChaincodeProperties(
 				url = bag.config.baseUrl,
-				batch = BatchProperties()
 			)
 		}
 

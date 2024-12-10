@@ -27,7 +27,7 @@ class DataSteps : SsmQueryStep(), En {
 
 	val ssmDataConfig: DataSsmConfig = SsmBddConfig.Data.config
 	val dataSsmQueryFunctionImpl =
-		DataSsmQueryFunctionImpl(ssmDataConfig, ChaincodeSsmQueriesImpl(ssmDataConfig.chaincode))
+		DataSsmQueryFunctionImpl(ssmDataConfig, ChaincodeSsmQueriesImpl(batch, ssmDataConfig.chaincode))
 	val couchdbSsmQueriesFunctionImpl = CouchdbSsmQueriesFunctionImpl(ssmDataConfig.couchdb)
 
 	init {

@@ -1,11 +1,11 @@
-package ssm.couchdb.spring.autoconfigure
+package ssm.chaincode.spring.autoconfigure
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 import ssm.chaincode.dsl.config.BatchProperties
-import ssm.couchdb.dsl.config.SsmCouchdbConfig
+import ssm.chaincode.dsl.config.SsmChaincodeProperties
 
 @ConfigurationProperties(prefix = "ssm")
-data class SsmCouchdbProperties(
-	val couchdb: SsmCouchdbConfig,
+data class SsmChaincodeConfiguration(
+	val chaincode: SsmChaincodeProperties,
 	val batch: BatchProperties = BatchProperties()
 )

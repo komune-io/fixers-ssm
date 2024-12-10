@@ -8,7 +8,7 @@ import org.springframework.beans.factory.aot.BeanFactoryInitializationAotProcess
 import org.springframework.beans.factory.aot.BeanFactoryInitializationCode
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory
 import org.springframework.util.ReflectionUtils
-import ssm.chaincode.dsl.config.SsmChaincodeConfig
+import ssm.chaincode.dsl.config.SsmChaincodeProperties
 import ssm.couchdb.dsl.config.SsmCouchdbConfig
 
 class SsmDataAutoConfigurationBeanFactoryInitializationAotProcessor : BeanFactoryInitializationAotProcessor {
@@ -32,7 +32,7 @@ class SsmDataAutoConfigurationBeanFactoryInitializationAotProcessor : BeanFactor
 
             hints.reflection().registerType(SsmDataProperties::class.java)
             hints.reflection().registerType(SsmCouchdbConfig::class.java)
-            hints.reflection().registerType(SsmChaincodeConfig::class.java)
+            hints.reflection().registerType(SsmChaincodeProperties::class.java)
 
             SsmCouchdbConfig::class.java.declaredConstructors.forEach {
                 hints.reflection().registerConstructor(it, ExecutableMode.INVOKE)
@@ -40,7 +40,7 @@ class SsmDataAutoConfigurationBeanFactoryInitializationAotProcessor : BeanFactor
             SsmDataProperties::class.java.declaredConstructors.forEach {
                 hints.reflection().registerConstructor(it, ExecutableMode.INVOKE)
             }
-            SsmChaincodeConfig::class.java.declaredConstructors.forEach {
+            SsmChaincodeProperties::class.java.declaredConstructors.forEach {
                 hints.reflection().registerConstructor(it, ExecutableMode.INVOKE)
             }
 
