@@ -40,7 +40,7 @@ class ChaincodeRestEndpoint(
 		fcn: String,
 		args: Array<String>
 	): CompletableFuture<String> {
-		logger.debug("Querying chaincode $chaincode on channel $channel with cmd $cmd, fcn $fcn and args ${args.joinToString()}")
+		logger.debug("Querying chaincode $cmd")
 		return chaincodeService.execute(InvokeParams(channel, chaincode, cmd, fcn, args))
 	}
 
