@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import ssm.chaincode.f2.features.command.SsmTxCreateFunctionImpl
 import ssm.sdk.core.SsmTxService
-import ssm.tx.config.spring.autoconfigure.SsmTxProperties
 import ssm.tx.dsl.features.ssm.SsmTxCreateFunction
 
 @Configuration(proxyBeanMethods = false)

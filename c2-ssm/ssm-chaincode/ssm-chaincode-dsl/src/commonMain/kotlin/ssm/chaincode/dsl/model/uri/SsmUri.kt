@@ -3,7 +3,6 @@ package ssm.chaincode.dsl.model.uri
 import kotlin.js.JsExport
 import kotlin.js.JsName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.Transient
 import ssm.chaincode.dsl.model.ChaincodeId
 import ssm.chaincode.dsl.model.ChannelId
 import ssm.chaincode.dsl.model.SsmName

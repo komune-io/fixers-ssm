@@ -1,8 +1,8 @@
 package ssm.chaincode.dsl.config
 
-import f2.dsl.fnc.operators.Batch
-import f2.dsl.fnc.operators.BATCH_DEFAULT_SIZE
 import f2.dsl.fnc.operators.BATCH_DEFAULT_CONCURRENCY
+import f2.dsl.fnc.operators.BATCH_DEFAULT_SIZE
+import f2.dsl.fnc.operators.Batch
 import kotlin.js.JsExport
 import kotlinx.serialization.Serializable
 
