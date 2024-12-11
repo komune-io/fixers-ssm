@@ -1,8 +1,8 @@
 package ssm.chaincode.dsl.config
 
-import f2.dsl.fnc.operators.Batch
-import f2.dsl.fnc.operators.BATCH_DEFAULT_SIZE
 import f2.dsl.fnc.operators.BATCH_DEFAULT_CONCURRENCY
+import f2.dsl.fnc.operators.BATCH_DEFAULT_SIZE
+import f2.dsl.fnc.operators.Batch
 import kotlin.js.JsExport
 import kotlinx.serialization.Serializable
 
@@ -13,6 +13,10 @@ import kotlinx.serialization.Serializable
  */
 @JsExport
 interface BatchPropertiesDTO {
+    /**
+     * The size of the batch.
+     */
+    val timeout: Int
     /**
      * The size of the batch.
      */
@@ -27,6 +31,7 @@ interface BatchPropertiesDTO {
 @JsExport
 @Serializable
 class SsmBatchProperties(
+    override val timeout: Int = 2000,
     override val size: Int = BATCH_DEFAULT_SIZE,
     override val concurrency: Int = BATCH_DEFAULT_CONCURRENCY
 ) : BatchPropertiesDTO
