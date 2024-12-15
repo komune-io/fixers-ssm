@@ -47,6 +47,7 @@ fun RepositoryHandler.defaultRepo() {
 
 object Dependencies {
 	fun slf4j(scope: Scope) = FixersDependencies.Jvm.Logging.slf4j(scope)
+
 	// TODO Migrate to f2-client
 	fun ktor(scope: Scope) = scope.add(
 		"io.ktor:ktor-client-core:${Versions.ktor}",
@@ -56,12 +57,34 @@ object Dependencies {
 		"io.ktor:ktor-serialization-kotlinx-json:${Versions.ktor}",
 		"io.ktor:ktor-serialization-jackson:${Versions.ktor}"
 	)
+
 	fun jackson(scope: Scope) = scope.add(
 		"com.fasterxml.jackson.module:jackson-module-kotlin:2.17.2"
 	)
+
+	fun f2Auth(scope: Scope) = scope.add(
+		"io.komune.f2:f2-spring-boot-starter-auth-tenant:${Versions.f2}"
+	)
+
+	fun springWebFlux(scope: Scope) = scope.add(
+		"org.springframework.boot:spring-boot-starter-actuator:${Versions.springBoot}",
+		"org.springframework.boot:spring-boot-autoconfigure:${Versions.springBoot}",
+		"org.springframework.boot:spring-boot-starter-webflux:${Versions.springBoot}"
+	)
+
 	fun test(scope: Scope) = scope.add(
 		"org.junit.jupiter:junit-jupiter:${Versions.junit}",
 		"org.junit.jupiter:junit-jupiter-api:${Versions.junit}",
+		"org.assertj:assertj-core:${Versions.assertj}"
+	)
+
+	fun fabricSdk(scope: Scope) = scope.add(
+		"org.hyperledger.fabric-sdk-java:fabric-sdk-java:${Versions.fabric}"
+	)
+
+	fun springTest(scope: Scope) = scope.add(
+		"org.springframework.boot:spring-boot-starter-test:${Versions.springBoot}",
+		"io.projectreactor:reactor-test:${Versions.reactor}",
 		"org.assertj:assertj-core:${Versions.assertj}"
 	)
 
