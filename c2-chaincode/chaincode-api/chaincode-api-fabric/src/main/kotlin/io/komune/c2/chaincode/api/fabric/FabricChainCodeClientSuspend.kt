@@ -6,6 +6,7 @@ import io.komune.c2.chaincode.api.fabric.factory.FabricChannelFactory
 import io.komune.c2.chaincode.api.fabric.model.Endorser
 import io.komune.c2.chaincode.api.fabric.model.InvokeArgs
 import java.io.IOException
+import java.lang.System.currentTimeMillis
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -42,11 +43,11 @@ class FabricChainCodeClientSuspend(private val channelFactory: FabricChannelFact
         chainId: String,
         invokeArgsList: List<InvokeArgs>
     ): List<BlockEvent.TransactionEvent> {
-        val start = System.currentTimeMillis()
+        val start = currentTimeMillis()
         val channel = channelFactory.getChannel(endorsers, client, channelName)
         val chaincodeId = ChaincodeID.newBuilder().setName(chainId).build()
         return invokeBlockChain(client, channel, chaincodeId, invokeArgsList).let {
-            logger.info("Transactions[${invokeArgsList.size}] completed in ${System.currentTimeMillis() - start} ms")
+            logger.info("Transactions[${invokeArgsList.size}] completed in ${currentTimeMillis() - start} ms")
             it
         }
     }
@@ -64,9 +65,11 @@ class FabricChainCodeClientSuspend(private val channelFactory: FabricChannelFact
                 }
             }
         }
-        val start = System.currentTimeMillis()
+        val start = currentTimeMillis()
         val allResponses = proposalResponses.awaitAll()
-        logger.info("TransactionProposalRequests[${allResponses.size}] all completed in ${System.currentTimeMillis() - start} ms")
+        logger.info(
+            "TransactionProposalRequests[${allResponses.size}] all completed in ${currentTimeMillis() - start} ms"
+        )
         val errors = allResponses.flatten().filterNot {
             it.status == ChaincodeResponse.Status.SUCCESS
         }
@@ -78,11 +81,11 @@ class FabricChainCodeClientSuspend(private val channelFactory: FabricChannelFact
         }
 
         logger.info("All proposals succeeded. Sending transaction to orderer...")
-        val startSend = System.currentTimeMillis()
+        val startSend = currentTimeMillis()
         allResponses.map { response ->
             channel.sendTransaction(response).asDeferred()
         }.awaitAll().also {
-            logger.info("Transaction[${allResponses.size}] sent in in ${System.currentTimeMillis() - startSend} ms")
+            logger.info("Transaction[${allResponses.size}] sent in in ${currentTimeMillis() - startSend} ms")
         }
     }
 
