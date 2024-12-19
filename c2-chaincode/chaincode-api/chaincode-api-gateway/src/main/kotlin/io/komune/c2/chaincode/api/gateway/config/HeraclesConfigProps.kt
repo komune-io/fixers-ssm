@@ -13,7 +13,7 @@ class HeraclesConfigProps(
 	var defaultCcid: String,
 	var ccid: String,
 	var user: UserConfig? = null,
-	var config: FileConfig? = null ,
+	var config: FileConfig? = null,
 	var endorsers: String,
 	var batch: BatchConfig? = null
 ) {
@@ -73,8 +73,9 @@ class HeraclesConfigProps(
 		lateinit var crypto: String
 	}
 
-	class BatchConfig {
-		val size: Int = BATCH_DEFAULT_SIZE
-		val concurrency: Int = BATCH_DEFAULT_CONCURRENCY
-	}
+}
+
+open class BatchConfig {
+	var size: Int = BATCH_DEFAULT_SIZE
+	var concurrency: Int = BATCH_DEFAULT_CONCURRENCY
 }

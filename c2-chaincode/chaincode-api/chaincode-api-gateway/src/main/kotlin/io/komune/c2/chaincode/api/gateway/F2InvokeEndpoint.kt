@@ -1,7 +1,6 @@
 package io.komune.c2.chaincode.api.gateway
 
 import f2.dsl.fnc.F2Function
-import f2.dsl.fnc.operators.Batch
 import f2.dsl.fnc.operators.batch
 import io.komune.c2.chaincode.api.fabric.model.InvokeArgs
 import io.komune.c2.chaincode.api.gateway.chaincode.model.InvokeParams
