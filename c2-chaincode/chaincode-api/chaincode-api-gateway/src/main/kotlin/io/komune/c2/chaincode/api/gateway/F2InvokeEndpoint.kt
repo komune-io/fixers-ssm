@@ -29,7 +29,7 @@ class F2InvokeEndpoint(
 
 	@Bean
 	fun invokeF2(): F2Function<InvokeParams, InvokeReturn> = F2Function { args ->
-        args.batch(Batch()) { list ->
+        args.batch(coopConfigProps.getBatch()) { list ->
 			logger.debug("Invoking chaincode ${list.size} items")
 			list.groupBy {
 				coopConfigProps.getChannelChaincodePair(it.channelid, it.chaincodeid)
