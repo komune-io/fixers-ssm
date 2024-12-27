@@ -24,12 +24,12 @@ object Versions {
 	const val jacksonKotlin = FixersVersions.Json.jacksonKotlin
 
 	const val springBoot = FixersVersions.Spring.boot
-	const val springSecurity = FixersVersions.Spring.security
 	const val reactor = FixersVersions.Spring.reactor
 
 	const val ktor = FixersVersions.Kotlin.ktor
 
 	const val fabric = "2.2.26"
+	const val fabricGateway = "1.7.1"
 
 	const val cloudant = "0.3.1"
 	const val bouncycastleVersion = "1.70"
@@ -59,7 +59,7 @@ object Dependencies {
 	)
 
 	fun jackson(scope: Scope) = scope.add(
-		"com.fasterxml.jackson.module:jackson-module-kotlin:2.17.2"
+		"com.fasterxml.jackson.module:jackson-module-kotlin:${Versions.jacksonKotlin}"
 	)
 
 	fun f2Http(scope: Scope) = scope.add(
@@ -85,10 +85,13 @@ object Dependencies {
 		"org.hyperledger.fabric-sdk-java:fabric-sdk-java:${Versions.fabric}"
 	)
 
+	fun fabricSdkGateway(scope: Scope) = scope.add(
+		"org.hyperledger.fabric:fabric-gateway:${Versions.fabricGateway}"
+	)
+
 	fun springTest(scope: Scope) = scope.add(
 		"org.springframework.boot:spring-boot-starter-test:${Versions.springBoot}",
 		"io.projectreactor:reactor-test:${Versions.reactor}",
 		"org.assertj:assertj-core:${Versions.assertj}"
 	)
-
 }

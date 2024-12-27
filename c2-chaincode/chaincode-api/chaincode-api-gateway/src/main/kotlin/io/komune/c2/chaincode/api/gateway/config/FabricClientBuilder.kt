@@ -1,14 +1,15 @@
 package io.komune.c2.chaincode.api.gateway.config
 
 import io.komune.c2.chaincode.api.fabric.FabricChainCodeClient
-import io.komune.c2.chaincode.api.fabric.FabricChainCodeClientSuspend
 import io.komune.c2.chaincode.api.fabric.FabricChannelClient
 import io.komune.c2.chaincode.api.fabric.FabricUserClient
 import io.komune.c2.chaincode.api.fabric.config.FabricConfig
 import io.komune.c2.chaincode.api.fabric.factory.FabricChannelFactory
 import io.komune.c2.chaincode.api.fabric.factory.FabricClientFactory
 
-class FabricClientBuilder(val coopConfig: HeraclesConfigProps) {
+class FabricClientBuilder(
+	private val coopConfig: HeraclesConfigProps
+) {
 
 	fun getChannelConfig(channelId: ChannelId): ChannelChaincode {
 		return coopConfig.getChannelChaincodes().get(channelId)
@@ -35,11 +36,6 @@ class FabricClientBuilder(val coopConfig: HeraclesConfigProps) {
 	fun getFabricChainCodeClient(channelId: ChannelId): FabricChainCodeClient {
 		val fabricChannelFactory = getFabricChannelFactory(channelId)
 		return FabricChainCodeClient(fabricChannelFactory)
-	}
-
-	fun getFabricChainCodeClientSuspend(channelId: ChannelId): FabricChainCodeClientSuspend {
-		val fabricChannelFactory = getFabricChannelFactory(channelId)
-		return FabricChainCodeClientSuspend(fabricChannelFactory)
 	}
 
 	fun getFabricChannelClient(channelId: ChannelId): FabricChannelClient {

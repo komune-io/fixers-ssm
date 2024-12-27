@@ -2,14 +2,15 @@ package io.komune.c2.chaincode.api.gateway
 
 import f2.dsl.fnc.F2Function
 import f2.dsl.fnc.operators.batch
+import io.komune.c2.chaincode.api.fabric.FabricGatewayClientSuspend
 import io.komune.c2.chaincode.api.fabric.model.InvokeArgs
 import io.komune.c2.chaincode.api.gateway.chaincode.model.InvokeParams
 import io.komune.c2.chaincode.api.gateway.chaincode.model.InvokeReturn
 import io.komune.c2.chaincode.api.gateway.chaincode.model.toInvokeArgs
 import io.komune.c2.chaincode.api.gateway.config.ChainCodeId
+import io.komune.c2.chaincode.api.gateway.config.ChannelChaincode
 import io.komune.c2.chaincode.api.gateway.config.ChannelId
 import io.komune.c2.chaincode.api.gateway.config.FabricClientBuilder
-import io.komune.c2.chaincode.api.gateway.config.FabricClientProvider
 import io.komune.c2.chaincode.api.gateway.config.HeraclesConfigProps
 import kotlinx.coroutines.coroutineScope
 import org.slf4j.LoggerFactory
@@ -19,7 +20,6 @@ import org.springframework.stereotype.Component
 
 @Component
 class F2InvokeEndpoint(
-	private val fabricClientProvider: FabricClientProvider,
 	private val fabricClientBuilder: FabricClientBuilder,
 	private val coopConfigProps: HeraclesConfigProps,
 ) {
@@ -46,13 +46,29 @@ class F2InvokeEndpoint(
 		chainCodeId: ChainCodeId,
 		invokeArgs: List<InvokeArgs>,
 	): List<InvokeReturn> = coroutineScope {
-		val client = fabricClientProvider.get(channelId)
 		val channelConfig = fabricClientBuilder.getChannelConfig(channelId)
-		val fabricChainCodeClientSuspend = fabricClientBuilder.getFabricChainCodeClientSuspend(channelId)
+		val fabricChainCodeClientSuspend = getFabricGatewayClientSuspend(channelConfig)
+
 		invokeArgs.let {
-			fabricChainCodeClientSuspend.invoke(channelConfig.endorsers, client, channelId, chainCodeId, it).map {
-				InvokeReturn("SUCCESS", "", it.transactionID)
+			fabricChainCodeClientSuspend.invoke(
+				endorsers = channelConfig.endorsers,
+				orgName =  channelConfig.user.org,
+				channelName = channelId,
+				chainId = chainCodeId,
+				invokeArgsList = it
+			).map {
+				InvokeReturn("SUCCESS", "", it.transactionId)
 			}
 		}
+	}
+
+	fun getFabricGatewayClientSuspend(
+		channelConfig: ChannelChaincode,
+	): FabricGatewayClientSuspend {
+		val fabricConfig = fabricClientBuilder.getFabricConfig(channelConfig.channelId)
+		return FabricGatewayClientSuspend(
+			cryptoConfigBase = channelConfig.config.crypto,
+			fabricConfig = fabricConfig
+		)
 	}
 }

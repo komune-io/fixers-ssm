@@ -81,6 +81,7 @@ class CoopApiTest : WebBaseTest() {
 		val uri = baseUrl().path("invokeF2").build().toUri()
 		val params = listOf(
 			InvokeParams(cmd = Cmd.invoke, fcn = "invoke", args = arrayOf("a", "b", "1")),
+//			InvokeParams(cmd = Cmd.invoke, fcn = "invoke", args = arrayOf("c", "d", "1")),
 		)
 		val headers = HttpHeaders()
 		headers.contentType = MediaType.APPLICATION_JSON

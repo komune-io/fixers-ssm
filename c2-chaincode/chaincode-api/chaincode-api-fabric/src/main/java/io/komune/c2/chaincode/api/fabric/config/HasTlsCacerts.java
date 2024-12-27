@@ -13,11 +13,7 @@ public interface HasTlsCacerts {
     String getTlsCacerts();
 
     default URL getTlsCacertsAsUrl(String cryptoBase) throws MalformedURLException {
-        if (!Strings.isNullOrEmpty(cryptoBase) && !cryptoBase.endsWith("/")) {
-            cryptoBase = cryptoBase + "/";
-        }
-        String baseTlsCacerts = cryptoBase + getTlsCacerts();
-        return FileUtils.getUrl(baseTlsCacerts);
+        return FileUtils.getUrl(cryptoBase, getTlsCacerts());
     }
 
     default Properties getPeerTlsProperties(String cryptoBase) throws IOException {

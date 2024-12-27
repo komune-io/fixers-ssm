@@ -3,21 +3,32 @@ package io.komune.c2.chaincode.api.fabric.config;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-public class PeerConfig implements HasTlsCacerts {
+public class PeerConfig implements HasTlsCacerts, HasKeystore, HasSigncerts {
 
     private String requests;
     private String events;
     private String serverHostname;
     private String tlsCacerts;
+    private String keystore;
+    private String signcerts;
 
     public PeerConfig() {
     }
 
-    public PeerConfig(String requests, String events, String serverHostname, String tlsCacerts) {
+    public PeerConfig(
+            String requests,
+            String events,
+            String serverHostname,
+            String tlsCacerts,
+            String keystore,
+            String signcerts
+    ) {
         this.requests = requests;
         this.events = events;
         this.serverHostname = serverHostname;
         this.tlsCacerts = tlsCacerts;
+        this.keystore = keystore;
+        this.signcerts = signcerts;
     }
 
     public String getRequests() {
@@ -80,5 +91,15 @@ public class PeerConfig implements HasTlsCacerts {
                 .add("serverHostname='" + serverHostname + "'")
                 .add("tlsCacerts='" + tlsCacerts + "'")
                 .toString();
+    }
+
+    @Override
+    public String getKeystore() {
+        return keystore;
+    }
+
+    @Override
+    public String getSigncerts() {
+        return signcerts;
     }
 }
