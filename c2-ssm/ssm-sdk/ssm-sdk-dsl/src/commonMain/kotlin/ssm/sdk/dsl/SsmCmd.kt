@@ -1,7 +1,7 @@
 package ssm.sdk.dsl
 
+import io.komune.c2.chaincode.api.dsl.ChaincodeUri
 import ssm.chaincode.dsl.model.AgentName
-import ssm.chaincode.dsl.model.uri.ChaincodeUri
 
 data class SsmCmd(
 	val chaincodeUri: ChaincodeUri,

@@ -62,11 +62,18 @@ object Dependencies {
 		"com.fasterxml.jackson.module:jackson-module-kotlin:${Versions.jacksonKotlin}"
 	)
 
+	fun f2Function(scope: Scope) = scope.add(
+		"io.komune.f2:f2-spring-boot-starter-function:${Versions.f2}"
+	)
 	fun f2Http(scope: Scope) = scope.add(
 		"io.komune.f2:f2-spring-boot-starter-function-http:${Versions.f2}"
 	)
 	fun f2Auth(scope: Scope) = scope.add(
 		"io.komune.f2:f2-spring-boot-starter-auth-tenant:${Versions.f2}"
+	)
+
+	fun springBootConfigurationProcessor(scope: Scope) = scope.add(
+		"org.springframework.boot:spring-boot-configuration-processor:${Versions.springBoot}"
 	)
 
 	fun springWebFlux(scope: Scope) = scope.add(

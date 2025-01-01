@@ -1,5 +1,7 @@
 package ssm.sdk.core.ktor
 
+import io.komune.c2.chaincode.api.dsl.ChaincodeUri
+import io.komune.c2.chaincode.api.dsl.from
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.HttpTimeout
@@ -19,7 +21,6 @@ import io.ktor.serialization.jackson.jackson
 import org.slf4j.LoggerFactory
 import ssm.chaincode.dsl.model.ChaincodeId
 import ssm.chaincode.dsl.model.ChannelId
-import ssm.chaincode.dsl.model.uri.ChaincodeUri
 import ssm.chaincode.dsl.model.uri.from
 import ssm.sdk.core.auth.AuthCredentials
 import ssm.sdk.core.auth.BearerTokenAuthCredentials

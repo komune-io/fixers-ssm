@@ -3,14 +3,14 @@ package ssm.couchdb.dsl.query
 import f2.dsl.cqrs.Event
 import f2.dsl.cqrs.Query
 import f2.dsl.fnc.F2Function
+import io.komune.c2.chaincode.api.dsl.ChaincodeUri
+import io.komune.c2.chaincode.api.dsl.ChaincodeUriDTO
 import kotlin.js.JsExport
 import kotlin.js.JsName
 import kotlinx.serialization.Serializable
 import ssm.chaincode.dsl.model.SessionName
 import ssm.chaincode.dsl.model.SsmName
 import ssm.chaincode.dsl.model.SsmSessionStateDTO
-import ssm.chaincode.dsl.model.uri.ChaincodeUri
-import ssm.chaincode.dsl.model.uri.ChaincodeUriDTO
 
 /**
  * Retrieve the list of all known sessions of a given SSM

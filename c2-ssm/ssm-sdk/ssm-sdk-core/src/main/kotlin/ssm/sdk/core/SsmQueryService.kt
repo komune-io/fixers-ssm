@@ -1,10 +1,11 @@
 package ssm.sdk.core
 
 import com.fasterxml.jackson.core.type.TypeReference
-import ssm.chaincode.dsl.blockchain.Block
-import ssm.chaincode.dsl.blockchain.BlockId
-import ssm.chaincode.dsl.blockchain.Transaction
-import ssm.chaincode.dsl.blockchain.TransactionId
+import io.komune.c2.chaincode.api.dsl.Block
+import io.komune.c2.chaincode.api.dsl.BlockId
+import io.komune.c2.chaincode.api.dsl.ChaincodeUri
+import io.komune.c2.chaincode.api.dsl.Transaction
+import io.komune.c2.chaincode.api.dsl.TransactionId
 import ssm.chaincode.dsl.model.Agent
 import ssm.chaincode.dsl.model.AgentName
 import ssm.chaincode.dsl.model.SessionName
@@ -12,7 +13,6 @@ import ssm.chaincode.dsl.model.Ssm
 import ssm.chaincode.dsl.model.SsmName
 import ssm.chaincode.dsl.model.SsmSessionState
 import ssm.chaincode.dsl.model.SsmSessionStateLog
-import ssm.chaincode.dsl.model.uri.ChaincodeUri
 import ssm.sdk.core.invoke.query.AdminQuery
 import ssm.sdk.core.invoke.query.AgentQuery
 import ssm.sdk.core.invoke.query.BlockQuery
@@ -125,7 +125,7 @@ class SsmQueryService(private val ssmRequester: SsmRequester): SsmQueryServiceI 
 		}.let {
 			ssmRequester.query(it, object : TypeReference<List<String?>>() {})
 		}.map { item ->
-			item?.let { JsonUtils.mapper.readValue(it, SsmSessionState::class.java) }
+			item?.ifBlank { null }?.let { JsonUtils.mapper.readValue(it, SsmSessionState::class.java) }
 		}
 
 	}

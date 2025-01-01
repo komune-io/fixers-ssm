@@ -1,12 +1,13 @@
 package ssm.api.features.query
 
 import f2.dsl.fnc.invokeWith
+import io.komune.c2.chaincode.api.dsl.ChaincodeUri
+import io.komune.c2.chaincode.api.dsl.from
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import ssm.api.features.query.internal.DataSsmSessionConvertFunctionImpl
 import ssm.api.features.query.internal.DataSsmSessionConvertQuery
 import ssm.chaincode.dsl.model.SsmSessionState
-import ssm.chaincode.dsl.model.uri.ChaincodeUri
 import ssm.chaincode.dsl.model.uri.burst
 import ssm.chaincode.dsl.model.uri.from
 import ssm.couchdb.dsl.query.CouchdbSsmSessionStateListQuery

@@ -3,8 +3,8 @@ package ssm.sdk.core.ktor
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import com.fasterxml.jackson.module.kotlin.readValue
+import io.komune.c2.chaincode.api.dsl.ChaincodeUri
 import org.slf4j.LoggerFactory
-import ssm.chaincode.dsl.model.uri.ChaincodeUri
 import ssm.sdk.core.invoke.builder.HasGet
 import ssm.sdk.core.invoke.builder.HasList
 import ssm.sdk.dsl.InvokeCommandArgs

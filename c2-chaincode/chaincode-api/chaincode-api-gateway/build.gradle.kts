@@ -6,8 +6,9 @@ plugins {
 }
 
 dependencies {
+	implementation(project(":c2-chaincode:chaincode-api:chaincode-api-config"))
+	implementation(project(":c2-chaincode:chaincode-api:chaincode-api-dsl"))
 	implementation(project(":c2-chaincode:chaincode-api:chaincode-api-fabric"))
-	implementation(project(":c2-chaincode:chaincode-api:chaincode-api-fabric-gateway"))
 
 	Dependencies.springWebFlux(::implementation)
 	Dependencies.f2Auth(::implementation)

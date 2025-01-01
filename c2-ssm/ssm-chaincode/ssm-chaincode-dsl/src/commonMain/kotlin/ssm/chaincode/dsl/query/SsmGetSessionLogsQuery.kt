@@ -1,6 +1,7 @@
 package ssm.chaincode.dsl.query
 
 import f2.dsl.fnc.F2Function
+import io.komune.c2.chaincode.api.dsl.ChaincodeUri
 import kotlin.js.JsExport
 import kotlin.js.JsName
 import kotlinx.serialization.Serializable
@@ -9,7 +10,6 @@ import ssm.chaincode.dsl.model.SessionName
 import ssm.chaincode.dsl.model.SsmName
 import ssm.chaincode.dsl.model.SsmSessionState
 import ssm.chaincode.dsl.model.SsmSessionStateLog
-import ssm.chaincode.dsl.model.uri.ChaincodeUri
 
 /**
  * Retrieves the logs of a session since its creation

@@ -1,6 +1,6 @@
 package ssm.sdk.dsl
 
-import ssm.chaincode.dsl.model.uri.ChaincodeUri
+import io.komune.c2.chaincode.api.dsl.ChaincodeUri
 
 data class InvokeArgs(
 	val fcn: String,

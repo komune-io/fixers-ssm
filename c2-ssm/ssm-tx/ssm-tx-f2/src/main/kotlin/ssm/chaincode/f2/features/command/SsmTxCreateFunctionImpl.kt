@@ -1,5 +1,6 @@
 package ssm.chaincode.f2.features.command
 
+import io.komune.c2.chaincode.api.dsl.burst
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import ssm.chaincode.dsl.model.uri.burst

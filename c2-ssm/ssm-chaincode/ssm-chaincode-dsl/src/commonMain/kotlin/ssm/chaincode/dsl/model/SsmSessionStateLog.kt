@@ -1,9 +1,9 @@
 package ssm.chaincode.dsl.model
 
+import io.komune.c2.chaincode.api.dsl.TransactionId
 import kotlin.js.JsExport
 import kotlin.js.JsName
 import kotlinx.serialization.Serializable
-import ssm.chaincode.dsl.blockchain.TransactionId
 
 @JsExport
 @JsName("SsmSessionStateLogDTO")

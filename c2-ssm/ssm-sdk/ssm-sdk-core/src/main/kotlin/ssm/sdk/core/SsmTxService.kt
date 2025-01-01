@@ -1,6 +1,7 @@
 package ssm.sdk.core
 
 import f2.dsl.fnc.operators.batch
+import io.komune.c2.chaincode.api.dsl.ChaincodeUri
 import kotlinx.coroutines.flow.Flow
 import org.slf4j.LoggerFactory
 import ssm.chaincode.dsl.config.SsmBatchProperties
@@ -10,7 +11,6 @@ import ssm.chaincode.dsl.model.AgentName
 import ssm.chaincode.dsl.model.Ssm
 import ssm.chaincode.dsl.model.SsmContext
 import ssm.chaincode.dsl.model.SsmSession
-import ssm.chaincode.dsl.model.uri.ChaincodeUri
 import ssm.sdk.core.command.SsmCreateCommand
 import ssm.sdk.core.command.SsmPerformCommand
 import ssm.sdk.core.command.SsmStartCommand

@@ -1,10 +1,10 @@
 package ssm.data.dsl.model
 
+import io.komune.c2.chaincode.api.dsl.Transaction
+import io.komune.c2.chaincode.api.dsl.TransactionDTO
 import kotlin.js.JsExport
 import kotlin.js.JsName
 import kotlinx.serialization.Serializable
-import ssm.chaincode.dsl.blockchain.Transaction
-import ssm.chaincode.dsl.blockchain.TransactionDTO
 import ssm.chaincode.dsl.model.SsmSessionState
 import ssm.chaincode.dsl.model.SsmSessionStateDTO
 

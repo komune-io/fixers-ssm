@@ -1,5 +1,8 @@
 package ssm.sdk.client
 
+import io.komune.c2.chaincode.api.dsl.Block
+import io.komune.c2.chaincode.api.dsl.ChaincodeUri
+import io.komune.c2.chaincode.api.dsl.Transaction
 import java.util.UUID
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
@@ -10,15 +13,12 @@ import org.junit.jupiter.api.MethodOrderer.OrderAnnotation
 import org.junit.jupiter.api.Order
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestMethodOrder
-import ssm.chaincode.dsl.blockchain.Block
-import ssm.chaincode.dsl.blockchain.Transaction
 import ssm.chaincode.dsl.model.Agent
 import ssm.chaincode.dsl.model.Ssm
 import ssm.chaincode.dsl.model.SsmContext
 import ssm.chaincode.dsl.model.SsmSession
 import ssm.chaincode.dsl.model.SsmSessionState
 import ssm.chaincode.dsl.model.SsmTransition
-import ssm.chaincode.dsl.model.uri.ChaincodeUri
 import ssm.sdk.core.SsmQueryService
 import ssm.sdk.core.SsmTxService
 import ssm.sdk.dsl.InvokeReturn
@@ -87,14 +87,14 @@ class SsmClientItTest {
 
 	@Order(5)
 	@Test
-	fun listAdmin() = runBlocking<Unit> {
+	fun listAdmin() = runTest {
 		val agentRet = query.listAdmins(chaincodeUri)
 		Assertions.assertThat(agentRet).contains(ADMIN_NAME)
 	}
 
 	@Order(10)
 	@Test
-	fun adminUser() = runBlocking<Unit> {
+	fun adminUser() = runTest {
 		val agentRet = query.getAdmin(chaincodeUri, ADMIN_NAME)
 		val agentFormClient = agentRet
 		Assertions.assertThat(agentFormClient).isEqualTo(agentAdmin)
@@ -102,7 +102,7 @@ class SsmClientItTest {
 
 	@Test
 	@Order(20)
-	fun registerUser1() = runBlocking<Unit> {
+	fun registerUser1() = runTest {
 		val transactionEvent = tx.sendRegisterUser(chaincodeUri, agentUser1, signerAdmin.name)
 		val trans = transactionEvent
 		assertThatTransactionExists(trans)
@@ -110,35 +110,35 @@ class SsmClientItTest {
 
 	@Order(30)
 	@Test
-	fun agentUser1() = runBlocking<Unit> {
+	fun agentUser1() = runTest {
 		val agentRet = query.getAgent(chaincodeUri, agentUser1.name)!!
 		Assertions.assertThat(agentRet).isEqualTo(agentUser1)
 	}
 
 	@Test
 	@Order(40)
-	fun registerUser2() = runBlocking<Unit> {
+	fun registerUser2() = runTest {
 		val transactionEvent = tx.sendRegisterUser(chaincodeUri, agentUser2, signerAdmin.name)
 		assertThatTransactionExists(transactionEvent)
 	}
 
 	@Order(50)
 	@Test
-	fun agentUser2() = runBlocking<Unit> {
+	fun agentUser2() = runTest {
 		val agentRet = query.getAgent(chaincodeUri, agentUser2.name)
 		Assertions.assertThat(agentRet).isEqualTo(agentUser2)
 	}
 
 	@Test
 	@Order(55)
-	fun listAgent() = runBlocking<Unit> {
+	fun listAgent() = runTest {
 		val agentRet = query.listUsers(chaincodeUri)
 		Assertions.assertThat(agentRet).contains(agentUser1.name, agentUser2.name)
 	}
 
 	@Test
 	@Order(60)
-	fun createSsm() = runBlocking<Unit> {
+	fun createSsm() = runTest {
 		val sell = SsmTransition(0, 1, "Seller", "Sell")
 		val buy = SsmTransition(1, 2, "Buyer", "Buy")
 		val ssm = Ssm(ssmName, Lists.newArrayList(sell, buy))

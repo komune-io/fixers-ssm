@@ -1,10 +1,10 @@
 package ssm.data.dsl.features.query
 
 import f2.dsl.fnc.F2Function
+import io.komune.c2.chaincode.api.dsl.ChaincodeUri
 import kotlin.js.JsExport
 import kotlin.js.JsName
 import kotlinx.serialization.Serializable
-import ssm.chaincode.dsl.model.uri.ChaincodeUri
 
 /**
  * Retrieves all known SSMs

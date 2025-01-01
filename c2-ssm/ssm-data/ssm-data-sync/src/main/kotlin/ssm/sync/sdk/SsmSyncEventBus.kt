@@ -1,12 +1,12 @@
 package ssm.sync.sdk
 
 import f2.dsl.fnc.invokeWith
+import io.komune.c2.chaincode.api.dsl.ChaincodeUri
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import ssm.chaincode.dsl.model.SessionName
 import ssm.chaincode.dsl.model.SsmName
-import ssm.chaincode.dsl.model.uri.ChaincodeUri
 import ssm.couchdb.dsl.model.ChangeEventId
 
 class SsmSyncEventBus (

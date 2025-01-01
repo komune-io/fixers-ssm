@@ -1,9 +1,9 @@
 package ssm.sync.sdk
 
 import f2.dsl.fnc.F2Function
+import io.komune.c2.chaincode.api.dsl.ChaincodeUri
 import ssm.chaincode.dsl.model.SessionName
 import ssm.chaincode.dsl.model.SsmName
-import ssm.chaincode.dsl.model.uri.ChaincodeUri
 import ssm.chaincode.dsl.model.uri.SsmUri
 import ssm.couchdb.dsl.model.ChangeEventId
 import ssm.data.dsl.model.DataSsmSessionState

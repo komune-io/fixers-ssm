@@ -1,92 +1,118 @@
 package io.komune.c2.chaincode.api.gateway.chaincode
 
-import io.komune.c2.chaincode.api.fabric.model.InvokeArgs
-import io.komune.c2.chaincode.api.fabric.utils.InvokeArgsUtils
-import io.komune.c2.chaincode.api.gateway.blockchain.BlockchainService
+import io.komune.c2.chaincode.api.config.C2ChaincodeConfiguration
+import io.komune.c2.chaincode.api.config.ChannelConfig
+import io.komune.c2.chaincode.api.config.FabricConfigLoader
+import io.komune.c2.chaincode.api.dsl.ChaincodeId
+import io.komune.c2.chaincode.api.dsl.ChannelId
+import io.komune.c2.chaincode.api.dsl.invoke.InvokeArgs
+import io.komune.c2.chaincode.api.dsl.invoke.InvokeArgsUtils
+import io.komune.c2.chaincode.api.fabric.FabricGatewayBuilder
+import io.komune.c2.chaincode.api.fabric.FabricGatewayClient
+import io.komune.c2.chaincode.api.gateway.blockchain.BlockchainServiceI
 import io.komune.c2.chaincode.api.gateway.chaincode.model.Cmd
 import io.komune.c2.chaincode.api.gateway.chaincode.model.InvokeParams
 import io.komune.c2.chaincode.api.gateway.chaincode.model.InvokeReturn
 import io.komune.c2.chaincode.api.gateway.chaincode.model.toInvokeArgs
-import io.komune.c2.chaincode.api.gateway.config.ChainCodeId
-import io.komune.c2.chaincode.api.gateway.config.ChannelId
-import io.komune.c2.chaincode.api.gateway.config.FabricClientBuilder
-import io.komune.c2.chaincode.api.gateway.config.FabricClientProvider
-import io.komune.c2.chaincode.api.gateway.config.HeraclesConfigProps
-import java.util.concurrent.CompletableFuture
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.future.asDeferred
+import kotlinx.coroutines.coroutineScope
 import org.springframework.stereotype.Service
 
 @Service
 class ChaincodeService(
-	val blockchainService: BlockchainService,
-	val coopConfigProps: HeraclesConfigProps,
-	val fabricClientProvider: FabricClientProvider,
-	val fabricClientBuilder: FabricClientBuilder,
+	val blockchainService: BlockchainServiceI,
+	private val chaincodeConfiguration: C2ChaincodeConfiguration,
+	private val fabricConfigLoader: FabricConfigLoader,
 ) {
 
-	fun execute(args: InvokeParams): CompletableFuture<String> {
-		val chainCodePair = coopConfigProps.getChannelChaincodePair(args.channelid, args.chaincodeid)
+	suspend fun execute(args: InvokeParams): String {
+		val chainCodePair = chaincodeConfiguration.getChannelChaincodePair(args.channelid, args.chaincodeid)
 		val invokeArgs = args.toInvokeArgs()
 		return when (args.cmd) {
-			Cmd.invoke -> doInvoke(chainCodePair.channelId, chainCodePair.chainCodeId, invokeArgs)
-				.thenApply { it.toJson() }
-			Cmd.query -> doQuery(chainCodePair.channelId, chainCodePair.chainCodeId, invokeArgs)
+			Cmd.invoke -> doInvoke(chainCodePair.channelId, chainCodePair.chainCodeId, invokeArgs).await()
+			Cmd.query -> doQuery(chainCodePair.channelId, chainCodePair.chainCodeId, invokeArgs).await()
 		}
 	}
 
 	suspend fun execute(args: List<InvokeParams>): List<Any> {
 		val futureList = args.map { params ->
-			val chainCodePair = coopConfigProps.getChannelChaincodePair(params.channelid, params.chaincodeid)
-			val invokeArgs = InvokeArgs(params.fcn, params.args.iterator())
+			val chainCodePair = chaincodeConfiguration.getChannelChaincodePair(params.channelid, params.chaincodeid)
+			val invokeArgs = InvokeArgs(params.fcn, params.args.toList())
 			when (params.cmd) {
-				Cmd.invoke -> doInvoke(chainCodePair.channelId, chainCodePair.chainCodeId, invokeArgs).asDeferred()
-				Cmd.query -> doQuery(chainCodePair.channelId, chainCodePair.chainCodeId, invokeArgs).asDeferred()
+				Cmd.invoke -> doInvoke(chainCodePair.channelId, chainCodePair.chainCodeId, invokeArgs)
+				Cmd.query -> doQuery(chainCodePair.channelId, chainCodePair.chainCodeId, invokeArgs)
 			}
 		}
 		return futureList.awaitAll()
 	}
 
-	private fun doQuery(
-        channelId: ChannelId,
-        chainCodeId: ChainCodeId?,
-        invokeArgs: InvokeArgs,
-	): CompletableFuture<String> {
+	private suspend fun doQuery(
+		channelId: ChannelId,
+		chainCodeId: ChaincodeId,
+		invokeArgs: InvokeArgs,
+	): Deferred<String>  = coroutineScope {
 		if (InvokeArgsUtils.isBlockQuery(invokeArgs) || InvokeArgsUtils.isTransactionQuery(invokeArgs)) {
-			return CompletableFuture.completedFuture(
-				blockchainService.query(channelId, invokeArgs)
-			)
+			async { blockchainService.query(channelId, invokeArgs) }
+		} else {
+			async { doQueryChaincode(channelId, chainCodeId, invokeArgs) }
 		}
-
-		return doQueryChaincode(channelId, chainCodeId, invokeArgs)
 	}
 
-	private fun doQueryChaincode(
-        channelId: ChannelId,
-        chainCodeId: ChainCodeId?,
-        invokeArgs: InvokeArgs,
-	): CompletableFuture<String> {
-		val client = fabricClientProvider.get(channelId)
-		val channelConfig = fabricClientBuilder.getChannelConfig(channelId)
-		val fabricChainCodeClient = fabricClientBuilder.getFabricChainCodeClient(channelId)
-		return CompletableFuture.completedFuture(
-			fabricChainCodeClient
-				.query(channelConfig.endorsers, client, channelId, chainCodeId, invokeArgs)
-				.ifBlank { null }
+	private suspend fun doQueryChaincode(
+		channelId: ChannelId,
+		chainCodeId: ChaincodeId,
+		invokeArgs: InvokeArgs,
+	): String {
+		val channelConfig = fabricConfigLoader.getChannelConfig(channelId)
+		val fabricChainCodeClientSuspend = getFabricGatewayClientSuspend(channelConfig)
+		return fabricChainCodeClientSuspend.query(
+			endorsers = channelConfig.endorsers,
+			orgName =  channelConfig.user.org,
+			channelId = channelId,
+			chaincodeId = chainCodeId,
+			invokeArgsList = listOf(invokeArgs)
+		).first()
+	}
+
+	private suspend fun doInvoke(
+		channelId: ChannelId,
+		chainCodeId: ChaincodeId,
+		invokeArgs: InvokeArgs,
+	): Deferred<String> = coroutineScope {
+		async {
+			doInvoke(channelId, chainCodeId, listOf(invokeArgs)).first().toJson()
+		}
+	}
+
+	private suspend fun doInvoke(
+		channelId: ChannelId,
+		chainCodeId: ChaincodeId,
+		invokeArgs: List<InvokeArgs>,
+	): List<InvokeReturn> = coroutineScope {
+		val channelConfig = fabricConfigLoader.getChannelConfig(channelId)
+		val fabricChainCodeClientSuspend = getFabricGatewayClientSuspend(channelConfig)
+		fabricChainCodeClientSuspend.invoke(
+			endorsers = channelConfig.endorsers,
+			orgName =  channelConfig.user.org,
+			channelId = channelId,
+			chaincodeId = chainCodeId,
+			invokeArgsList = invokeArgs
+		).map {
+			InvokeReturn("SUCCESS", "", it.transactionId)
+		}
+	}
+
+	private fun getFabricGatewayClientSuspend(
+		channelConfig: ChannelConfig,
+	): FabricGatewayClient {
+		val builder = FabricGatewayBuilder(
+			cryptoConfigBase = channelConfig.config.crypto,
+			fabricConfigLoader = fabricConfigLoader
 		)
-	}
-
-	private fun doInvoke(
-        channelId: ChannelId,
-        chainCodeId: ChainCodeId,
-        invokeArgs: InvokeArgs,
-	): CompletableFuture<InvokeReturn> {
-		val client = fabricClientProvider.get(channelId)
-		val channelConfig = fabricClientBuilder.getChannelConfig(channelId)
-		val fabricChainCodeClient = fabricClientBuilder.getFabricChainCodeClient(channelId)
-		val future = fabricChainCodeClient.invoke(channelConfig.endorsers, client, channelId, chainCodeId, invokeArgs)
-		return future.thenApply {
-			InvokeReturn("SUCCESS", "", it.transactionID)
-		}
+		return FabricGatewayClient(
+			fabricGatewayBuilder = builder
+		)
 	}
 }

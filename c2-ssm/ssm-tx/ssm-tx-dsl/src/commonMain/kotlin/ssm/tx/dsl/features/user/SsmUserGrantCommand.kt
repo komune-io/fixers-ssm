@@ -1,10 +1,10 @@
 package ssm.tx.dsl.features.user
 
 import f2.dsl.fnc.F2Function
-import ssm.chaincode.dsl.blockchain.TransactionId
+import io.komune.c2.chaincode.api.dsl.ChaincodeUriDTO
+import io.komune.c2.chaincode.api.dsl.TransactionId
 import ssm.chaincode.dsl.model.Agent
 import ssm.chaincode.dsl.model.AgentName
-import ssm.chaincode.dsl.model.uri.ChaincodeUriDTO
 import ssm.tx.dsl.features.SsmCommandDTO
 import ssm.tx.dsl.features.SsmCommandResultDTO
 
