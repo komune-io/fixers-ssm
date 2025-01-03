@@ -33,7 +33,7 @@ class FabricGatewayBlockClient(
 
     fun queryAllBlocksIds(channelId: ChannelId): List<Long> {
         val gateway = fabricGatewayBuilder.gateway(organizationName, channelId, endorsers)
-        return gateway.use { gateway ->
+        return gateway.use {
             val network = gateway.getNetwork(channelId)
             val contract = network.getContract("qscc")
             val blockIds = contract.evaluateTransaction("GetChainInfo", channelId)
@@ -44,7 +44,7 @@ class FabricGatewayBlockClient(
 
     fun queryBlockByTransactionId(channelId: ChannelId, transactionId: TransactionId): BlockDsl {
         val gateway = fabricGatewayBuilder.gateway(organizationName, channelId, endorsers)
-        return gateway.use { gateway ->
+        return gateway.use {
             val network = gateway.getNetwork(channelId)
             val contract = network.getContract("qscc")
             val blockResponse = contract.evaluateTransaction("GetBlockByTxId", channelId, transactionId)
@@ -52,8 +52,12 @@ class FabricGatewayBlockClient(
         }
     }
 
-    private fun queryBlockIdByTransactionId(gateway: Gateway, channelId: ChannelId, transactionId: TransactionId): BlockId {
-        return gateway.use { gateway ->
+    private fun queryBlockIdByTransactionId(
+        gateway: Gateway,
+        channelId: ChannelId,
+        transactionId: TransactionId
+    ): BlockId {
+        return gateway.use {
             val network = gateway.getNetwork(channelId)
             val contract = network.getContract("qscc")
             val blockResponse = contract.evaluateTransaction("GetBlockByTxId", channelId, transactionId)
@@ -78,7 +82,7 @@ class FabricGatewayBlockClient(
         val transactions = result.data.dataList.map { data ->
             val envelopeInfo: Envelope = Envelope.parseFrom(data)
             val payload = Payload.parseFrom(envelopeInfo.payload)
-            payload.asTransaction(blockId)
+            payload.asTransaction {blockId}
         }
         return BlockDsl(
             blockId = blockId,
@@ -96,22 +100,22 @@ class FabricGatewayBlockClient(
             val data = contract.evaluateTransaction("GetTransactionByID", channelId, transactionId)
             val processedTransaction = ProcessedTransaction.parseFrom(data)
             val payload = Payload.parseFrom(processedTransaction.transactionEnvelope.payload)
-            payload.asTransaction(gateway, channelId, null)
+            payload.asTransaction { queryBlockIdByTransactionId(gateway, channelId, transactionId) }
         }
     }
 
-    private fun Payload.asTransaction(gateway: Gateway, channelId: ChannelId, blockId: BlockId?): Transaction {
+    private fun Payload.asTransaction(getBlockId: () -> BlockId): Transaction {
 
         val signatureHeader = SignatureHeader.parseFrom(header.signatureHeader)
         val channelHeader = ChannelHeader.parseFrom(header.channelHeader)
-        val blockIdNotNull = blockId ?: queryBlockIdByTransactionId(gateway, channelId, channelHeader.txId)
+        val blockId = getBlockId()
         val identifierHeader = SerializedIdentity.parseFrom(signatureHeader.creator)
 
         @Suppress("MagicNumber")
         val millis: Long = channelHeader.timestamp.seconds * 1000 + channelHeader.timestamp.nanos / 1000000
         return TransactionDsl(
             transactionId = channelHeader.txId,
-            blockId = blockIdNotNull,
+            blockId = blockId,
             timestamp = millis,
             isValid = true,
             channelId = channelHeader.channelId,

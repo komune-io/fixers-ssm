@@ -49,6 +49,7 @@ class FabricGatewayBuilder(
         }
     }
 
+    @Suppress("LongMethod")
     fun gateway(organizationName: String, channelId: ChannelId, endorsers: List<Endorser>): Gateway {
         val fabricConfig = fabricConfigLoader.getFabricConfig(channelId)
         val organizationConfig = fabricConfig.network.organisations[organizationName]!!
