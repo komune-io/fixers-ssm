@@ -52,7 +52,7 @@ class FabricGatewayBlockClient(
         }
     }
 
-    private fun queryBlockIdByTransactionId(
+    fun queryBlockIdByTransactionId(
         gateway: Gateway,
         channelId: ChannelId,
         transactionId: TransactionId
@@ -99,7 +99,10 @@ class FabricGatewayBlockClient(
             val data = contract.evaluateTransaction("GetTransactionByID", channelId, transactionId)
             val processedTransaction = ProcessedTransaction.parseFrom(data)
             val payload = Payload.parseFrom(processedTransaction.transactionEnvelope.payload)
-            payload.asTransaction { queryBlockIdByTransactionId(gateway, channelId, transactionId) }
+            payload.asTransaction {
+                0
+//                queryBlockIdByTransactionId(gateway, channelId, transactionId)
+            }
         }
     }
 
