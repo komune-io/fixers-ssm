@@ -79,7 +79,8 @@ class FabricGatewayClient(
                 val start = currentTimeMillis()
                 logger.info("Submit transaction[${tr.transactionId}] in [${channelId}:$chaincodeId]...")
                 tr.submit()
-                logger.info("Submitted transaction[${tr.transactionId}] in [${channelId}:$chaincodeId] in ${currentTimeMillis() - start} ms")
+                logger.info("Submitted transaction[${tr.transactionId}] " +
+                        "in [${channelId}:$chaincodeId] in ${currentTimeMillis() - start} ms")
                 Transaction(
                     tr.transactionId,
                     tr.result.toString()

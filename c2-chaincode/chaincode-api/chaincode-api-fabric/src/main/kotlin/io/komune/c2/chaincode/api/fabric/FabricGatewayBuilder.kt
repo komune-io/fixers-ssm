@@ -44,7 +44,7 @@ class FabricGatewayBuilder(
             val contract = network.getContract(chaincodeId)
             return contract
         } catch (e: Throwable) {
-            logger.error("Error while quering of channel [$channelId]", e)
+            logger.error("Error while querying of channel [$channelId]", e)
             throw e
         }
     }
