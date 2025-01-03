@@ -79,59 +79,59 @@ class FabricGatewayBuilder(
             .signer(channelConfig.newSigner(peerConfig))
             .hash(Hash.SHA256)
             .connection(channel)
-            .blockAndPrivateDataEventsOptions { options: CallOptions ->
-                @Suppress("MagicNumber")
-                options.withDeadlineAfter(
-                    240,
-                    TimeUnit.MINUTES
-                )
-            }.blockEventsOptions { options: CallOptions ->
-                @Suppress("MagicNumber")
-                options.withDeadlineAfter(
-                    240,
-                    TimeUnit.MINUTES
-                )
-            }
-            .chaincodeEventsOptions {  options: CallOptions ->
-                @Suppress("MagicNumber")
-                options.withDeadlineAfter(
-                    240,
-                    TimeUnit.SECONDS
-                ) }
-            .commitStatusOptions { options: CallOptions ->
-                @Suppress("MagicNumber")
-                options.withDeadlineAfter(
-                    240,
-                    TimeUnit.MINUTES
-                )
-            }
-            .endorseOptions { options: CallOptions ->
-                @Suppress("MagicNumber")
-                options.withDeadlineAfter(
-                    240,
-                    TimeUnit.SECONDS
-                )
-            }
-            .evaluateOptions { options: CallOptions ->
-                @Suppress("MagicNumber")
-                options.withDeadlineAfter(
-                    240,
-                    TimeUnit.SECONDS
-                )
-            }
-            .filteredBlockEventsOptions {  options: CallOptions ->
-                @Suppress("MagicNumber")
-                options.withDeadlineAfter(
-                    240,
-                    TimeUnit.SECONDS
-                ) }
-            .submitOptions { options: CallOptions ->
-                @Suppress("MagicNumber")
-                options.withDeadlineAfter(
-                    240,
-                    TimeUnit.SECONDS
-                )
-            }
+//            .blockAndPrivateDataEventsOptions { options: CallOptions ->
+//                @Suppress("MagicNumber")
+//                options.withDeadlineAfter(
+//                    240,
+//                    TimeUnit.MINUTES
+//                )
+//            }.blockEventsOptions { options: CallOptions ->
+//                @Suppress("MagicNumber")
+//                options.withDeadlineAfter(
+//                    240,
+//                    TimeUnit.MINUTES
+//                )
+//            }
+//            .chaincodeEventsOptions {  options: CallOptions ->
+//                @Suppress("MagicNumber")
+//                options.withDeadlineAfter(
+//                    240,
+//                    TimeUnit.SECONDS
+//                ) }
+//            .commitStatusOptions { options: CallOptions ->
+//                @Suppress("MagicNumber")
+//                options.withDeadlineAfter(
+//                    240,
+//                    TimeUnit.MINUTES
+//                )
+//            }
+//            .endorseOptions { options: CallOptions ->
+//                @Suppress("MagicNumber")
+//                options.withDeadlineAfter(
+//                    240,
+//                    TimeUnit.SECONDS
+//                )
+//            }
+//            .evaluateOptions { options: CallOptions ->
+//                @Suppress("MagicNumber")
+//                options.withDeadlineAfter(
+//                    240,
+//                    TimeUnit.SECONDS
+//                )
+//            }
+//            .filteredBlockEventsOptions {  options: CallOptions ->
+//                @Suppress("MagicNumber")
+//                options.withDeadlineAfter(
+//                    240,
+//                    TimeUnit.SECONDS
+//                ) }
+//            .submitOptions { options: CallOptions ->
+//                @Suppress("MagicNumber")
+//                options.withDeadlineAfter(
+//                    240,
+//                    TimeUnit.SECONDS
+//                )
+//            }
             .connect()
     }
 
