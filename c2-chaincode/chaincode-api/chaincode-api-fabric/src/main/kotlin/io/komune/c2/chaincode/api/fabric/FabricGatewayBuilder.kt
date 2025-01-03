@@ -71,28 +71,28 @@ class FabricGatewayBuilder(
             .evaluateOptions { options: CallOptions ->
                 @Suppress("MagicNumber")
                 options.withDeadlineAfter(
-                    5,
+                    120,
                     TimeUnit.SECONDS
                 )
             }
             .endorseOptions { options: CallOptions ->
                 @Suppress("MagicNumber")
                 options.withDeadlineAfter(
-                    15,
+                    120,
                     TimeUnit.SECONDS
                 )
             }
             .submitOptions { options: CallOptions ->
                 @Suppress("MagicNumber")
                 options.withDeadlineAfter(
-                    5,
+                    120,
                     TimeUnit.SECONDS
                 )
             }
             .commitStatusOptions { options: CallOptions ->
                 @Suppress("MagicNumber")
                 options.withDeadlineAfter(
-                    1,
+                    120,
                     TimeUnit.MINUTES
                 )
             }
