@@ -21,7 +21,6 @@ import io.ktor.serialization.jackson.jackson
 import org.slf4j.LoggerFactory
 import ssm.chaincode.dsl.model.ChaincodeId
 import ssm.chaincode.dsl.model.ChannelId
-import ssm.chaincode.dsl.model.uri.from
 import ssm.sdk.core.auth.AuthCredentials
 import ssm.sdk.core.auth.BearerTokenAuthCredentials
 import ssm.sdk.dsl.InvokeCommandArgs

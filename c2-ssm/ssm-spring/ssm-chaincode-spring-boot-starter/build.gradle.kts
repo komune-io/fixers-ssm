@@ -1,5 +1,3 @@
-import Dependencies
-
 plugins {
 	id("io.komune.fixers.gradle.kotlin.jvm")
 	id("io.komune.fixers.gradle.publish")

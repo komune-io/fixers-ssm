@@ -2,16 +2,11 @@ package io.komune.c2.chaincode.api.gateway
 
 import io.komune.c2.chaincode.api.dsl.ChaincodeId
 import io.komune.c2.chaincode.api.dsl.ChannelId
-import io.komune.c2.chaincode.api.dsl.invoke.InvokeException
 import io.komune.c2.chaincode.api.gateway.chaincode.ChaincodeService
 import io.komune.c2.chaincode.api.gateway.chaincode.model.Cmd
-import io.komune.c2.chaincode.api.gateway.chaincode.model.ErrorResponse
 import io.komune.c2.chaincode.api.gateway.chaincode.model.InvokeParams
 import org.slf4j.LoggerFactory
-import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
-import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.web.bind.annotation.PostMapping

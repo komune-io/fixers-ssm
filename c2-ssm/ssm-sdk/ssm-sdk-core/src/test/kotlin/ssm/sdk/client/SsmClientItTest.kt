@@ -4,7 +4,6 @@ import io.komune.c2.chaincode.api.dsl.Block
 import io.komune.c2.chaincode.api.dsl.ChaincodeUri
 import io.komune.c2.chaincode.api.dsl.Transaction
 import java.util.UUID
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.assertj.core.api.Assertions
 import org.assertj.core.util.Lists

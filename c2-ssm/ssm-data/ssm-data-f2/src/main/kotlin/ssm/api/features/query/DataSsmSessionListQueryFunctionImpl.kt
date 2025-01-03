@@ -9,7 +9,6 @@ import ssm.api.features.query.internal.DataSsmSessionConvertFunctionImpl
 import ssm.api.features.query.internal.DataSsmSessionConvertQuery
 import ssm.chaincode.dsl.model.SsmSessionState
 import ssm.chaincode.dsl.model.uri.burst
-import ssm.chaincode.dsl.model.uri.from
 import ssm.couchdb.dsl.query.CouchdbSsmSessionStateListQuery
 import ssm.couchdb.dsl.query.CouchdbSsmSessionStateListQueryFunction
 import ssm.data.dsl.features.query.DataSsmSessionListQueryDTO

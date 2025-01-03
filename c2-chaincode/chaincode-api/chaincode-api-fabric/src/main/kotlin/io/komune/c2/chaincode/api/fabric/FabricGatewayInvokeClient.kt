@@ -10,7 +10,6 @@ import io.komune.c2.chaincode.api.dsl.invoke.InvokeArgs
 import io.komune.c2.chaincode.api.dsl.invoke.InvokeException
 import java.lang.System.currentTimeMillis
 import java.util.StringJoiner
-import java.util.function.Consumer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll

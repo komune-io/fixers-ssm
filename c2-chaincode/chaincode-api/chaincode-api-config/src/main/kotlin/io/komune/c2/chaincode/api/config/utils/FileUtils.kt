@@ -1,6 +1,5 @@
 package io.komune.c2.chaincode.api.config.utils
 
-import java.net.MalformedURLException
 import java.net.URL
 
 
