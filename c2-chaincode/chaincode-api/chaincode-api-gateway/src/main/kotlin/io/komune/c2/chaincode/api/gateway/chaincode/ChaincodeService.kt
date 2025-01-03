@@ -14,10 +14,7 @@ import io.komune.c2.chaincode.api.gateway.chaincode.model.Cmd
 import io.komune.c2.chaincode.api.gateway.chaincode.model.InvokeParams
 import io.komune.c2.chaincode.api.gateway.chaincode.model.InvokeReturn
 import io.komune.c2.chaincode.api.gateway.chaincode.model.toInvokeArgs
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.coroutineScope
 import org.springframework.stereotype.Service
 
 @Service
@@ -31,8 +28,8 @@ class ChaincodeService(
 		val chainCodePair = chaincodeConfiguration.getChannelChaincodePair(args.channelid, args.chaincodeid)
 		val invokeArgs = args.toInvokeArgs()
 		return when (args.cmd) {
-			Cmd.invoke -> doInvoke(chainCodePair.channelId, chainCodePair.chainCodeId, invokeArgs).await()
-			Cmd.query -> doQuery(chainCodePair.channelId, chainCodePair.chainCodeId, invokeArgs).await()
+			Cmd.invoke -> doInvoke(chainCodePair.channelId, chainCodePair.chainCodeId, invokeArgs)
+			Cmd.query -> doQuery(chainCodePair.channelId, chainCodePair.chainCodeId, invokeArgs)
 		}
 	}
 
@@ -45,18 +42,18 @@ class ChaincodeService(
 				Cmd.query -> doQuery(chainCodePair.channelId, chainCodePair.chainCodeId, invokeArgs)
 			}
 		}
-		return futureList.awaitAll()
+		return futureList
 	}
 
 	private suspend fun doQuery(
 		channelId: ChannelId,
 		chainCodeId: ChaincodeId,
 		invokeArgs: InvokeArgs,
-	): Deferred<String>  = coroutineScope {
-		if (InvokeArgsUtils.isBlockQuery(invokeArgs) || InvokeArgsUtils.isTransactionQuery(invokeArgs)) {
-			async { blockchainService.query(channelId, invokeArgs) }
+	): String {
+		return if (InvokeArgsUtils.isBlockQuery(invokeArgs) || InvokeArgsUtils.isTransactionQuery(invokeArgs)) {
+			blockchainService.query(channelId, invokeArgs)
 		} else {
-			async { doQueryChaincode(channelId, chainCodeId, invokeArgs) }
+			doQueryChaincode(channelId, chainCodeId, invokeArgs)
 		}
 	}
 
@@ -80,20 +77,18 @@ class ChaincodeService(
 		channelId: ChannelId,
 		chainCodeId: ChaincodeId,
 		invokeArgs: InvokeArgs,
-	): Deferred<String> = coroutineScope {
-		async {
-			doInvoke(channelId, chainCodeId, listOf(invokeArgs)).first().toJson()
-		}
+	): String {
+		return doInvoke(channelId, chainCodeId, listOf(invokeArgs)).first().toJson()
 	}
 
-	private suspend fun doInvoke(
+	suspend fun doInvoke(
 		channelId: ChannelId,
 		chainCodeId: ChaincodeId,
 		invokeArgs: List<InvokeArgs>,
-	): List<InvokeReturn> = coroutineScope {
+	): List<InvokeReturn> {
 		val channelConfig = fabricConfigLoader.getChannelConfig(channelId)
 		val fabricChainCodeClientSuspend = getFabricGatewayClientSuspend(channelConfig)
-		fabricChainCodeClientSuspend.invoke(
+		return fabricChainCodeClientSuspend.invoke(
 			endorsers = channelConfig.endorsers,
 			orgName =  channelConfig.user.org,
 			channelId = channelId,

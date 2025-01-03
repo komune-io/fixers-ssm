@@ -109,7 +109,6 @@ class FabricGatewayClient(
         }
         return errors.toString()
     }
-
 }
 
 class Transaction(
