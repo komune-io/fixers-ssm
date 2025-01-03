@@ -23,6 +23,7 @@ import org.slf4j.LoggerFactory
 class FabricGatewayClient(
     private val fabricGatewayBuilder: FabricGatewayBuilder,
 ) {
+    @Suppress("MagicNumber")
     val customThreadPool = Executors.newFixedThreadPool(1024).asCoroutineDispatcher()
 
 
