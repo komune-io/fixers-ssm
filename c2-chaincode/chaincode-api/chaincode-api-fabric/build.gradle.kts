@@ -8,7 +8,6 @@ dependencies {
 
     Dependencies.jackson(::implementation)
     Dependencies.slf4j(::implementation)
-//    Dependencies.fabricSdkGateway(::api)
 
 
     // Enforce platform versions
@@ -25,33 +24,6 @@ dependencies {
     implementation("io.grpc:grpc-protobuf")
     implementation("io.grpc:grpc-stub")
     implementation("io.grpc:grpc-netty-shaded")
-
-    // Add constraints to force versions
-//    constraints {
-//        implementation( implementation("org.hyperledger.fabric:fabric-protos")) {
-//            version {
-//                strictly("0.3.1")
-//            }
-//        }
-//        implementation("io.grpc:grpc-protobuf") {
-//            version {
-//                strictly("1.67.1")
-//            }
-//        }
-//        implementation("com.google.protobuf:protobuf-java") {
-//            version {
-//                strictly("4.28.2")
-//            }
-//        }
-//    }
-//
-//    // Optional: exclude transitive grpc-protobuf if still having issues
-//    configurations.all {
-//        resolutionStrategy {
-//            force("io.grpc:grpc-protobuf:1.67.1")
-//            force("com.google.protobuf:protobuf-java:4.28.2")
-//        }
-//    }
 
     Dependencies.test(::testImplementation)
 }

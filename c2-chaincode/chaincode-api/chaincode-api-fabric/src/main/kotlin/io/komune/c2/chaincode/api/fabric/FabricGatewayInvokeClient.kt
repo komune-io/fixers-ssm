@@ -28,14 +28,13 @@ class FabricGatewayClient(
 
     @Throws(Exception::class)
     suspend fun query(
-        endorsers: List<Endorser>,
-        orgName: String,
         channelId: ChannelId,
         chaincodeId: ChaincodeId,
         invokeArgsList: List<InvokeArgs>
     ): List<String> = coroutineScope {
+
         val start = currentTimeMillis()
-        val contract = fabricGatewayBuilder.contract(orgName, channelId, endorsers, chaincodeId)
+        val contract = fabricGatewayBuilder.contract(channelId, chaincodeId)
 
         val proposalResponses = invokeArgsList.map { invokeArgs ->
             async(Dispatchers.IO) {
@@ -52,15 +51,13 @@ class FabricGatewayClient(
 
     @Throws(Exception::class)
     suspend fun invoke(
-        endorsers: List<Endorser>,
-        orgName: String,
         channelId: ChannelId,
         chaincodeId: ChaincodeId,
         invokeArgsList: List<InvokeArgs>
     ): List<Transaction> = coroutineScope {
         logger.info("Invoke[${invokeArgsList.size}] transactions in [${channelId}:$chaincodeId]")
         val start = currentTimeMillis()
-        val contract = fabricGatewayBuilder.contract(orgName, channelId, endorsers, chaincodeId)
+        val contract = fabricGatewayBuilder.contract(channelId, chaincodeId)
         val proposal = invokeArgsList.map { invokeArgs ->
                 try {
                      contract.newProposal(invokeArgs.function)

@@ -12,7 +12,7 @@ class ChaincodeControllerAdvice {
 
 	@ExceptionHandler(InvokeException::class)
 	fun handleException(invokeException: InvokeException): ResponseEntity<ErrorResponse> {
-		val error = ErrorResponse(invokeException.message ?: "Unknown error")
+		val error = ErrorResponse(invokeException.message)
 		return ResponseEntity(error, HttpStatus.BAD_REQUEST)
 	}
 

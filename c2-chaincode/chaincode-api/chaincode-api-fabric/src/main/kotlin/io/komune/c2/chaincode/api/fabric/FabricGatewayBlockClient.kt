@@ -2,7 +2,6 @@ package io.komune.c2.chaincode.api.fabric
 
 import io.komune.c2.chaincode.api.dsl.BlockId
 import io.komune.c2.chaincode.api.dsl.ChannelId
-import io.komune.c2.chaincode.api.dsl.Endorser
 import io.komune.c2.chaincode.api.dsl.IdentitiesInfo
 import io.komune.c2.chaincode.api.dsl.Transaction
 import io.komune.c2.chaincode.api.dsl.TransactionId
@@ -21,8 +20,6 @@ import io.komune.c2.chaincode.api.dsl.Transaction as TransactionDsl
 
 class FabricGatewayBlockClient(
     private val fabricGatewayBuilder: FabricGatewayBuilder,
-    private val organizationName: String,
-    private val endorsers: List<Endorser>
 ) {
 //    val GETCHAININFO: String = "GetChainInfo"
 //    val GETBLOCKBYNUMBER: String = "GetBlockByNumber"
@@ -32,7 +29,7 @@ class FabricGatewayBlockClient(
 
 
     fun queryAllBlocksIds(channelId: ChannelId): List<Long> {
-        val gateway = fabricGatewayBuilder.gateway(organizationName, channelId, endorsers)
+        val gateway = fabricGatewayBuilder.gateway(channelId)
         return gateway.use {
             val network = gateway.getNetwork(channelId)
             val contract = network.getContract("qscc")
@@ -43,7 +40,7 @@ class FabricGatewayBlockClient(
     }
 
     fun queryBlockByTransactionId(channelId: ChannelId, transactionId: TransactionId): BlockDsl {
-        val gateway = fabricGatewayBuilder.gateway(organizationName, channelId, endorsers)
+        val gateway = fabricGatewayBuilder.gateway(channelId)
         return gateway.use {
             val network = gateway.getNetwork(channelId)
             val contract = network.getContract("qscc")
@@ -66,7 +63,7 @@ class FabricGatewayBlockClient(
     }
 
     fun queryBlockByNumber(channelId: ChannelId, blockId: Long): BlockDsl {
-        val gateway = fabricGatewayBuilder.gateway(organizationName, channelId, endorsers)
+        val gateway = fabricGatewayBuilder.gateway(channelId)
         return gateway.use {
             val network = gateway.getNetwork(channelId)
             val contract = network.getContract("qscc")
@@ -92,7 +89,7 @@ class FabricGatewayBlockClient(
     }
 
     fun queryTransactionById(channelId: ChannelId, transactionId: TransactionId): TransactionDsl {
-        val gateway = fabricGatewayBuilder.gateway(organizationName, channelId, endorsers)
+        val gateway = fabricGatewayBuilder.gateway(channelId)
         return gateway.use {
             val network = gateway.getNetwork(channelId)
             val contract = network.getContract("qscc")
