@@ -53,7 +53,6 @@ class FabricGatewayBuilder(
         val fabricConfig = fabricConfigLoader.getFabricConfig(channelId)
         val organizationConfig = fabricConfig.network.organisations[organizationName]!!
         val trustManager = organizationConfig.ca.getTlsCacertsAsUrl(cryptoConfigBase)
-
         val credentials = TlsChannelCredentials.newBuilder()
             .trustManager(trustManager.openStream())
             .build()
@@ -68,32 +67,57 @@ class FabricGatewayBuilder(
             .signer(newSigner(peerConfig))
             .hash(Hash.SHA256)
             .connection(channel)
-            .evaluateOptions { options: CallOptions ->
+            .blockAndPrivateDataEventsOptions { options: CallOptions ->
                 @Suppress("MagicNumber")
                 options.withDeadlineAfter(
-                    120,
+                    240,
+                    TimeUnit.MINUTES
+                )
+            }.blockEventsOptions { options: CallOptions ->
+                @Suppress("MagicNumber")
+                options.withDeadlineAfter(
+                    240,
+                    TimeUnit.MINUTES
+                )
+            }
+            .chaincodeEventsOptions {  options: CallOptions ->
+                @Suppress("MagicNumber")
+                options.withDeadlineAfter(
+                    240,
                     TimeUnit.SECONDS
+                ) }
+            .commitStatusOptions { options: CallOptions ->
+                @Suppress("MagicNumber")
+                options.withDeadlineAfter(
+                    240,
+                    TimeUnit.MINUTES
                 )
             }
             .endorseOptions { options: CallOptions ->
                 @Suppress("MagicNumber")
                 options.withDeadlineAfter(
-                    120,
+                    240,
                     TimeUnit.SECONDS
                 )
             }
+            .evaluateOptions { options: CallOptions ->
+                @Suppress("MagicNumber")
+                options.withDeadlineAfter(
+                    240,
+                    TimeUnit.SECONDS
+                )
+            }
+            .filteredBlockEventsOptions {  options: CallOptions ->
+                @Suppress("MagicNumber")
+                options.withDeadlineAfter(
+                    240,
+                    TimeUnit.SECONDS
+                ) }
             .submitOptions { options: CallOptions ->
                 @Suppress("MagicNumber")
                 options.withDeadlineAfter(
-                    120,
+                    240,
                     TimeUnit.SECONDS
-                )
-            }
-            .commitStatusOptions { options: CallOptions ->
-                @Suppress("MagicNumber")
-                options.withDeadlineAfter(
-                    120,
-                    TimeUnit.MINUTES
                 )
             }
             .connect()
