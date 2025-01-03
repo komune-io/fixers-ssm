@@ -65,14 +65,13 @@ class FabricGatewayBlockClient(
         }
     }
 
-    fun queryBlockByNumber(channelId: ChannelId, blockId: Long): BlockId {
+    fun queryBlockByNumber(channelId: ChannelId, blockId: Long): BlockDsl {
         val gateway = fabricGatewayBuilder.gateway(organizationName, channelId, endorsers)
         return gateway.use {
             val network = gateway.getNetwork(channelId)
             val contract = network.getContract("qscc")
             val blockResponse = contract.evaluateTransaction("GetBlockByNumber", channelId, blockId.toString())
-            val result = Block.parseFrom(blockResponse)
-            result.header.number.toInt()
+            blockResponse.toBlock()
         }
     }
 
