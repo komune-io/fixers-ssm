@@ -76,6 +76,9 @@ object Dependencies {
 		"org.springframework.boot:spring-boot-configuration-processor:${Versions.springBoot}"
 	)
 
+	fun springBootAuthConfiguration(scope: Scope, ksp: Scope)
+		= FixersDependencies.Jvm.Spring.autoConfigure(scope, ksp)
+
 	fun springWebFlux(scope: Scope) = scope.add(
 		"org.springframework.boot:spring-boot-starter-actuator:${Versions.springBoot}",
 		"org.springframework.boot:spring-boot-autoconfigure:${Versions.springBoot}",
