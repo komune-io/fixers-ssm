@@ -58,9 +58,10 @@ class FabricGatewayClient(
         chaincodeId: ChaincodeId,
         invokeArgsList: List<InvokeArgs>
     ): List<Transaction> = coroutineScope {
+        logger.info("Invoke[${invokeArgsList.size}] transactions in [${channelId}:$chaincodeId]")
         val start = currentTimeMillis()
         val contract = fabricGatewayBuilder.contract(orgName, channelId, endorsers, chaincodeId)
-        val proposal = invokeArgsList.mapIndexed { index, invokeArgs ->
+        val proposal = invokeArgsList.map { invokeArgs ->
                 try {
                      contract.newProposal(invokeArgs.function)
                         .addArguments(*invokeArgs.values.toTypedArray())
@@ -75,7 +76,10 @@ class FabricGatewayClient(
 
         val asyncSubmit = proposal.map { tr ->
             async(Dispatchers.IO) {
+                val start = currentTimeMillis()
+                logger.info("Submit transaction[${tr.transactionId}] in [${channelId}:$chaincodeId]...")
                 tr.submit()
+                logger.info("Submitted transaction[${tr.transactionId}] in [${channelId}:$chaincodeId] in ${currentTimeMillis() - start} ms")
                 Transaction(
                     tr.transactionId,
                     tr.result.toString()
