@@ -77,10 +77,10 @@ class FabricGatewayClient(
         val asyncSubmit = proposal.map { tr ->
             async(customThreadPool) {
                 val startSubmit = currentTimeMillis()
-                logger.info("Submit transaction[${tr.transactionId}] in [${channelId}:$chaincodeId]...")
-                tr.submit()
-                logger.info("Submitted transaction[${tr.transactionId}] " +
-                        "in [${channelId}:$chaincodeId] in ${currentTimeMillis() - startSubmit} ms")
+//                logger.info("Submit transaction[${tr.transactionId}] in [${channelId}:$chaincodeId]...")
+                tr.submitAsync()
+//                logger.info("Submitted transaction[${tr.transactionId}] " +
+//                        "in [${channelId}:$chaincodeId] in ${currentTimeMillis() - startSubmit} ms")
                 Transaction(
                     tr.transactionId,
                     tr.result.toString()
