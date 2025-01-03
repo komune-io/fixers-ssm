@@ -10,6 +10,7 @@ import io.komune.c2.chaincode.api.dsl.invoke.InvokeException
 import java.lang.System.currentTimeMillis
 import java.util.StringJoiner
 import java.util.concurrent.Executors
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -24,7 +25,9 @@ class FabricGatewayClient(
     private val fabricGatewayBuilder: FabricGatewayBuilder,
 ) {
     @Suppress("MagicNumber")
-    val customThreadPool = Executors.newFixedThreadPool(1024).asCoroutineDispatcher()
+//    val customThreadPool = Executors.newFixedThreadPool(1024).asCoroutineDispatcher()
+    val parallelIO = Dispatchers.IO.limitedParallelism(1024)
+
 
 
     private val logger: Logger = LoggerFactory.getLogger(FabricGatewayClient::class.java)
@@ -40,7 +43,7 @@ class FabricGatewayClient(
         val contract = fabricGatewayBuilder.contract(channelId, chaincodeId)
 
         val proposalResponses = invokeArgsList.map { invokeArgs ->
-            async(customThreadPool) {
+            async(parallelIO) {
                 val result = contract.evaluateTransaction(invokeArgs.function, *invokeArgs.values.toTypedArray())
                 String(result)
             }
@@ -75,10 +78,10 @@ class FabricGatewayClient(
         }
 
         val asyncSubmit = proposal.map { tr ->
-            async(customThreadPool) {
+            async(parallelIO) {
 //                val startSubmit = currentTimeMillis()
 //                logger.info("Submit transaction[${tr.transactionId}] in [${channelId}:$chaincodeId]...")
-                tr.submitAsync()
+                tr.submit()
 //                logger.info("Submitted transaction[${tr.transactionId}] " +
 //                        "in [${channelId}:$chaincodeId] in ${currentTimeMillis() - startSubmit} ms")
                 Transaction(

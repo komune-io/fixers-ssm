@@ -71,8 +71,7 @@ class FabricGatewayBuilder(
         val endorser = channelConfig.endorsers.first()
         val peerConfig = organizationConfig.peers[endorser.peer]
         val requests = peerConfig!!.requests.removePrefix("grpcs://")
-        val channel = Grpc.newChannelBuilder(requests, credentials)
-            .build()
+        val channel = Grpc.newChannelBuilder(requests, credentials).build()
 
         return Gateway.newInstance()
             .identity(channelConfig.newIdentity(organizationConfig, peerConfig))
