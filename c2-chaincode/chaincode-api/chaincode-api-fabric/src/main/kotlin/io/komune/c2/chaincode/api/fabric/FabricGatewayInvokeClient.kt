@@ -9,7 +9,8 @@ import io.komune.c2.chaincode.api.dsl.invoke.InvokeArgs
 import io.komune.c2.chaincode.api.dsl.invoke.InvokeException
 import java.lang.System.currentTimeMillis
 import java.util.StringJoiner
-import kotlinx.coroutines.Dispatchers
+import java.util.concurrent.Executors
+import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
@@ -22,6 +23,8 @@ import org.slf4j.LoggerFactory
 class FabricGatewayClient(
     private val fabricGatewayBuilder: FabricGatewayBuilder,
 ) {
+    val customThreadPool = Executors.newFixedThreadPool(1024).asCoroutineDispatcher()
+
 
     private val logger: Logger = LoggerFactory.getLogger(FabricGatewayClient::class.java)
 
@@ -36,7 +39,7 @@ class FabricGatewayClient(
         val contract = fabricGatewayBuilder.contract(channelId, chaincodeId)
 
         val proposalResponses = invokeArgsList.map { invokeArgs ->
-            async(Dispatchers.IO) {
+            async(customThreadPool) {
                 val result = contract.evaluateTransaction(invokeArgs.function, *invokeArgs.values.toTypedArray())
                 String(result)
             }
@@ -71,7 +74,7 @@ class FabricGatewayClient(
         }
 
         val asyncSubmit = proposal.map { tr ->
-            async(Dispatchers.IO) {
+            async(customThreadPool) {
                 val startSubmit = currentTimeMillis()
                 logger.info("Submit transaction[${tr.transactionId}] in [${channelId}:$chaincodeId]...")
                 tr.submit()
