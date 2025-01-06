@@ -62,7 +62,7 @@ class FabricGatewayClient(
         val start = currentTimeMillis()
         val proposal = invokeArgsList.map { invokeArgs ->
                 try {
-                    val contract = fabricGatewayBuilder.contracts(channelId, chaincodeId).shuffled().first()
+                    val contract = fabricGatewayBuilder.contract(channelId, chaincodeId)
                      contract.newProposal(invokeArgs.function)
                         .addArguments(*invokeArgs.values.toTypedArray())
                         .build()
