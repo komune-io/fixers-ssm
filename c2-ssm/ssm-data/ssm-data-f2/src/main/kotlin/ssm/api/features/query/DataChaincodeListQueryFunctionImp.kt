@@ -1,7 +1,7 @@
 package ssm.api.features.query
 
 import f2.dsl.fnc.invoke
-import io.komune.c2.chaincode.api.dsl.burst
+import io.komune.c2.chaincode.dsl.burst
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import ssm.couchdb.dsl.query.CouchdbChaincodeListQuery

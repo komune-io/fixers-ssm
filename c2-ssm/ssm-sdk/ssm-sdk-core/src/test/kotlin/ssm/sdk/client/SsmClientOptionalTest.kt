@@ -1,6 +1,6 @@
 package ssm.sdk.client
 
-import io.komune.c2.chaincode.api.dsl.ChaincodeUri
+import io.komune.c2.chaincode.dsl.ChaincodeUri
 import java.util.UUID
 import kotlinx.coroutines.runBlocking
 import org.assertj.core.api.Assertions

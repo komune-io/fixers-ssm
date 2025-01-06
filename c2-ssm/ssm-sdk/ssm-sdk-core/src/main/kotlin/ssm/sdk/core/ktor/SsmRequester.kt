@@ -3,7 +3,7 @@ package ssm.sdk.core.ktor
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import com.fasterxml.jackson.module.kotlin.readValue
-import io.komune.c2.chaincode.api.dsl.ChaincodeUri
+import io.komune.c2.chaincode.dsl.ChaincodeUri
 import org.slf4j.LoggerFactory
 import ssm.sdk.core.invoke.builder.HasGet
 import ssm.sdk.core.invoke.builder.HasList
@@ -26,7 +26,7 @@ class SsmRequester(
 	private val logger = LoggerFactory.getLogger(SsmRequester::class.java)
 
 	suspend fun <T> logger(
-		chaincodeUri: ChaincodeUri, value: String, query: HasGet, clazz: TypeReference<List<T>>
+        chaincodeUri: ChaincodeUri, value: String, query: HasGet, clazz: TypeReference<List<T>>
 	): List<T> {
 		val args = query.queryArgs(value)
 		logger.info(
@@ -174,7 +174,7 @@ class SsmRequester(
 }
 
 data class SsmApiQuery(
-	val chaincodeUri: ChaincodeUri,
-	val value: String,
-	val query: HasGet,
+    val chaincodeUri: ChaincodeUri,
+    val value: String,
+    val query: HasGet,
 )

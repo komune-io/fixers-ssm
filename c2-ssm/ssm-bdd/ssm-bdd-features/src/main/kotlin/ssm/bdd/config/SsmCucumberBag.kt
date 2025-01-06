@@ -1,7 +1,7 @@
 package ssm.bdd.config
 
 import io.cucumber.java8.Scenario
-import io.komune.c2.chaincode.api.dsl.ChaincodeUri
+import io.komune.c2.chaincode.dsl.ChaincodeUri
 import java.util.UUID
 import ssm.chaincode.dsl.config.SsmBatchProperties
 import ssm.chaincode.dsl.model.AgentName

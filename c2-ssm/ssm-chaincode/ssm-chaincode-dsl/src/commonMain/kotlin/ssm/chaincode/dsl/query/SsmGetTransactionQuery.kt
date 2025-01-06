@@ -1,9 +1,9 @@
 package ssm.chaincode.dsl.query
 
 import f2.dsl.fnc.F2Function
-import io.komune.c2.chaincode.api.dsl.ChaincodeUri
-import io.komune.c2.chaincode.api.dsl.Transaction
-import io.komune.c2.chaincode.api.dsl.TransactionId
+import io.komune.c2.chaincode.dsl.ChaincodeUri
+import io.komune.c2.chaincode.dsl.Transaction
+import io.komune.c2.chaincode.dsl.TransactionId
 import kotlin.js.JsExport
 import kotlin.js.JsName
 import kotlinx.serialization.Serializable
@@ -27,8 +27,8 @@ typealias SsmGetTransactionQueryFunction = F2Function<SsmGetTransactionQuery, Ss
 @JsExport
 @JsName("SsmGetTransactionQuery")
 data class SsmGetTransactionQuery(
-	override val chaincodeUri: ChaincodeUri,
-	val id: TransactionId,
+    override val chaincodeUri: ChaincodeUri,
+    val id: TransactionId,
 ) : SsmQueryDTO
 
 /**
@@ -40,5 +40,5 @@ data class SsmGetTransactionQuery(
 @JsExport
 @JsName("SsmGetTransactionQueryResult")
 class SsmGetTransactionQueryResult(
-	override val item: Transaction?,
+    override val item: Transaction?,
 ) : SsmItemResultDTO<Transaction>

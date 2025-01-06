@@ -1,7 +1,7 @@
 package ssm.chaincode.dsl.query
 
 import f2.dsl.fnc.F2Function
-import io.komune.c2.chaincode.api.dsl.ChaincodeUri
+import io.komune.c2.chaincode.dsl.ChaincodeUri
 import kotlin.js.JsExport
 import kotlin.js.JsName
 import kotlinx.serialization.Serializable
@@ -29,13 +29,13 @@ typealias SsmGetSessionLogsQueryFunction = F2Function<SsmGetSessionLogsQuery, Ss
 @JsExport
 @JsName("SsmGetSessionLogsQuery")
 class SsmGetSessionLogsQuery(
-	override val chaincodeUri: ChaincodeUri,
-	/**
+    override val chaincodeUri: ChaincodeUri,
+    /**
 	 * The name of the ssm
 	 * @example "ssm"
 	 */
 	val ssmName: SsmName,
-	/**
+    /**
 	 * Identifier of the session to retrieve
 	 * @example [SsmSessionState.session]
 	 */

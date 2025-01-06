@@ -1,7 +1,7 @@
 package ssm.sync.sdk
 
 import f2.dsl.fnc.invokeWith
-import io.komune.c2.chaincode.api.dsl.ChaincodeUri
+import io.komune.c2.chaincode.dsl.ChaincodeUri
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import ssm.chaincode.dsl.model.SessionName

@@ -2,7 +2,7 @@ package ssm.chaincode.dsl
 
 import f2.dsl.cqrs.Event
 import f2.dsl.cqrs.Query
-import io.komune.c2.chaincode.api.dsl.ChaincodeUri
+import io.komune.c2.chaincode.dsl.ChaincodeUri
 import kotlin.js.JsExport
 import kotlin.js.JsName
 

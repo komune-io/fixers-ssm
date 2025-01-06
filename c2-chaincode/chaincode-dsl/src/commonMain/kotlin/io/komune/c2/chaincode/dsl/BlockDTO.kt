@@ -1,4 +1,4 @@
-package io.komune.c2.chaincode.api.dsl
+package io.komune.c2.chaincode.dsl
 
 import kotlin.js.JsExport
 import kotlin.js.JsName
@@ -42,8 +42,8 @@ interface BlockDTO {
 @JsExport
 @JsName("Block")
 class Block(
-	override val blockId: BlockId,
-	override val previousHash: ByteArray,
-	override val dataHash: ByteArray,
-	override val transactions: List<Transaction>,
+    override val blockId: BlockId,
+    override val previousHash: ByteArray,
+    override val dataHash: ByteArray,
+    override val transactions: List<Transaction>,
 ) : BlockDTO

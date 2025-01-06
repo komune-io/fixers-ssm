@@ -1,14 +1,14 @@
 package ssm.sdk.dsl
 
-import io.komune.c2.chaincode.api.dsl.ChaincodeUri
+import io.komune.c2.chaincode.dsl.ChaincodeUri
 
 typealias SignerName = String
 
 data class SsmCmdSigned(
-	val cmd: SsmCmd,
-	val signature: String,
-	val signer: SignerName,
-	val chaincodeUri: ChaincodeUri,
+    val cmd: SsmCmd,
+    val signature: String,
+    val signer: SignerName,
+    val chaincodeUri: ChaincodeUri,
 )
 
 fun SsmCmdSigned.buildArgs(): InvokeArgs {

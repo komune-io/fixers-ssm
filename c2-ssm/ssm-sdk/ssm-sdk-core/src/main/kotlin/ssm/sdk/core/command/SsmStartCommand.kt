@@ -1,6 +1,6 @@
 package ssm.sdk.core.command
 
-import io.komune.c2.chaincode.api.dsl.ChaincodeUri
+import io.komune.c2.chaincode.dsl.ChaincodeUri
 import ssm.chaincode.dsl.model.AgentName
 import ssm.chaincode.dsl.model.SsmSession
 

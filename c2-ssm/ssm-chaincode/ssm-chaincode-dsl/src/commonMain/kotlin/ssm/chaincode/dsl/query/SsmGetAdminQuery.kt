@@ -1,7 +1,7 @@
 package ssm.chaincode.dsl.query
 
 import f2.dsl.fnc.F2Function
-import io.komune.c2.chaincode.api.dsl.ChaincodeUri
+import io.komune.c2.chaincode.dsl.ChaincodeUri
 import kotlin.js.JsExport
 import kotlin.js.JsName
 import kotlinx.serialization.Serializable
@@ -28,8 +28,8 @@ typealias SsmGetAdminFunction = F2Function<SsmGetAdminQuery, SsmGetAdminResult>
 @Serializable
 @JsName("SsmGetAdminQuery")
 class SsmGetAdminQuery(
-	override val chaincodeUri: ChaincodeUri,
-	/**
+    override val chaincodeUri: ChaincodeUri,
+    /**
 	 * The name of the admin.
 	 * @example ["Chuck"]
 	 */

@@ -1,4 +1,4 @@
-package io.komune.c2.chaincode.api.dsl.invoke
+package io.komune.c2.chaincode.dsl.invoke
 
 class InvokeException(
     override val message: String,

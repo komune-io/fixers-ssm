@@ -7,8 +7,8 @@ import io.komune.c2.chaincode.api.config.FabricConfigLoader
 import io.komune.c2.chaincode.api.config.properties.OrganisationProperties
 import io.komune.c2.chaincode.api.config.properties.PeerProperties
 import io.komune.c2.chaincode.api.config.utils.asFileReader
-import io.komune.c2.chaincode.api.dsl.ChaincodeId
-import io.komune.c2.chaincode.api.dsl.ChannelId
+import io.komune.c2.chaincode.dsl.ChaincodeId
+import io.komune.c2.chaincode.dsl.ChannelId
 import java.io.IOException
 import java.security.InvalidKeyException
 import java.security.cert.CertificateException

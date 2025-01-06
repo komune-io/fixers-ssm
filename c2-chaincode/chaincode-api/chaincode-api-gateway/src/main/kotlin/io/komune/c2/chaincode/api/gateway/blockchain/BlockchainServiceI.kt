@@ -1,7 +1,7 @@
 package io.komune.c2.chaincode.api.gateway.blockchain
 
-import io.komune.c2.chaincode.api.dsl.ChannelId
-import io.komune.c2.chaincode.api.dsl.invoke.InvokeArgs
+import io.komune.c2.chaincode.dsl.ChannelId
+import io.komune.c2.chaincode.dsl.invoke.InvokeArgs
 
 interface BlockchainServiceI {
 	fun query(channelId: ChannelId, invokeArgs: InvokeArgs): String

@@ -5,7 +5,7 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":c2-chaincode:chaincode-api:chaincode-api-dsl"))
+    implementation(project(":c2-chaincode:chaincode-dsl"))
 
     Dependencies.springBootConfigurationProcessor(::kapt)
     Dependencies.f2Function(::implementation)

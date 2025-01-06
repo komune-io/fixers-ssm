@@ -6,7 +6,7 @@ plugins {
 
 dependencies {
     implementation(project(":c2-chaincode:chaincode-api:chaincode-api-config"))
-    implementation(project(":c2-chaincode:chaincode-api:chaincode-api-dsl"))
+    implementation(project(":c2-chaincode:chaincode-dsl"))
 
     Dependencies.springBootAuthConfiguration(::implementation, ::kapt)
     Dependencies.jackson(::implementation)

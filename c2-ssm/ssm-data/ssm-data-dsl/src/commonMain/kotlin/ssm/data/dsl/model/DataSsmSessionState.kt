@@ -1,7 +1,7 @@
 package ssm.data.dsl.model
 
-import io.komune.c2.chaincode.api.dsl.Transaction
-import io.komune.c2.chaincode.api.dsl.TransactionDTO
+import io.komune.c2.chaincode.dsl.Transaction
+import io.komune.c2.chaincode.dsl.TransactionDTO
 import kotlin.js.JsExport
 import kotlin.js.JsName
 import kotlinx.serialization.Serializable
@@ -31,6 +31,6 @@ interface DataSsmSessionStateDTO {
 @JsExport
 @JsName("DataSsmSessionState")
 class DataSsmSessionState(
-	override val details: SsmSessionState,
-	override val transaction: Transaction?,
+    override val details: SsmSessionState,
+    override val transaction: Transaction?,
 ) : DataSsmSessionStateDTO

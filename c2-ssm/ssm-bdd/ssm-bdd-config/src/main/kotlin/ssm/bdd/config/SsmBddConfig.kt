@@ -1,6 +1,6 @@
 package ssm.bdd.config
 
-import io.komune.c2.chaincode.api.dsl.ChaincodeUri
+import io.komune.c2.chaincode.dsl.ChaincodeUri
 import ssm.chaincode.dsl.config.SsmBatchProperties
 import ssm.chaincode.dsl.config.SsmChaincodeProperties
 import ssm.couchdb.dsl.config.SsmCouchdbConfig

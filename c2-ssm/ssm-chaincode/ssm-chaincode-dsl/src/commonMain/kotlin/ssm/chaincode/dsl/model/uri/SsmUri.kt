@@ -1,9 +1,9 @@
 package ssm.chaincode.dsl.model.uri
 
-import io.komune.c2.chaincode.api.dsl.ChaincodeUri
-import io.komune.c2.chaincode.api.dsl.ChaincodeUriDTO
-import io.komune.c2.chaincode.api.dsl.burst
-import io.komune.c2.chaincode.api.dsl.from
+import io.komune.c2.chaincode.dsl.ChaincodeUri
+import io.komune.c2.chaincode.dsl.ChaincodeUriDTO
+import io.komune.c2.chaincode.dsl.burst
+import io.komune.c2.chaincode.dsl.from
 import kotlin.js.JsExport
 import kotlin.js.JsName
 import kotlinx.serialization.Serializable
@@ -58,8 +58,8 @@ fun ChaincodeUriDTO.toSsmUri(ssmName: SsmName): SsmUri {
 }
 
 fun SsmUri.Companion.from(
-		chaincodeUri: ChaincodeUri,
-		ssmName: SsmName,
+    chaincodeUri: ChaincodeUri,
+    ssmName: SsmName,
 ) = SsmUri("${PREFIX}:${chaincodeUri.channelId}:${chaincodeUri.chaincodeId}:$ssmName")
 
 fun SsmUri.Companion.from(

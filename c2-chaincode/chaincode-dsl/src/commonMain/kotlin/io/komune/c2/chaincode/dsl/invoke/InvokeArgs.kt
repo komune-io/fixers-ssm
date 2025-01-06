@@ -1,6 +1,6 @@
-package io.komune.c2.chaincode.api.dsl.invoke
+package io.komune.c2.chaincode.dsl.invoke
 
-import io.komune.c2.chaincode.api.dsl.ChaincodeUri
+import io.komune.c2.chaincode.dsl.ChaincodeUri
 
 
 data class InvokeArgs(

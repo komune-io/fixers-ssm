@@ -1,7 +1,7 @@
 package ssm.sdk.core
 
 import f2.dsl.fnc.operators.batch
-import io.komune.c2.chaincode.api.dsl.ChaincodeUri
+import io.komune.c2.chaincode.dsl.ChaincodeUri
 import kotlinx.coroutines.flow.Flow
 import org.slf4j.LoggerFactory
 import ssm.chaincode.dsl.config.SsmBatchProperties
@@ -108,7 +108,7 @@ class SsmTxService(
 	}
 
 	suspend fun sendPerform(
-		chaincodeUri: ChaincodeUri, action: String, context: SsmContext, signerName: AgentName
+        chaincodeUri: ChaincodeUri, action: String, context: SsmContext, signerName: AgentName
 	): InvokeReturn {
 		return ssmService.signAndSend {
 			perform(action, context, chaincodeUri, signerName)

@@ -1,7 +1,7 @@
 package ssm.chaincode.dsl.query
 
 import f2.dsl.fnc.F2Function
-import io.komune.c2.chaincode.api.dsl.ChaincodeUri
+import io.komune.c2.chaincode.dsl.ChaincodeUri
 import kotlin.js.JsExport
 import kotlin.js.JsName
 import kotlinx.serialization.Serializable
@@ -27,7 +27,7 @@ typealias SsmListSessionQueryFunction = F2Function<SsmListSessionQuery, SsmListS
 @JsExport
 @JsName("SsmListSessionQuery")
 class SsmListSessionQuery(
-	override val chaincodeUri: ChaincodeUri,
+    override val chaincodeUri: ChaincodeUri,
 ): SsmQueryDTO
 
 /**

@@ -1,6 +1,6 @@
 package io.komune.c2.chaincode.api.config
 
-import io.komune.c2.chaincode.api.dsl.ChannelId
+import io.komune.c2.chaincode.dsl.ChannelId
 
 
 class FabricConfigLoader(

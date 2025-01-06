@@ -3,9 +3,9 @@ package io.komune.c2.chaincode.api.config
 import f2.dsl.fnc.operators.BATCH_DEFAULT_CONCURRENCY
 import f2.dsl.fnc.operators.BATCH_DEFAULT_SIZE
 import f2.dsl.fnc.operators.Batch
-import io.komune.c2.chaincode.api.dsl.ChannelId
-import io.komune.c2.chaincode.api.dsl.Endorser
-import io.komune.c2.chaincode.api.dsl.invoke.InvokeException
+import io.komune.c2.chaincode.dsl.ChannelId
+import io.komune.c2.chaincode.dsl.Endorser
+import io.komune.c2.chaincode.dsl.invoke.InvokeException
 import org.slf4j.LoggerFactory
 import org.springframework.boot.context.properties.ConfigurationProperties
 

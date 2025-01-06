@@ -1,4 +1,4 @@
-package io.komune.c2.chaincode.api.dsl
+package io.komune.c2.chaincode.dsl
 
 
 interface EndorserDTO {

@@ -3,8 +3,8 @@ package ssm.couchdb.dsl.query
 import f2.dsl.cqrs.Event
 import f2.dsl.cqrs.Query
 import f2.dsl.fnc.F2Function
-import io.komune.c2.chaincode.api.dsl.ChaincodeUri
-import io.komune.c2.chaincode.api.dsl.ChaincodeUriDTO
+import io.komune.c2.chaincode.dsl.ChaincodeUri
+import io.komune.c2.chaincode.dsl.ChaincodeUriDTO
 import kotlin.js.JsExport
 import kotlin.js.JsName
 import kotlinx.serialization.Serializable
@@ -48,9 +48,9 @@ interface CouchdbSsmSessionStateGetQueryResultDTO : Event {
 @JsExport
 @JsName("CouchdbSsmSessionStateGetQuery")
 class CouchdbSsmSessionStateGetQuery(
-	override val chaincodeUri: ChaincodeUri,
-	override val ssmName: SsmName?,
-	override val sessionName: SessionName,
+    override val chaincodeUri: ChaincodeUri,
+    override val ssmName: SsmName?,
+    override val sessionName: SessionName,
 ) : CouchdbSsmSessionStateGetQueryDTO
 
 /**

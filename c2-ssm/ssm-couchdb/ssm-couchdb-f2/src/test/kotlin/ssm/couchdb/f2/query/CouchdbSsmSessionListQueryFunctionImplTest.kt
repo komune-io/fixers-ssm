@@ -1,8 +1,8 @@
 package ssm.couchdb.f2.query
 
 import f2.dsl.fnc.invokeWith
-import io.komune.c2.chaincode.api.dsl.ChaincodeUri
-import io.komune.c2.chaincode.api.dsl.from
+import io.komune.c2.chaincode.dsl.ChaincodeUri
+import io.komune.c2.chaincode.dsl.from
 import kotlinx.coroutines.runBlocking
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test

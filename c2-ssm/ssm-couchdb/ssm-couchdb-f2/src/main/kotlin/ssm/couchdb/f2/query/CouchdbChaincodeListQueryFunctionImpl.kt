@@ -1,7 +1,7 @@
 package ssm.couchdb.f2.query
 
-import io.komune.c2.chaincode.api.dsl.ChaincodeUri
-import io.komune.c2.chaincode.api.dsl.from
+import io.komune.c2.chaincode.dsl.ChaincodeUri
+import io.komune.c2.chaincode.dsl.from
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.filter

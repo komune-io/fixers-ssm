@@ -1,10 +1,10 @@
 package io.komune.c2.chaincode.api.gateway.chaincode
 
 import io.komune.c2.chaincode.api.config.C2ChaincodeConfiguration
-import io.komune.c2.chaincode.api.dsl.ChaincodeId
-import io.komune.c2.chaincode.api.dsl.ChannelId
-import io.komune.c2.chaincode.api.dsl.invoke.InvokeArgs
-import io.komune.c2.chaincode.api.dsl.invoke.InvokeArgsUtils
+import io.komune.c2.chaincode.dsl.ChaincodeId
+import io.komune.c2.chaincode.dsl.ChannelId
+import io.komune.c2.chaincode.dsl.invoke.InvokeArgs
+import io.komune.c2.chaincode.dsl.invoke.InvokeArgsUtils
 import io.komune.c2.chaincode.api.fabric.FabricGatewayClient
 import io.komune.c2.chaincode.api.gateway.blockchain.BlockchainServiceI
 import io.komune.c2.chaincode.api.gateway.chaincode.model.Cmd
@@ -41,9 +41,9 @@ class ChaincodeService(
 	}
 
 	private suspend fun doQuery(
-		channelId: ChannelId,
-		chainCodeId: ChaincodeId,
-		invokeArgs: InvokeArgs,
+        channelId: ChannelId,
+        chainCodeId: ChaincodeId,
+        invokeArgs: InvokeArgs,
 	): String {
 		return if (InvokeArgsUtils.isBlockQuery(invokeArgs) || InvokeArgsUtils.isTransactionQuery(invokeArgs)) {
 			blockchainService.query(channelId, invokeArgs)
@@ -53,9 +53,9 @@ class ChaincodeService(
 	}
 
 	private suspend fun doQueryChaincode(
-		channelId: ChannelId,
-		chainCodeId: ChaincodeId,
-		invokeArgs: InvokeArgs,
+        channelId: ChannelId,
+        chainCodeId: ChaincodeId,
+        invokeArgs: InvokeArgs,
 	): String {
 		return fabricGatewayClient.query(
 			channelId = channelId,
@@ -65,17 +65,17 @@ class ChaincodeService(
 	}
 
 	private suspend fun doInvoke(
-		channelId: ChannelId,
-		chainCodeId: ChaincodeId,
-		invokeArgs: InvokeArgs,
+        channelId: ChannelId,
+        chainCodeId: ChaincodeId,
+        invokeArgs: InvokeArgs,
 	): String {
 		return doInvoke(channelId, chainCodeId, listOf(invokeArgs)).first().toJson()
 	}
 
 	suspend fun doInvoke(
-		channelId: ChannelId,
-		chainCodeId: ChaincodeId,
-		invokeArgs: List<InvokeArgs>,
+        channelId: ChannelId,
+        chainCodeId: ChaincodeId,
+        invokeArgs: List<InvokeArgs>,
 	): List<InvokeReturn> {
 		return fabricGatewayClient.invoke(
 			channelId = channelId,

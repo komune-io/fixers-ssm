@@ -1,6 +1,6 @@
 package ssm.sdk.core.invoke.command
 
-import io.komune.c2.chaincode.api.dsl.ChaincodeUri
+import io.komune.c2.chaincode.dsl.ChaincodeUri
 import org.assertj.core.api.Assertions
 import org.assertj.core.util.Lists
 import org.junit.jupiter.api.Test

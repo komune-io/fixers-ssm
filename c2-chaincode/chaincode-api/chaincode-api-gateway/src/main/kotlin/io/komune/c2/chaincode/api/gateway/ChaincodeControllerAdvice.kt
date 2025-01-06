@@ -1,6 +1,6 @@
 package io.komune.c2.chaincode.api.gateway
 
-import io.komune.c2.chaincode.api.dsl.invoke.InvokeException
+import io.komune.c2.chaincode.dsl.invoke.InvokeException
 import io.komune.c2.chaincode.api.gateway.chaincode.model.ErrorResponse
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity

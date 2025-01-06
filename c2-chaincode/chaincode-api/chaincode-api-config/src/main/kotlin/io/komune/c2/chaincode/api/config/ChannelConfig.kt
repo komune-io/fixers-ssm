@@ -1,8 +1,8 @@
 package io.komune.c2.chaincode.api.config
 
-import io.komune.c2.chaincode.api.dsl.ChaincodeId
-import io.komune.c2.chaincode.api.dsl.ChannelId
-import io.komune.c2.chaincode.api.dsl.Endorser
+import io.komune.c2.chaincode.dsl.ChaincodeId
+import io.komune.c2.chaincode.dsl.ChannelId
+import io.komune.c2.chaincode.dsl.Endorser
 
 
 class ChannelConfig(

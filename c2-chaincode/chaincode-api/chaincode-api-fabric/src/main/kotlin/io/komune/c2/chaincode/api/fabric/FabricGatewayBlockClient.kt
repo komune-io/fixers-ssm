@@ -1,10 +1,10 @@
 package io.komune.c2.chaincode.api.fabric
 
-import io.komune.c2.chaincode.api.dsl.BlockId
-import io.komune.c2.chaincode.api.dsl.ChannelId
-import io.komune.c2.chaincode.api.dsl.IdentitiesInfo
-import io.komune.c2.chaincode.api.dsl.Transaction
-import io.komune.c2.chaincode.api.dsl.TransactionId
+import io.komune.c2.chaincode.dsl.BlockId
+import io.komune.c2.chaincode.dsl.ChannelId
+import io.komune.c2.chaincode.dsl.IdentitiesInfo
+import io.komune.c2.chaincode.dsl.Transaction
+import io.komune.c2.chaincode.dsl.TransactionId
 import org.hyperledger.fabric.client.Gateway
 import org.hyperledger.fabric.protos.common.Block
 import org.hyperledger.fabric.protos.common.BlockchainInfo
@@ -14,8 +14,8 @@ import org.hyperledger.fabric.protos.common.Payload
 import org.hyperledger.fabric.protos.common.SignatureHeader
 import org.hyperledger.fabric.protos.msp.SerializedIdentity
 import org.hyperledger.fabric.protos.peer.ProcessedTransaction
-import io.komune.c2.chaincode.api.dsl.Block as BlockDsl
-import io.komune.c2.chaincode.api.dsl.Transaction as TransactionDsl
+import io.komune.c2.chaincode.dsl.Block as BlockDsl
+import io.komune.c2.chaincode.dsl.Transaction as TransactionDsl
 
 
 class FabricGatewayBlockClient(

@@ -2,9 +2,9 @@ package ssm.api.features.query.internal
 
 import f2.dsl.fnc.F2Function
 import f2.dsl.fnc.operators.flattenConcurrently
-import io.komune.c2.chaincode.api.dsl.ChaincodeUri
-import io.komune.c2.chaincode.api.dsl.Transaction
-import io.komune.c2.chaincode.api.dsl.TransactionId
+import io.komune.c2.chaincode.dsl.ChaincodeUri
+import io.komune.c2.chaincode.dsl.Transaction
+import io.komune.c2.chaincode.dsl.TransactionId
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.map

@@ -1,4 +1,4 @@
-package io.komune.c2.chaincode.api.dsl
+package io.komune.c2.chaincode.dsl
 
 import kotlin.js.JsExport
 import kotlin.js.JsName

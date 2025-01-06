@@ -3,7 +3,7 @@ package ssm.couchdb.bdd
 import f2.dsl.fnc.invokeWith
 import io.cucumber.datatable.DataTable
 import io.cucumber.java8.En
-import io.komune.c2.chaincode.api.dsl.ChaincodeUri
+import io.komune.c2.chaincode.dsl.ChaincodeUri
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.assertj.core.api.Assertions
@@ -77,9 +77,9 @@ class CouchdbSsmSteps : SsmQueryStep(), En {
 	}
 
 	suspend fun getChanges(
-		chaincodeUri: ChaincodeUri,
-		ssmName: SsmName,
-		sessionName: SessionName,
+        chaincodeUri: ChaincodeUri,
+        ssmName: SsmName,
+        sessionName: SessionName,
 	): CouchdbDatabaseGetChangesQueryResultDTO {
 		return CouchdbDatabaseGetChangesQuery(
 			channelId = chaincodeUri.channelId,

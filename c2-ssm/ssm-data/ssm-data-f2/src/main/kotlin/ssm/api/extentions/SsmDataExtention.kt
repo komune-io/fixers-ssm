@@ -1,9 +1,9 @@
 package ssm.api.extentions
 
 import f2.dsl.fnc.invokeWith
-import io.komune.c2.chaincode.api.dsl.ChaincodeUri
-import io.komune.c2.chaincode.api.dsl.Transaction
-import io.komune.c2.chaincode.api.dsl.TransactionId
+import io.komune.c2.chaincode.dsl.ChaincodeUri
+import io.komune.c2.chaincode.dsl.Transaction
+import io.komune.c2.chaincode.dsl.TransactionId
 import ssm.chaincode.dsl.model.SessionName
 import ssm.chaincode.dsl.model.Ssm
 import ssm.chaincode.dsl.model.SsmDTO

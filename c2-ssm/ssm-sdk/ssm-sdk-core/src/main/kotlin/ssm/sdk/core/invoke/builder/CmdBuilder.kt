@@ -1,6 +1,6 @@
 package ssm.sdk.core.invoke.builder
 
-import io.komune.c2.chaincode.api.dsl.ChaincodeUri
+import io.komune.c2.chaincode.dsl.ChaincodeUri
 import ssm.chaincode.dsl.model.AgentName
 import ssm.sdk.dsl.SsmCmd
 import ssm.sdk.dsl.SsmCmdName

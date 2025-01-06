@@ -1,8 +1,8 @@
 package ssm.tx.dsl.features.ssm
 
 import f2.dsl.fnc.F2Function
-import io.komune.c2.chaincode.api.dsl.ChaincodeUriDTO
-import io.komune.c2.chaincode.api.dsl.TransactionId
+import io.komune.c2.chaincode.dsl.ChaincodeUriDTO
+import io.komune.c2.chaincode.dsl.TransactionId
 import ssm.chaincode.dsl.model.AgentName
 import ssm.chaincode.dsl.model.SsmSession
 import ssm.tx.dsl.features.SsmCommandDTO
@@ -23,12 +23,12 @@ typealias SsmTxSessionStartFunction = F2Function<SsmSessionStartCommand, SsmSess
  * @title Start Session: Parameters
  */
 class SsmSessionStartCommand(
-	override val chaincodeUri: ChaincodeUriDTO,
-	/**
+    override val chaincodeUri: ChaincodeUriDTO,
+    /**
 	 * The name of the signer
 	 */
 	val signerName: AgentName,
-	/**
+    /**
 	 * Session to start
 	 */
 	val session: SsmSession,
@@ -40,5 +40,5 @@ class SsmSessionStartCommand(
  * @title Start Session: Response
  */
 class SsmSessionStartResult(
-	override val transactionId: TransactionId,
+    override val transactionId: TransactionId,
 ) : SsmCommandResultDTO

@@ -1,10 +1,10 @@
 package ssm.sdk.core
 
-import io.komune.c2.chaincode.api.dsl.Block
-import io.komune.c2.chaincode.api.dsl.BlockId
-import io.komune.c2.chaincode.api.dsl.ChaincodeUri
-import io.komune.c2.chaincode.api.dsl.Transaction
-import io.komune.c2.chaincode.api.dsl.TransactionId
+import io.komune.c2.chaincode.dsl.Block
+import io.komune.c2.chaincode.dsl.BlockId
+import io.komune.c2.chaincode.dsl.ChaincodeUri
+import io.komune.c2.chaincode.dsl.Transaction
+import io.komune.c2.chaincode.dsl.TransactionId
 import ssm.chaincode.dsl.model.Agent
 import ssm.chaincode.dsl.model.AgentName
 import ssm.chaincode.dsl.model.SessionName
@@ -22,7 +22,7 @@ interface SsmQueryServiceI {
 	suspend fun getSsm(chaincodeUri: ChaincodeUri, name: SsmName): Ssm?
 
 	suspend fun listSession(chaincodeUri: ChaincodeUri): List<SessionName>
-	suspend fun getSession(chaincodeUri: ChaincodeUri,sessionName: SessionName): SsmSessionState?
+	suspend fun getSession(chaincodeUri: ChaincodeUri, sessionName: SessionName): SsmSessionState?
 
 	suspend fun log(chaincodeUri: ChaincodeUri, sessionName: SessionName): List<SsmSessionStateLog>
 
