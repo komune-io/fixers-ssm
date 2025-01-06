@@ -9,9 +9,7 @@ import io.komune.c2.chaincode.api.dsl.invoke.InvokeArgs
 import io.komune.c2.chaincode.api.dsl.invoke.InvokeException
 import java.lang.System.currentTimeMillis
 import java.util.StringJoiner
-import java.util.concurrent.Executors
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
@@ -40,10 +38,9 @@ class FabricGatewayClient(
     ): List<String> = coroutineScope {
 
         val start = currentTimeMillis()
-        val contract = fabricGatewayBuilder.contract(channelId, chaincodeId)
-
         val proposalResponses = invokeArgsList.map { invokeArgs ->
             async(parallelIO) {
+                val contract = fabricGatewayBuilder.contracts(channelId, chaincodeId).shuffled().first()
                 val result = contract.evaluateTransaction(invokeArgs.function, *invokeArgs.values.toTypedArray())
                 String(result)
             }
@@ -63,9 +60,9 @@ class FabricGatewayClient(
     ): List<Transaction> = coroutineScope {
         logger.info("Invoke[${invokeArgsList.size}] transactions in [${channelId}:$chaincodeId]")
         val start = currentTimeMillis()
-        val contract = fabricGatewayBuilder.contract(channelId, chaincodeId)
         val proposal = invokeArgsList.map { invokeArgs ->
                 try {
+                    val contract = fabricGatewayBuilder.contracts(channelId, chaincodeId).shuffled().first()
                      contract.newProposal(invokeArgs.function)
                         .addArguments(*invokeArgs.values.toTypedArray())
                         .build()

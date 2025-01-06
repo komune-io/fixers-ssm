@@ -31,6 +31,7 @@ class FabricGatewayBuilder(
 ) {
 
     private val gateways = ConcurrentHashMap<ChannelId, Gateway>()
+    private val gatewayss = ConcurrentHashMap<ChannelId, List<Gateway>>()
 
     private val logger: Logger = LoggerFactory.getLogger(FabricGatewayClient::class.java)
 
@@ -48,15 +49,60 @@ class FabricGatewayBuilder(
             throw e
         }
     }
+    fun contracts(
+        channelId: ChannelId,
+        chaincodeId: ChaincodeId
+    ): List<Contract> {
+         try {
+             return gateways(channelId).map { gateway ->
+                val network = gateway.getNetwork(channelId)
+                val contract = network.getContract(chaincodeId)
+                contract
+            }
+        } catch (e: Throwable) {
+            logger.error("Error while querying of channel [$channelId]", e)
+            throw e
+        }
+    }
 
     fun gateway(channelId: ChannelId): Gateway {
         return gateways.getOrPut(channelId) {
             createGateway(channelId)
         }
-//        return createGateway(channelId)
+    }
+
+    fun gateways(channelId: ChannelId): List<Gateway> {
+        return gatewayss.getOrPut(channelId) {
+            createGateways(channelId)
+        }
     }
 
     @Suppress("LongMethod")
+    private fun createGateways(channelId: ChannelId): List<Gateway> {
+        val channelConfig = fabricConfigLoader.getChannelConfig(channelId)
+        val cryptoConfigBase = channelConfig.config.crypto
+        val organizationName = channelConfig.user.org
+
+        val fabricConfig = fabricConfigLoader.getFabricConfig(channelId)
+        val organizationConfig = fabricConfig.network.organisations[organizationName]!!
+        val trustManager = organizationConfig.ca.getTlsCacertsAsUrl(cryptoConfigBase)
+        val credentials = TlsChannelCredentials.newBuilder()
+            .trustManager(trustManager.openStream())
+            .build()
+        return channelConfig.endorsers.map { endorser ->
+            val peerConfig = organizationConfig.peers[endorser.peer]
+            val requests = peerConfig!!.requests.removePrefix("grpcs://")
+            val channel = Grpc.newChannelBuilder(requests, credentials).build()
+
+            Gateway.newInstance()
+                .identity(channelConfig.newIdentity(organizationConfig, peerConfig))
+                .signer(channelConfig.newSigner(peerConfig))
+                .hash(Hash.SHA256)
+                .connection(channel)
+                .connect()
+        }
+    }
+
     private fun createGateway(channelId: ChannelId): Gateway {
         val channelConfig = fabricConfigLoader.getChannelConfig(channelId)
         val cryptoConfigBase = channelConfig.config.crypto
@@ -68,7 +114,7 @@ class FabricGatewayBuilder(
         val credentials = TlsChannelCredentials.newBuilder()
             .trustManager(trustManager.openStream())
             .build()
-        val endorser = channelConfig.endorsers.first()
+        val endorser = channelConfig.endorsers.shuffled().first()
         val peerConfig = organizationConfig.peers[endorser.peer]
         val requests = peerConfig!!.requests.removePrefix("grpcs://")
         val channel = Grpc.newChannelBuilder(requests, credentials).build()
