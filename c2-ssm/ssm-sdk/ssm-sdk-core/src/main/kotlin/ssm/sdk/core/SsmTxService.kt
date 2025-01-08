@@ -2,6 +2,7 @@ package ssm.sdk.core
 
 import f2.dsl.fnc.operators.batch
 import io.komune.c2.chaincode.dsl.ChaincodeUri
+import io.komune.c2.chaincode.dsl.invoke.InvokeReturn
 import kotlinx.coroutines.flow.Flow
 import org.slf4j.LoggerFactory
 import ssm.chaincode.dsl.config.SsmBatchProperties
@@ -19,7 +20,6 @@ import ssm.sdk.core.invoke.command.CreateCmd
 import ssm.sdk.core.invoke.command.PerformCmd
 import ssm.sdk.core.invoke.command.RegisterCmd
 import ssm.sdk.core.invoke.command.StartCmd
-import ssm.sdk.dsl.InvokeReturn
 import ssm.sdk.dsl.SsmCmd
 
 class SsmTxService(

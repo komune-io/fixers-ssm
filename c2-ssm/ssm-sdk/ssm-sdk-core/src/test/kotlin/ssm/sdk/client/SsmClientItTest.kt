@@ -3,6 +3,7 @@ package ssm.sdk.client
 import io.komune.c2.chaincode.dsl.Block
 import io.komune.c2.chaincode.dsl.ChaincodeUri
 import io.komune.c2.chaincode.dsl.Transaction
+import io.komune.c2.chaincode.dsl.invoke.InvokeReturn
 import java.util.UUID
 import kotlinx.coroutines.test.runTest
 import org.assertj.core.api.Assertions
@@ -20,7 +21,6 @@ import ssm.chaincode.dsl.model.SsmSessionState
 import ssm.chaincode.dsl.model.SsmTransition
 import ssm.sdk.core.SsmQueryService
 import ssm.sdk.core.SsmTxService
-import ssm.sdk.dsl.InvokeReturn
 import ssm.sdk.sign.SsmCmdSignerSha256RSASigner
 import ssm.sdk.sign.extention.addPrivateMessage
 import ssm.sdk.sign.extention.getPrivateMessage
@@ -38,9 +38,9 @@ class SsmClientItTest {
 		private const val NETWORK = "bclan-it/"
 		const val ADMIN_NAME = "ssm-admin"
 		val USER1_NAME = "bob-$uuid"
-		val USER2_NAME = "sam-$uuid"
+		private val USER2_NAME = "sam-$uuid"
 		const val USER1_FILENAME = NETWORK + "bob"
-		const val USER2_FILENAME = NETWORK + "sam"
+		private const val USER2_FILENAME = NETWORK + "sam"
 
 		private lateinit var query: SsmQueryService
 		private lateinit var tx: SsmTxService
@@ -53,7 +53,7 @@ class SsmClientItTest {
 		private var signerUser1: Signer = SignerUser.loadFromFile(USER1_NAME, USER1_FILENAME)
 		private var signerUser2: Signer = SignerUser.loadFromFile(USER2_NAME, USER2_FILENAME)
 
-		val signer = SsmCmdSignerSha256RSASigner(
+		private val signer = SsmCmdSignerSha256RSASigner(
 			SignerAdmin.loadFromFile(ADMIN_NAME, NETWORK + ADMIN_NAME),
 			SignerUser.loadFromFile(USER1_NAME, USER1_FILENAME),
 			SignerUser.loadFromFile(USER2_NAME, USER2_FILENAME)
@@ -94,8 +94,7 @@ class SsmClientItTest {
 	@Order(10)
 	@Test
 	fun adminUser() = runTest {
-		val agentRet = query.getAdmin(chaincodeUri, ADMIN_NAME)
-		val agentFormClient = agentRet
+		val agentFormClient = query.getAdmin(chaincodeUri, ADMIN_NAME)
 		Assertions.assertThat(agentFormClient).isEqualTo(agentAdmin)
 	}
 
@@ -103,8 +102,7 @@ class SsmClientItTest {
 	@Order(20)
 	fun registerUser1() = runTest {
 		val transactionEvent = tx.sendRegisterUser(chaincodeUri, agentUser1, signerAdmin.name)
-		val trans = transactionEvent
-		assertThatTransactionExists(trans)
+		assertThatTransactionExists(transactionEvent)
 	}
 
 	@Order(30)
@@ -232,7 +230,7 @@ class SsmClientItTest {
 		assertThatTransactionExists(transactionEvent)
 	}
 
-	suspend fun assertThatTransactionExists(trans: InvokeReturn) {
+	private suspend fun assertThatTransactionExists(trans: InvokeReturn) {
 		Assertions.assertThat(trans).isNotNull
 		Assertions.assertThat(trans.status).isEqualTo("SUCCESS")
 		val transaction: Transaction? = query.getTransaction(chaincodeUri, trans.transactionId)
@@ -246,16 +244,15 @@ class SsmClientItTest {
 	@Test
 	fun sessionAfterBuy() = runTest {
 		val buy = SsmTransition(1, 2, "Buyer", "Buy")
-		val sesReq = query.getSession(
+		val state = query.getSession(
 			chaincodeUri,
 			sessionName
 		)
-		val state = sesReq
-		val stateExcpected = SsmSessionState(
+		val stateExpected = SsmSessionState(
 			ssmName,
 			sessionName, session.roles, "Deal !", emptyMap(), buy, 2, 2
 		)
-		Assertions.assertThat(state).isEqualTo(stateExcpected)
+		Assertions.assertThat(state).isEqualTo(stateExpected)
 	}
 
 	@Test
