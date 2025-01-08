@@ -2,6 +2,7 @@ package ssm.sdk.core.ktor
 
 import io.komune.c2.chaincode.dsl.ChaincodeUri
 import io.komune.c2.chaincode.dsl.from
+import io.komune.c2.chaincode.dsl.invoke.InvokeRequest
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.HttpTimeout
@@ -36,11 +37,11 @@ class KtorRepository(
 	private val logger = LoggerFactory.getLogger(javaClass)
 	companion object {
 		const val PATH = "/"
-		const val CMD_PROPS = "cmd"
-		const val CHANNEL_ID_PROPS = "channelid"
-		const val CHAINCODE_ID_PROPS = "chaincodeid"
-		const val FCN_PROPS = "fcn"
-		const val ARGS_PROPS = "args"
+		val CMD_PROPS = InvokeRequest::cmd.name
+		val CHANNEL_ID_PROPS = InvokeRequest::channelid.name
+		val CHAINCODE_ID_PROPS = InvokeRequest::chaincodeid.name
+		val FCN_PROPS = InvokeRequest::fcn.name
+		val ARGS_PROPS = InvokeRequest::args.name
 	}
 
 	val client = HttpClient(CIO) {

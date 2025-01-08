@@ -42,7 +42,7 @@ fun ChannelConfig.Companion.fromConfig(
     endorsers: List<Endorser>
 ): Map<ChannelId, ChannelConfig> {
     return lines.map { line ->
-        ChannelChaincodePair.Companion.fromConfig(line)
+        ChannelChaincodePair.fromConfig(line)
     }.groupBy(
         { it.channelId }, { it.chainCodeId }
     ).mapValues { (channelId, chaincodeIds) ->

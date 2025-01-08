@@ -1,24 +1,27 @@
-package io.komune.c2.chaincode.api.gateway.chaincode.model
+package io.komune.c2.chaincode.dsl.invoke
 
 import io.komune.c2.chaincode.dsl.ChaincodeId
 import io.komune.c2.chaincode.dsl.ChannelId
-import io.komune.c2.chaincode.dsl.invoke.InvokeArgs
 
-
-data class InvokeParams(
+data class InvokeRequest(
     val channelid: ChannelId? = null,
     val chaincodeid: ChaincodeId? = null,
-    val cmd: Cmd,
+    val cmd: InvokeRequestType,
     val fcn: String,
     val args: Array<String>
 )
 
+@Suppress("EnumNaming")
+enum class InvokeRequestType {
+    query, invoke
+}
 
-fun List<InvokeParams>.toInvokeArgs(): List<InvokeArgs> = map {
+
+fun List<InvokeRequest>.toInvokeArgs(): List<InvokeArgs> = map {
     it.toInvokeArgs()
 }
 
-fun InvokeParams.toInvokeArgs(): InvokeArgs {
+fun InvokeRequest.toInvokeArgs(): InvokeArgs {
     return InvokeArgs(fcn, args.toList())
 }
 
